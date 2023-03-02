@@ -3,11 +3,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600&display=swap');
 body{
     overflow-x: hidden;
+    font-family: Arial, Helvetica, sans-serif;
+    color: white;
 }
 
 .header, .header2{
     overflow: hidden;
-    background-color: #fab728;
+    background-color: #ff9f1a;
     color: rgb(255, 254, 254);
     width: 100%;
     position: sticky;
@@ -138,7 +140,6 @@ body{
     top:calc((500px + 60px)/2);
     color: whitesmoke;
     font-size: 40px;
-    font-family: Arial, Helvetica, sans-serif;
 }
 
 .button-switcher-group{
@@ -167,16 +168,37 @@ body{
 }
 
 #first-section{
-   /* background-color: red;*/
+   background-color: #ca7f16;
     float: left;
-    width: 50vw;
+    width: 15vw;
     height: 100%;
-    border-right: 1px solid rgb(187, 187, 187);
 }
 
 #secound-section{
-    /*background-color: blueviolet;*/
-    float: right;
-    width: 49vw;
+    background-color: #131211;
     height: 100%;
+    float: left;
+    width: 69vw;
+    padding-left: 50px;
+    padding-right: 50px;
+}
+
+#third-section{
+    background-color: #ca7f16;
+    float: right;
+    width: 15vw;
+    height: 100%;
+}
+
+#desc-image{
+    width: 200px;
+    user-select: none;
+    -webkit-user-drag: none;
+}
+
+#secound-section-title{
+    width: 100%;
+    height: 110px;
+    display: flex;
+    justify-content: center;
 }
