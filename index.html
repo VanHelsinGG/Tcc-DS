@@ -5,137 +5,222 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Placeholder</title>
+    <title>VivaAtivo: Promovendo Saúde e Bem-Estar</title>
     <!-- <script src="./javascript/scroll.js" defer></script> -->
     <script src="./javascript/switcher.js" defer></script>
     <script src="./javascript/main.js" defer></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans|Roboto|Montserrat&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./style/index.css">
     <link rel="stylesheet" href="./style/reseter.css">
-    <link rel="preload" href="./style/fonts/arimo.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="stylesheet" href="./images/bootstrap-icons-1.10.4/font/bootstrap-icons.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
 </head>
 
 <body style="background-color: #ca7f16;">
+    <!-- Header / NavBar -->
     <header class="header d-flex justify-content-between" id="header">
-        <div class="d-flex align-items-center justify-content-between title-div bg-white text-black" style="width: 25vw;">
-            <h1 class="fs-4 mt-2 text-end" id="title">Smart Workout</h1>
+        <div class="d-flex align-items-center justify-content-between title-div" style="width: 25vw;">
+            <h1 class="fs-4 mt-2 text-end" id="title">VivaAtivo</h1>
             <img src="./images/Tcc Header laranja.jpg" alt="" id="diagonal-bars-header">
         </div>
-        <nav class="navbar navbar-expand-sm navbar-light" id="navbar">
+        <nav class="navbar navbar-expand-md navbar-light d-flex justify-content-end" id="navbar">
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon text-white" style="filter: invert(1);"></span>
+            </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
+                <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
                         <a href="./index.html" id="home" class="nav-link text-white fw-bolder active">Inicio</a>
                     </li>
                     <li class="nav-item">
-                        <a href="#contact" id="contact" class="nav-link text-white ">Contact</a>
+                        <a href="#contact" id="contact" class="nav-link text-white">Contact</a>
                     </li>
-                    <li class="nav-item ">
-                        <a href="#about" id="about" class="nav-link text-white ">About</a>
+                    <li class="nav-item">
+                        <a href="#about" id="about" class="nav-link text-white">About</a>
                     </li>
-                    <li class="nav-item ">
-                        <a href="#about" id="profile" class="nav-link text-white ">Profile</a>
+                    <li class="nav-item">
+                        <a href="#about" id="profile" class="nav-link text-white">
+                            <!-- <i class="bi bi-person-circle"></i> -->
+                            Profile
+                        </a>
                     </li>
                 </ul>
             </div>
         </nav>
     </header>
 
+    <!-- Slide-Show -->
     <div class="container-fluid image-switcher p-0 d-flex justify-content-center align-items-center">
-        <div id="image-switcher" class="carousel slide" data-ride="carousel" data-interval="5000">
+        <div id="image-switcher" class="carousel slide" data-ride="carousel" data-wrap="false" data-interval="5000">
             <ol class="carousel-indicators">
                 <li data-target="#image-switcher" data-slide-to="1" class=""></li>
                 <li data-target="#image-switcher" data-slide-to="2" class=""></li>
                 <li data-target="#image-switcher" data-slide-to="3"></li>
                 <li data-target="#image-switcher" data-slide-to="4"></li>
-              </ol>
+            </ol>
             <div class="carousel-inner" style="height: 500px;">
                 <div class="carousel-item active">
-                    <img class="switcher-images" src="./images/back.jpeg" alt="First slide">
+                    <img class="switcher-images" src="./images/carousel-images/back.jpeg" alt="First slide">
                 </div>
                 <div class="carousel-item">
-                    <img class="switcher-images" src="./images/back2.jpeg" alt="Second slide">
+                    <img class="switcher-images" src="./images/carousel-images/back2.jpeg" alt="Second slide">
                 </div>
                 <div class="carousel-item">
-                    <img class="switcher-images" src="./images/back3.jpeg" alt="Third slide">
+                    <img class="switcher-images" src="./images/carousel-images/back3.jpeg" alt="Third slide">
                 </div>
                 <div class="carousel-item">
-                    <img class="switcher-images" src="./images/back4.jpeg" alt="Fourth slide">
+                    <img class="switcher-images" src="./images/carousel-images/back4.jpeg" alt="Fourth slide">
                 </div>
             </div>
-            <button class="carousel-control-prev" href="" role="button" data-slide="prev" onclick="Atualizar_Switcher(2);" style="background: linear-gradient(to right, rgb(0, 0, 1), rgba(0,0,0,0));">
+            <button class="botao carousel-control-prev hidden-sm" id="botaobug" href="" role="button" data-slide="prev"
+                onclick="atualizarSwitcher(2);"
+                style="background: linear-gradient(to right, rgb(0, 0, 1), rgba(0,0,0,0));">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
             </button>
-            <button class="carousel-control-next" href="" role="button" data-slide="next" onclick="Atualizar_Switcher(1);" style="background: linear-gradient(to left, rgba(0,0,0,1), rgba(0,0,0,0));">
+            <button class="botao carousel-control-next hidden-sm" href="" role="button" data-slide="next"
+                onclick="atualizarSwitcher(1);"
+                style="background: linear-gradient(to left, rgba(0,0,0,1), rgba(0,0,0,0));">
                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
             </button>
         </div>
         <div class="text-center" style="position: absolute;">
-            <h2 id="image-title">Inove seu treino de uma vez por todas!</h2>
+            <h2 id="image-title">Promovendo Saúde e Bem-Estar!</h2>
         </div>
     </div>
 
-    <div class="container" id="quem-somos">
-        <div class="row">
-            <div class="col d-flex justify-content-center align-items-center">
-                <img src="./images/Quem somos.png" id="desc-image" alt="">
+    <!-- Primeira Section -->
+    <div class="container background-escuro">
+        <div class="row text-light d-flex justify-content-center align-items-center">
+            <div class="col-md-6 px-5" style="height: 100%;">
+                <h4 class="fs-5 mb-4" style="font-weight: bold; color: #ff9f1a;">Descubra a
+                    plataforma digital para uma vida ativa e saudável!</h4>
+                <p>Oferecemos uma ampla gama de recursos, incluindo vídeos de exercícios inspiradores, conteúdo didático
+                    de alta qualidade, um sistema nutricional inteligente e incentivos empolgantes para te manter
+                    motivado. É a ferramenta perfeita para transformar seu estilo de vida. Venha se juntar a nós e cuide
+                    de si mesmo de forma personalizada. Não espere mais, comece a sua jornada de bem-estar conosco
+                    agora!</p>
+                <a href="#" class="btn btn-danger mt-3" style="width:100%;">Começar gratuitamente</a>
             </div>
-        </div>
-        <div class="row text-light">
-            <div class="col-md-6 p-5">
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse dui quam, aliquet quis sagittis
-                    et, gravida ut ligula. Nullam laoreet condimentum justo, quis dapibus ante pulvinar ac. Interdum et
-                    malesuada fames ac ante ipsum primis in faucibus. Interdum et malesuada fames ac ante ipsum primis
-                    in faucibus. Nunc pellentesque faucibus auctor. Proin finibus nunc quis rhoncus faucibus. Orci
-                    varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Duis facilisis
-                    magna vel nisl malesuada mattis. Cras eu ex ac ante condimentum viverra. Sed feugiat, eros sit amet
-                    ornare semper, est ante consectetur mauris, quis gravida metus ante id dolor. Nam lobortis porttitor
-                    mi vitae dictum.</p>
-            </div>
-            <div class="col-md-6 d-flex justify-content-center align-items-center">
-                Imagem
+            <div class="col-md-6" style="height: 100%;">
+                <img src="./images/Quem somo image.png" alt="" id="imagem-comecar" class="img-fluid mb-5 mt-5"
+                    style="width: 100%;height: 100%;">
             </div>
         </div>
     </div>
 
-    <!-- <div class="section">
-        <div id="first-section">
-        </div>
-        <div id="secound-section">
-            <div id="secound-section-title">
-                <img src="./images/Quem somos.png" id="desc-image" alt="">
-            </div>
-            <div id="secound-section-left" style="float: left; height: 490px; width: 50%;">
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse dui quam, aliquet quis sagittis
-                    et, gravida ut ligula. Nullam laoreet condimentum justo, quis dapibus ante pulvinar ac. Interdum et
-                    malesuada fames ac ante ipsum primis in faucibus. Interdum et malesuada fames ac ante ipsum primis
-                    in faucibus. Nunc pellentesque faucibus auctor. Proin finibus nunc quis rhoncus faucibus. Orci
-                    varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Duis facilisis
-                    magna vel nisl malesuada mattis. Cras eu ex ac ante condimentum viverra. Sed feugiat, eros sit amet
-                    ornare semper, est ante consectetur mauris, quis gravida metus ante id dolor. Nam lobortis porttitor
-                    mi vitae dictum.
-
-                    Etiam euismod nec erat non gravida. Phasellus volutpat eleifend egestas. Vivamus consectetur
-                    scelerisque lorem, sit amet dictum lectus blandit et. Aenean et libero sit amet massa egestas
-                    dapibus ut et lacus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Suspendisse nec
-                    metus at ex sagittis varius. Proin finibus lacinia purus, in consectetur dolor tincidunt sed. Nulla
-                    dictum tellus nibh, at malesuada ante pellentesque sed. Donec ut pharetra dui. Integer gravida
-                    faucibus tellus vel fringilla. Maecenas quis erat sagittis, scelerisque mauris et, tristique enim.
-                    Aliquam ut hendrerit ligula. Aenean suscipit dolor quis aliquet venenatis. Quisque mollis efficitur
-                    blandit. Maecenas non est auctor, sodales ex sit amet, condimentum nisi. Integer nec nisi vel neque
-                    aliquam consequat.
-                </p>
-            </div>
-            <div id="secound-section-right"
-                style="float:right; height: 490px; width: 50%;display: flex;justify-content: center;align-items: center;">
-                Imagem
+    <!-- Numeros -->
+    <div class="py-1 numero d-flex align-items-center">
+        <div class="container">
+            <div class="row py-4">
+                <div class="col-md-4 col-sm-12">
+                    <h3 class="px-3 fs-3 my-4">
+                        Temos <span class="numeros">{x}</span> exercícios em nosso banco de dados
+                    </h3>
+                </div>
+                <div class="col-md-4 col-sm-12">
+                    <h3 class="px-3 fs-3 my-4">
+                        Tenha contato com <span class="numeros">{x}</span> informações confiáveis
+                    </h3>
+                </div>
+                <div class="col-md-4 col-sm-12">
+                    <h3 class="px-3 fs-3 my-4">
+                        Tenha acesso a ferramentas úteis para sua prática física
+                    </h3>
+                </div>
             </div>
         </div>
-        <div id="third-section"></div> -->
     </div>
 
-    <footer class="footer">
+    <!-- Outras sections -->
+    <div class="container-full-width p-5 m-0 background-escuro text-light" style="padding-inline: 100px !important;">
+        <div class="row py-5">
+            <div class="col-12 col-md-6 d-flex align-items-center justify-content-center">
+                <img src="caminho-da-imagem.jpg" alt="Imagem" class="img-fluid">
+            </div>
+            <div class="col-12 col-md-6 col-sm-12 text-center text-md-end">
+                <h4 class="fs-5 mb-4" style="font-weight: bold; color: #ff9f1a;">Descubra o Poder da Saúde e Nutrição:
+                    Transforme sua Vida!</h4>
+                <p class="mb-4">Tenha uma vida mais plena e saudável com o poder da saúde e nutrição! Nossa plataforma é
+                    sua aliada para descobrir como uma alimentação equilibrada, atividades físicas regulares e hábitos
+                    saudáveis podem transformar sua vida para melhor. Oferecemos recursos valiosos, como conteúdo
+                    informativo sobre práticas saudáveis, dicas nutricionais, sugestões de exercícios e muito mais.
+                    Invista em sua saúde e bem-estar, e experimente os benefícios transformadores da saúde e nutrição em
+                    sua jornada para uma vida mais vibrante e plena!</p>
+                <a href="#" class="btn btn-success">Descubra agora!</a>
+            </div>
+        </div>
+        <div class="py-5 row mt-5">
+            <div class="col-12 col-md-6 col-sm-12 text-center text-md-start">
+                <h4 class="fs-5 mb-4" style="font-weight: bold; color: #ff9f1a;">Desvende os Segredos do Conhecimento na
+                    Atividade Física: Supere seus Limites!</h4>
+                <p class="mb-4">Aprofunde-se no mundo do conhecimento relacionado à atividade física e desvende os
+                    segredos para atingir o melhor desempenho físico. Descubra as melhores práticas, estratégias de
+                    treinamento, dicas de nutrição, técnicas de recuperação e muito mais para superar seus limites e
+                    alcançar novos patamares em sua performance esportiva. Amplie seu entendimento sobre a ciência por
+                    trás da atividade física e potencialize seus resultados, levando sua prática esportiva a um novo
+                    nível!</p>
+                <a href="#" class="btn btn-azul btn-primary">Explore o mundo do conhecimento!</a>
+            </div>
+            <div class="col-12 col-md-6 d-flex align-items-center justify-content-center">
+                <img src="caminho-da-imagem.jpg" alt="Imagem" class="img-fluid">
+            </div>
+        </div>
+        <div class="row py-5 mt-5">
+            <div class="col-12 col-md-6 d-flex align-items-center justify-content-center">
+                <img src="caminho-da-imagem.jpg" alt="Imagem" class="img-fluid">
+            </div>
+            <div class="col-12 col-md-6 col-sm-12 text-center text-md-end">
+                <h4 class="fs-5 mb-4" style="font-weight: bold; color: #ff9f1a;">Monitoramento Inteligente: Acompanhe
+                    suas Atividades Físicas Diárias com Facilidade!</h4>
+                <p class="mb-4">Acompanhe suas atividades físicas diárias de forma fácil e eficaz com nossa plataforma
+                    de monitoramento inteligente. Registre, analise e otimize seu progresso para transformar sua rotina
+                    de exercícios em uma jornada gratificante de bem-estar. Descubra como nosso acompanhamento pode
+                    impulsionar seu estilo de vida ativo e saudável!!</p>
+                <a href="#" class="btn btn-success btn-roxo">Experimente Agora!</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white text-center">
+        <div class="container pt-5">
+            <div class="row">
+                <div class="col-3 d-flex flex-column">
+                    <span>Logo</span>
+                    <span>Telefone</span>
+                    <span>Email</span>
+                </div>
+                <div class="col-3 d-flex">
+                    <ul>
+                        <li>Atalho 1</li>
+                        <li>Atalho 2</li>
+                        <li>Atalho 3</li>
+                        <li>Atalho 4</li>
+                    </ul>
+                </div>
+                <div class="col-3 d-flex">
+                    <ul>
+                        <li>Atalho 5</li>
+                        <li>Atalho 6</li>
+                        <li>Atalho 7</li>
+                        <li>Atalho 8</li>
+                    </ul>
+                </div>
+                <div class="col-3 d-flex">
+                    Redes sociais
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col-12">
+                    <p>&copy; 2023 {Nome}. Todos os direitos reservados.</p>
+                </div>
+            </div>
+        </div>
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
