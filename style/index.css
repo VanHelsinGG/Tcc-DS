@@ -47,9 +47,9 @@ body {
 
 .image-switcher {
     background-color: rgb(0, 0, 0);
-    height: 500px;
+    height: 600px;
     width: 100%;
-    overflow-x: hidden;
+    overflow: hidden;
 }
 
 #title {
@@ -70,7 +70,7 @@ body {
     -webkit-user-drag: none;
 }
 
-.carousel-item {
+.carousel-item{
     height: 100%;
     object-fit: cover;
 }
@@ -170,7 +170,6 @@ h4{
     background-color: var(--roxo) !important;
     border-color: var(--roxo) !important;
 }
-
 @media (max-width: 700px) {
 
     .container-fluid,
