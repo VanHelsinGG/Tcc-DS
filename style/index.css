@@ -45,11 +45,11 @@ body {
     margin-right: 15vw;
 }
 
-.image-switcher {
+.image-switcher, .carousel-inner {
     background-color: rgb(0, 0, 0);
     height: 600px;
     width: 100%;
-    overflow: hidden;
+    overflow-x: hidden;
 }
 
 #title {
@@ -59,7 +59,6 @@ body {
     letter-spacing: 1px;
     color: var(--laranja-secundario);
 }
-
 
 .switcher-images {
     width: 100vw;
@@ -231,4 +230,7 @@ h4{
         display: none !important;
     }
 
+    .carousel-inner{
+        height: 100% !important;
+    }
 }
