@@ -1,31 +1,3 @@
-:root {
-    --escuro-principal: #131211;
-    --laranja-principal: #ff9f1a;
-    --laranja-secundario: #ca7f16;
-    --laranja-terciario: #985f0f;
-    --azul-complementar: #005cb2;
-    --roxo: #6C4079;
-
-    --texto-principal: 'Roboto Condensed', sans-serif;
-    --texto-secundario: 'Open Sans', sans-serif;
-    --texto-titulo-principal: 'Barlow Condensed', sans-serif;
-    --texto-titulo-secundario: 'Lato', sans-serif;
-    --texto-terciario: 'Montserrat', sans-serif;
-}
-
-p,
-span,
-a,
-body {
-    font-family: var(--texto-principal) !important;
-    color: white;
-}
-
-img{
-    user-select: none;
-    -webkit-user-drag: none;
-}
-
 .header {
     background-color: var(--laranja-principal);
     color: rgb(255, 254, 254);
@@ -163,23 +135,13 @@ h4{
     padding-bottom: 50px;
 }
 
-.btn-azul{
-    background-color: var(--azul-complementar) !important;
-    border-color: var(--azul-complementar) !important;
-}
-
-.btn-roxo{
-    background-color: var(--roxo) !important;
-    border-color: var(--roxo) !important;
-}
-
 .img-section{
     width: 70%;
     height: 70%;
 }
 
 div:has(> .img-section):not(div:has(> #imagem-comecar)){
-    background-color: #20201e;
+    background-color: #242420;
     border-radius: 15px;
 }
 
