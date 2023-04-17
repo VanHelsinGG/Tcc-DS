@@ -43,7 +43,7 @@
                             echo '<div class="row py-3">
                                 <div class="col-12">
                                     <div class="alert alert-danger mb-0">
-                                        Já existe uma conta vinculado à esse email. Deseja <a href="login.html">Logar-se</a>?
+                                        Já existe uma conta vinculado à esse email. Deseja <a href="login.php">Logar-se</a>?
                                     </div>
                                 </div>
                             </div>';
