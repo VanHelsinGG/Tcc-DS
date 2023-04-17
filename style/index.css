@@ -106,12 +106,6 @@
     font-family: var(--texto-secundario);
 }
 
-.navbar-nav li a:hover {
-    -webkit-transform: scale(1.1);
-    transform: scale(1.1);
-    background-color: var(--laranja-secundario);
-}
-
 .title-div {
     background-color: white;
     color: var(--escuro-principal);
@@ -140,11 +134,17 @@ h4{
     height: 70%;
 }
 
-div:has(> .img-section):not(div:has(> #imagem-comecar)){
-    background-color: #242420;
-    border-radius: 15px;
+.dropdown-item-hover:hover{
+    color:black !important;
 }
 
+.dropdown-item-deslogar:hover{
+    background-color: #dc3545 !important;
+}
+
+.dropdown-menu{
+    margin-top:-0.18rem !important;
+}
 
 @media (max-width: 700px) {
 

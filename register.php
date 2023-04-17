@@ -30,7 +30,9 @@
                 </div>
                 <!-- Setinha redonda -->
                 <div class="col-6 d-lg-flex d-none justify-content-end position-absolute top-50 end-0 p-2 rounded-circle d-flex align-items-center justify-content-center" id="circulo">
-                    <span class="bi bi-caret-right-fill"></span>
+                    <a href="login.php" class="btn">
+                        <span class="bi bi-caret-right-fill"></span>
+                    </a>
                 </div>
             </div>
             <!-- Formulario -->
@@ -39,15 +41,15 @@
                     <!-- Aparece o box de erro caso já existir conta no mesmo email - ERRO DE RETORNO -->
                     <?php
                     $emailDuplicado = isset($_GET['emailerror']) ? $_GET['emailerror'] : null; // Caso email error tiver setado = 1 caso não = null
-                        if ($emailDuplicado) {
-                            echo '<div class="row py-3">
+                    if ($emailDuplicado) {
+                        echo '<div class="row py-3">
                                 <div class="col-12">
                                     <div class="alert alert-danger mb-0">
                                         Já existe uma conta vinculado à esse email. Deseja <a href="login.php">Logar-se</a>?
                                     </div>
                                 </div>
                             </div>';
-                        }
+                    }
                     ?>
                     <div class="row py-3">
                         <div class="col-12 ">

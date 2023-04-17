@@ -24,16 +24,16 @@
             <div class="col-md-6 col-12 d-flex align-items-center justify-content-center text-white">
                 <form action="login_action.php" method="post">
                     <?php
-                        $emailDuplicado = isset($_GET['usererror']) ? $_GET['usererror'] : null; // Caso email error tiver setado = 1 caso não = null
-                            if ($emailDuplicado) {
-                                echo '<div class="row py-3">
+                    $emailDuplicado = isset($_GET['usererror']) ? $_GET['usererror'] : null; // Caso email error tiver setado = 1 caso não = null
+                    if ($emailDuplicado) {
+                        echo '<div class="row py-3">
                                     <div class="col-12">
                                         <div class="alert alert-danger mb-0">
                                             Usuário ou senha inválidos.
                                         </div>
                                     </div>
                                 </div>';
-                            }
+                    }
                     ?>
                     <div class="row py-3">
                         <div class="col-12">
@@ -63,7 +63,9 @@
                     <h1>Conectar-se</h1>
                 </div>
                 <div class="col-6 d-lg-flex d-none position-absolute top-50 end-0 p-2 rounded-circle justify-content-center align-items-center" id="circulo">
-                    <span class="bi bi-caret-left-fill"></span>
+                    <a href="register.php" class="btn">
+                        <span class="bi bi-caret-left-fill"></span>
+                    </a>
                 </div>
             </div>
         </div>

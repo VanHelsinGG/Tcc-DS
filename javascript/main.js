@@ -33,4 +33,3 @@ function aceitarCookies() {
     document.getElementById('aviso-cookies').style.display = 'none';
 }
 
-

@@ -1,3 +1,7 @@
+<?php
+include("./php/connector.php");
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -16,8 +20,7 @@
     <link rel="stylesheet" href="./style/index.css">
     <link rel="stylesheet" href="./style/universal.css">
     <link rel="stylesheet" href="./images/bootstrap-icons-1.10.4/font/bootstrap-icons.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
 </head>
 
 <body style="background-color: #ca7f16;">
@@ -28,8 +31,7 @@
             <img src="./images/Tcc Header laranja.jpg" alt="" id="diagonal-bars-header">
         </div>
         <nav class="navbar navbar-expand-md navbar-light d-flex" id="navbar">
-            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon text-white" style="filter: invert(1);"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
@@ -39,19 +41,34 @@
                     </li>
                     <li class="nav-item d-md-none d-block">
                         <a href="#contact" id="contact" class="nav-link text-white">Conta</a>
-                    </li> 
-                    <!-- <li class="nav-item">
-                        <a href="#about" id="about" class="nav-link text-white">Conta</a>
-                    </li> -->
+                    </li>
                 </ul>
-                <ul class="navbar-nav d-md-block d-none ms-3">
+                <?php
+                if (isset($_COOKIE['logado'])) {
+                    echo '<ul class="navbar-nav d-md-block d-none ms-3">
+                    <li class="nav-item dropdown">
+                        <a href="#" id="profile" class="nav-link text-white d-flex align-items-center nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                            <i class="bi bi-person-circle fs-2 me-2"></i>
+                            ' . $_SESSION['nome'] . '
+                        </a>
+                        <div class="dropdown-menu p-0" id="dropdown-menu" style="width:200px;background-color:var(--azul-complementar);">
+                            <a class="dropdown-item dropdown-item-hover text-light py-2" href="#"><i class="bi bi-person-circle me-2"></i>Perfil</a>
+                            <a class="dropdown-item dropdown-item-hover text-light py-2" href="#"><i class="bi bi-gear-fill me-2"></i>Configurações</a>
+                            <a class="dropdown-item text-white dropdown-item-deslogar py-2" href="deslogar.php" style="margin-bottom: 0;"><i class="bi bi-power me-2"></i>Deslogar-se</a>
+                        </div>
+                    </li>
+                </ul>';
+                } else {
+                    echo '<ul class="navbar-nav d-md-block d-none ms-3">
                     <li class="nav-item">
-                        <a href="#about" id="profile" class="nav-link text-white d-flex align-items-center">
+                        <a href="register.php" id="profile" class="nav-link text-white d-flex align-items-center nav-link">
                             <i class="bi bi-person-circle fs-2 me-2"></i>
                             Conectar-se
                         </a>
                     </li>
-                </ul>
+                </ul>';
+                }
+                ?>
             </div>
         </nav>
     </header>
@@ -91,14 +108,10 @@
                     <img class="switcher-images" src="./images/carousel-images/Carousel-Item-7.jpeg" alt="Fourth slide">
                 </div>
             </div>
-            <button class="botao carousel-control-prev hidden-sm" id="botaobug" href="" role="button" data-slide="prev"
-                onclick="atualizarSwitcher(2);"
-                style="background: linear-gradient(to right, rgb(0, 0, 1), rgba(0,0,0,0));">
+            <button class="botao carousel-control-prev hidden-sm" id="botaobug" href="" role="button" data-slide="prev" onclick="atualizarSwitcher(2);" style="background: linear-gradient(to right, rgb(0, 0, 1), rgba(0,0,0,0));">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
             </button>
-            <button class="botao carousel-control-next hidden-sm" href="" role="button" data-slide="next"
-                onclick="atualizarSwitcher(1);"
-                style="background: linear-gradient(to left, rgba(0,0,0,1), rgba(0,0,0,0));">
+            <button class="botao carousel-control-next hidden-sm" href="" role="button" data-slide="next" onclick="atualizarSwitcher(1);" style="background: linear-gradient(to left, rgba(0,0,0,1), rgba(0,0,0,0));">
                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
             </button>
         </div>
@@ -121,8 +134,7 @@
                 <a href="./register.php" class="btn btn-danger my-3 mb-5 w-100">Começar gratuitamente</a>
             </div>
             <div class="col-md-6" style="height: 100%;">
-                <img src="./images/section-images/Section-Image-4.png" alt="" id="imagem-comecar" class="img-fluid my-5 pe-3 img-section"
-                    style="width: 100%;height: 100%;">
+                <img src="./images/section-images/Section-Image-4.png" alt="" id="imagem-comecar" class="img-fluid my-5 pe-3 img-section" style="width: 100%;height: 100%;">
             </div>
         </div>
     </div>
@@ -143,7 +155,12 @@
                 </div>
                 <div class="col-md-4 col-sm-12">
                     <h3 class="px-3 fs-3 my-4">
-                        Tenha acesso a ferramentas úteis para sua prática física
+                        <?php
+                            $query = "SELECT * FROM users";
+                            $resultados = mysqli_query($db,$query);
+
+                            echo "Tenha contato com outros <span class='numeros'>".mysqli_num_rows($resultados)."</span> usuarios";
+                        ?>
                     </h3>
                 </div>
             </div>
@@ -251,9 +268,7 @@
             </div>
         </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
-        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
 </body>
 
 </html>

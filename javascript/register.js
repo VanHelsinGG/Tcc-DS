@@ -1,20 +1,22 @@
 // Verifica se as senhas são compatíveis
 function checkCampos() {
-    //  ***** Função criada para ser usada em outros casos, se caso não utilizar, remover o IF abaixo: *****
-    if (document.body.contains(document.getElementById("senha2"))) {
-        let senha = document.getElementById("senha").value;
-        let confirmacaoSenha = document.getElementById("senha2").value;
+    // Verifica se o elemento com id "senha2" existe no documento
+    const senha2Element = document.getElementById("senha2");
+    if (senha2Element) {
+        const senha = document.getElementById("senha").value;
+        const confirmacaoSenha = senha2Element.value;
 
         if (senha !== confirmacaoSenha) {
             // Senhas diferentes
-            // ***** Modificar o modo de alerta ***** //
+            // Modificar o modo de alerta
             alert("As senhas não conferem!");
             return false; // retorna falso
         } else {
             // Senhas iguais
-            return true; // returna verdadeiro
+            return true; // retorna verdadeiro
         }
     }
+    return true; // retorna verdadeiro caso não haja elemento com id "senha2"
 }
 
 // Evento de clique no botão de cadastrar
@@ -24,4 +26,3 @@ document.getElementById('continuar').addEventListener('submit', function (event)
         event.preventDefault();
     }
 });
-
