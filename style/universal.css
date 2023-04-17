@@ -47,3 +47,10 @@ img{
     background-color: var(--roxo) !important;
     border-color: var(--roxo) !important;
 }
+.escuro {
+    background-color: #131211;
+}
+
+.laranja{
+    color: rgba(152, 95, 15, 1);
+}

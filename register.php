@@ -20,10 +20,35 @@
 </head>
 
 <body style="background-color: #131211;">
+    <!-- Corpo do site -->
     <div class="container-fluid fs-5 h-100">
+        <!-- Parte laranja decorativa -->
         <div class="row h-100">
+            <div class="col-12 col-md-6 bg-white d-flex text-center align-items-center justify-content-center title text-white position-relative titulo" style="background-color: #ff9f1a !important;">
+                <div class="col-6">
+                    <h1>Inscrever-se</h1>
+                </div>
+                <!-- Setinha redonda -->
+                <div class="col-6 d-lg-flex d-none justify-content-end position-absolute top-50 end-0 p-2 rounded-circle d-flex align-items-center justify-content-center" id="circulo">
+                    <span class="bi bi-caret-right-fill"></span>
+                </div>
+            </div>
+            <!-- Formulario -->
             <div class="col-md-6 col-12 d-flex align-items-center justify-content-center text-white">
                 <form action="register_action.php" method="post">
+                    <!-- Aparece o box de erro caso já existir conta no mesmo email - ERRO DE RETORNO -->
+                    <?php
+                    $emailDuplicado = isset($_GET['emailerror']) ? $_GET['emailerror'] : null; // Caso email error tiver setado = 1 caso não = null
+                        if ($emailDuplicado) {
+                            echo '<div class="row py-3">
+                                <div class="col-12">
+                                    <div class="alert alert-danger mb-0">
+                                        Já existe uma conta vinculado à esse email. Deseja <a href="login.html">Logar-se</a>?
+                                    </div>
+                                </div>
+                            </div>';
+                        }
+                    ?>
                     <div class="row py-3">
                         <div class="col-12 ">
                             <div class="form-group">
@@ -60,14 +85,6 @@
                         </div>
                     </div>
                 </form>
-            </div>
-            <div class="col-12 col-md-6 bg-white d-flex text-center align-items-center justify-content-center title text-white position-relative titulo" style="background-color: #ff9f1a !important;">
-                <div class="col-6">
-                    <h1>Inscrever-se</h1>
-                </div>
-                <div class="col-6 d-lg-flex d-none justify-content-end position-absolute top-50 end-0 p-2 rounded-circle d-flex align-items-center justify-content-center" id="circulo">
-                    <span class="bi bi-caret-right-fill"></span>
-                </div>
             </div>
         </div>
     </div>

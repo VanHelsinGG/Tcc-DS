@@ -214,4 +214,6 @@ div:has(> .img-section):not(div:has(> #imagem-comecar)){
     .img-section{
         display: none;
     }
+
+
 }
