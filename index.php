@@ -1,5 +1,6 @@
 <?php
 include("./php/connector.php");
+include("./php/functions.php");
 ?>
 
 <!DOCTYPE html>
@@ -44,12 +45,13 @@ include("./php/connector.php");
                     </li>
                 </ul>
                 <?php
+                session_start();
                 if (isset($_COOKIE['logado'])) {
                     echo '<ul class="navbar-nav d-md-block d-none ms-3">
                     <li class="nav-item dropdown">
                         <a href="#" id="profile" class="nav-link text-white d-flex align-items-center nav-link dropdown-toggle" data-bs-toggle="dropdown">
                             <i class="bi bi-person-circle fs-2 me-2"></i>
-                            ' . $_SESSION['nome'] . '
+                            ' . $_COOKIE['logado'] . '
                         </a>
                         <div class="dropdown-menu p-0" id="dropdown-menu" style="width:200px;background-color:var(--azul-complementar);">
                             <a class="dropdown-item dropdown-item-hover text-light py-2" href="#"><i class="bi bi-person-circle me-2"></i>Perfil</a>
@@ -58,7 +60,7 @@ include("./php/connector.php");
                         </div>
                     </li>
                 </ul>';
-                } else {
+                } else{
                     echo '<ul class="navbar-nav d-md-block d-none ms-3">
                     <li class="nav-item">
                         <a href="register.php" id="profile" class="nav-link text-white d-flex align-items-center nav-link">

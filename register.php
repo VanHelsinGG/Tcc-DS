@@ -1,3 +1,7 @@
+<?php
+include("./php/functions.php");
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -51,7 +55,7 @@
                             </div>';
                     }
                     ?>
-                    <div class="row py-3">
+                    <div class="row py-3 sumir-logado">
                         <div class="col-12 ">
                             <div class="form-group">
                                 <label for="nome" class="form-label">NOME</label>
@@ -59,7 +63,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row py-3">
+                    <div class="row py-3 sumir-logado">
                         <div class="col-12">
                             <div class="form-group">
                                 <label for="email" class="form-label">EMAIL</label>
@@ -67,7 +71,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row py-3">
+                    <div class="row py-3 sumir-logado">
                         <div class="col-lg-6 col-12">
                             <div class="form-group">
                                 <label for="senha" class="form-label">SENHA</label>
@@ -83,7 +87,31 @@
                     </div>
                     <div class="row">
                         <div class="col">
-                            <button class="btn text-light mt-5" style="background-color: #005cb2;border:none;" id="continuar" onclick="return checkCampos()">INSCREVER-SE</button>
+                            <?php
+                            if (verificarLogado()) {
+                                echo '<div class="row py-3">
+                                        <div class="col-12">
+                                            <div class="alert alert-danger mb-0">
+                                                    Você já está logado!
+                                                    <a href="deslogar.php">Deslogar-se</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row py-3">
+                                        <div class="col-12">
+                                            <a href="index.php" class="btn btn-azul text-light">Página Inicial</a>
+                                        </div>
+                                    </div>
+                                    <style>
+                                        .sumir-logado{
+                                            display:none;
+                                        }
+                                    </style>
+                                ';
+                            } else {
+                                echo '<button class="btn text-light mt-5" style="background-color: #005cb2;border:none;" id="continuar" onclick="return checkCampos()">INSCREVER-SE</button>';
+                            }
+                            ?>
                         </div>
                     </div>
                 </form>

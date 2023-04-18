@@ -1,6 +1,4 @@
 <?php
-    session_start();
-
     // Conexão com o banco e com as funções
     include('./php/connector.php');
     include('./php/functions.php');
@@ -11,7 +9,7 @@
         
         // Retoma informações do formulario
         $senha = $_POST['senha'];
-        $_SESSION['email'] = $_POST['email'];
+        $email = $_POST['email'];
 
         // Criptografa a senha inserida, para compara-la com a do banco
         $hashedSenha = hash('sha256', $senha);
@@ -19,7 +17,7 @@
         // Query preparado para evitar sqlinjection
         $query = "SELECT * FROM users WHERE email = ?";
         $stmt = mysqli_prepare($db, $query);
-        mysqli_stmt_bind_param($stmt, "s", $_SESSION['email']);
+        mysqli_stmt_bind_param($stmt, "s", $email);
         mysqli_stmt_execute($stmt);
 
         // Pega o resultado
@@ -32,9 +30,9 @@
             // Verifica se as senhas forem iguais
             if ($hashedSenha === $rows['senha']) {
                 // Se sim...
-                $_SESSION['nome'] = $rows['nome'];
+                $nome = $rows['nome'];
 
-                setarCookie("logado", 1, 1); // Define o cookie de logado para verdadeiro
+                setarCookie("logado", $nome, 7); // Define o cookie de logado para verdadeiro
 
                 // Retorna ao index
                 $redirectUrl = urlencode("index.php");
