@@ -26,28 +26,34 @@ include("./php/functions.php");
 
 <body style="background-color: #ca7f16;">
     <!-- Header / NavBar -->
-    <header class="header d-flex justify-content-between" id="header">
-        <div class="d-flex align-items-center justify-content-between title-div" style="width: 25vw;">
-            <h1 class="fs-4 mt-2 text-end ms-4" id="title">Olympia<span style="color:#005cb2;" id="title">Workout</span></h1>
-            <img src="./images/Tcc Header laranja.jpg" alt="" id="diagonal-bars-header">
-        </div>
-        <nav class="navbar navbar-expand-md navbar-light d-flex" id="navbar">
-            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon text-white" style="filter: invert(1);"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a href="./index.html" id="home" class="nav-link text-white fw-bolder active">Inicio</a>
-                    </li>
-                    <li class="nav-item d-md-none d-block">
-                        <a href="#contact" id="contact" class="nav-link text-white">Conta</a>
-                    </li>
-                </ul>
-                <?php
-                session_start();
-                if (isset($_COOKIE['logado'])) {
-                    echo '<ul class="navbar-nav d-md-block d-none ms-3">
+    <header class="header container-fluid sticky-top" id="header">
+        <div class="row h-100 d-flex">
+            <div class="col-6 bg-white d-flex justify-content-center h-100 align-items-center">
+                <div class="col-6">
+                    <h1 class="fs-4 text-center" id="title">Olympia<span style="color:#005cb2;">Workout</span></h1>
+                </div>
+                <div class="col-6 text-end" style="margin-right: -1.5rem;">
+                    <img src="./images/Tcc Header laranja.jpg" alt="" id="diagonal-bars-header" class="img-fluid">
+                </div>
+            </div>
+            <div class="col-6">
+                <nav class="navbar navbar-expand-md navbar-light ms-auto" id="navbar">
+                    <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon text-white" style="filter: invert(1);"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                        <ul class="navbar-nav ms-auto">
+                            <li class="nav-item">
+                                <a href="./index.html" id="home" class="nav-link text-white fw-bolder active">Inicio</a>
+                            </li>
+                            <li class="nav-item d-md-none d-block">
+                                <a href="#contact" id="contact" class="nav-link text-white">Conta</a>
+                            </li>
+                        </ul>
+                        <?php
+                        session_start();
+                        if (isset($_COOKIE['logado'])) {
+                            echo '<ul class="navbar-nav d-md-block d-none ms-3">
                     <li class="nav-item dropdown">
                         <a href="#" id="profile" class="nav-link text-white d-flex align-items-center nav-link dropdown-toggle" data-bs-toggle="dropdown">
                             <i class="bi bi-person-circle fs-2 me-2"></i>
@@ -60,8 +66,8 @@ include("./php/functions.php");
                         </div>
                     </li>
                 </ul>';
-                } else{
-                    echo '<ul class="navbar-nav d-md-block d-none ms-3">
+                        } else {
+                            echo '<ul class="navbar-nav d-md-block d-none ms-3">
                     <li class="nav-item">
                         <a href="register.php" id="profile" class="nav-link text-white d-flex align-items-center nav-link">
                             <i class="bi bi-person-circle fs-2 me-2"></i>
@@ -69,10 +75,12 @@ include("./php/functions.php");
                         </a>
                     </li>
                 </ul>';
-                }
-                ?>
+                        }
+                        ?>
+                    </div>
+                </nav>
             </div>
-        </nav>
+        </div>
     </header>
 
     <!-- Slide-Show -->
@@ -158,10 +166,10 @@ include("./php/functions.php");
                 <div class="col-md-4 col-sm-12">
                     <h3 class="px-3 fs-3 my-4">
                         <?php
-                            $query = "SELECT * FROM users";
-                            $resultados = mysqli_query($db,$query);
+                        $query = "SELECT * FROM users";
+                        $resultados = mysqli_query($db, $query);
 
-                            echo "Tenha contato com outros <span class='numeros'>".mysqli_num_rows($resultados)."</span> usuarios";
+                        echo "Tenha contato com outros <span class='numeros'>" . mysqli_num_rows($resultados) . "</span> usuarios";
                         ?>
                     </h3>
                 </div>
@@ -184,7 +192,9 @@ include("./php/functions.php");
                     informativo sobre práticas saudáveis, dicas nutricionais, sugestões de exercícios e muito mais.
                     Invista em sua saúde e bem-estar, e experimente os benefícios transformadores da saúde e nutrição em
                     sua jornada para uma vida mais vibrante e plena!</p>
-                <a href="#" class="btn btn-success w-100 ms-md-4">Descubra agora!</a>
+                <?php
+                echo (verificarLogado()) ? '<a href="#" class="btn btn-success w-100 ms-md-4">Descubra agora!</a>' : '<a href="register.php" class="btn btn-success w-100 ms-md-4">Descubra agora!</a>';
+                ?>
             </div>
         </div>
         <div class="py-5 row mt-5 d-flex align-items-center justify-content-center">
@@ -197,7 +207,9 @@ include("./php/functions.php");
                     alcançar novos patamares em sua performance esportiva. Amplie seu entendimento sobre a ciência por
                     trás da atividade física e potencialize seus resultados, levando sua prática esportiva a um novo
                     nível!</p>
-                <a href="#" class="btn btn-azul btn-primary" style="width: 97%;">Explore o mundo do conhecimento!</a>
+                <?php
+                echo (verificarLogado()) ? '<a href="#" class="btn btn-azul btn-primary" style="width: 97%;">Explore o mundo do conhecimento!</a>' : '<a href="register.php" class="btn btn-azul btn-primary" style="width: 97%;">Explore o mundo do conhecimento!</a>';
+                ?>
             </div>
             <div class="col-12 col-md-6 d-flex align-items-center justify-content-center">
                 <img src="./images/section-images/Section-Image-2.png" alt="Imagem" class="img-fluid img-section">
@@ -214,7 +226,9 @@ include("./php/functions.php");
                     de monitoramento inteligente. Registre, analise e otimize seu progresso para transformar sua rotina
                     de exercícios em uma jornada gratificante de bem-estar. Descubra como nosso acompanhamento pode
                     impulsionar seu estilo de vida ativo e saudável!!</p>
-                <a href="#" class="btn btn-success btn-roxo ms-md-4 w-100">Experimente Agora!</a>
+                <?php
+                echo (verificarLogado()) ? '<a href="#" class="btn btn-success btn-roxo ms-md-4 w-100">Experimente Agora!</a>' : '<a href="register.php" class="btn btn-success btn-roxo ms-md-4 w-100">Experimente Agora!</a>';
+                ?>
             </div>
         </div>
     </div>
@@ -250,7 +264,7 @@ include("./php/functions.php");
             </div>
             <div class="row mt-4">
                 <div class="col-12">
-                    <p>&copy; <span id="data">{data}</span> {Nome}. Todos os direitos reservados.</p>
+                    <p>&copy; <span id="data">{data}</span> OlympiaWorkout. Todos os direitos reservados.</p>
                 </div>
             </div>
         </div>

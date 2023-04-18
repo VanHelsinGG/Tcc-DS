@@ -1,33 +1,23 @@
 .header {
     background-color: var(--laranja-principal);
     color: rgb(255, 254, 254);
-    width: 100%;
-    position: sticky;
-    top: 0;
-    z-index: 999;
-    height: 60px;
 }
 
 #diagonal-bars-header {
-    width: 90px;
-    height: 100%;
+    max-width: 100%;
+    height: 90px;
     overflow: hidden;
 }
 
-.navbar {
-    float: right;
-    height: 100%;
-    margin-right: 15vw;
-}
-
-.image-switcher, .carousel-inner {
+.image-switcher,
+.carousel-inner {
     background-color: rgb(0, 0, 0);
     height: 600px;
     width: 100%;
     overflow-x: hidden;
 }
 
-#title{
+#title {
     font-family: var(--texto-titulo-principal) !important;
     text-align: right;
     width: 100%;
@@ -44,7 +34,7 @@
     -webkit-user-drag: none;
 }
 
-.carousel-item{
+.carousel-item {
     height: 100%;
     object-fit: cover;
 }
@@ -89,62 +79,41 @@
     height: 12px;
 }
 
-.navbar-collapse {
-    display: flex;
-    width: 100%;
-}
-
-.navbar-collapse.show .navbar-nav {
-    background-color: var(--laranja-principal);
-    width: 100%;
-    text-align: center;
-}
-
-.navbar-nav li a {
-    -webkit-transition: -webkit-transform 0.1s ease-in-out;
-    transition: transform 0.1s ease-in-out;
-    font-family: var(--texto-secundario);
-}
-
-.title-div {
-    background-color: white;
-    color: var(--escuro-principal);
-}
-
-.numero{
+.numero {
     background-color: var(--azul-complementar);
     color: white;
     font-family: var(--texto-secundario);
 }
 
-.numeros{
-    color:#ff9f1a;
+.numeros {
+    color: #ff9f1a;
 }
 
-h4{
+h4 {
     font-family: var(--texto-terciario);
 }
 
-#imagem-comecar{
+#imagem-comecar {
     padding-bottom: 50px;
 }
 
-.img-section{
+.img-section {
     width: 70%;
     height: 70%;
 }
 
-.dropdown-item-hover:hover{
-    color:black !important;
+.dropdown-item-hover:hover {
+    color: black !important;
 }
 
-.dropdown-item-deslogar:hover{
+.dropdown-item-deslogar:hover {
     background-color: #dc3545 !important;
 }
 
-.dropdown-menu{
-    margin-top:-0.18rem !important;
+.dropdown-menu {
+    margin-top: -0.18rem !important;
 }
+
 
 @media (max-width: 700px) {
 
@@ -207,11 +176,11 @@ h4{
         display: none !important;
     }
 
-    .carousel-inner{
+    .carousel-inner {
         height: 100% !important;
     }
 
-    .img-section{
+    .img-section {
         display: none;
     }
 
