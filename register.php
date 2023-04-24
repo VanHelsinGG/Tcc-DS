@@ -41,7 +41,7 @@ include("./php/functions.php");
             </div>
             <!-- Formulario -->
             <div class="col-md-6 col-12 d-flex align-items-center justify-content-center text-white">
-                <form action=".register_action.php" method="post">
+                <form action="./register_action.php" method="post">
                     <!-- Aparece o box de erro caso já existir conta no mesmo email - ERRO DE RETORNO -->
                     <?php
                     $emailDuplicado = isset($_GET['emailerror']) ? $_GET['emailerror'] : null; // Caso email error tiver setado = 1 caso não = null

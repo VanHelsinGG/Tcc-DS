@@ -1,5 +1,6 @@
 :root {
     --escuro-principal: #131211;
+    --escuro-secundario: #363330;
     --laranja-principal: #ff9f1a;
     --laranja-secundario: #ca7f16;
     --laranja-terciario: #985f0f;
@@ -43,6 +44,10 @@ img{
     border-color: var(--azul-complementar) !important;
 }
 
+.bg-escuro-secundario{
+    background-color: var(--escuro-secundario) !important;
+}
+
 .btn-roxo{
     background-color: var(--roxo) !important;
     border-color: var(--roxo) !important;
@@ -53,4 +58,44 @@ img{
 
 .laranja{
     color: rgba(152, 95, 15, 1);
+}
+
+.bg-laranja{
+    background-color: var(--laranja-principal);
+}
+
+#title {
+    font-family: var(--texto-titulo-principal) !important;
+    text-align: right;
+    width: 100%;
+    letter-spacing: 1px;
+    color: var(--laranja-secundario);
+}
+
+.header {
+    background-color: var(--laranja-principal);
+    color: rgb(255, 254, 254);
+}
+
+#diagonal-bars-header {
+    max-width: 100%;
+    height: 90px;
+    overflow: hidden;
+}
+
+.carousel-indicators li {
+    width: 10px;
+    height: 10px;
+    color: rgba(0, 0, 0, 0);
+    border-radius: 50%;
+    margin: 0 10px;
+    background-color: rgba(255, 255, 255, 0.5);
+    border: none;
+    transition: all 0.25s ease-in-out;
+}
+
+.carousel-indicators li.active {
+    background-color: #fff;
+    width: 12px;
+    height: 12px;
 }
