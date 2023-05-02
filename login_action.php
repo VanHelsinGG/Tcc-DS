@@ -38,27 +38,20 @@
                 $redirectUrl = urlencode("index.php");
                 header("Location: $redirectUrl");
                 exit();
-            } else {
-                // Se não...
-            
-                // Retorna a tela de login com o atributo usererror=1, para exibir o box de erro
-                $referer = strtok($_SERVER['HTTP_REFERER'], '?');
-                $redirectUrl = urlencode($referer . '?usererror=1');
-                header("Location: $redirectUrl");
-                exit();
             }
-        } else {
-            // Se não existir cadastro no email, retorna erro
-            $referer = strtok($_SERVER['HTTP_REFERER'], '?');
-            $redirectUrl = urlencode($referer . '?usererror=1');
-            header("Location: $redirectUrl");
-            exit();
         }
-    } else {
-        // Se não...
-        $referer = strtok($_SERVER['HTTP_REFERER'], '?');
-        $redirectUrl = urlencode($referer . '?usererror=1');
-        header("Location: $redirectUrl");
-        exit();
     }
-?>
+    $url_parts = parse_url($_SERVER['HTTP_REFERER']); // Analisa a URL atual
+    $query = isset($url_parts['query']) ? $url_parts['query'] : ''; // Obtém a query string da URL, se existir
+    $params = array(); // Inicializa um array para armazenar os parâmetros da query string
+    parse_str($query, $params); // Separa os parâmetros da query string em um array associativo
+
+    if (!isset($params['usererror'])) { // Verifica se o parâmetro usererror ainda não está presente
+        $params['usererror'] = 1; // Adiciona o parâmetro usererror com valor 1
+    }
+
+    $new_query = http_build_query($params); // Reconstroi a query string com os parâmetros atualizados
+    $new_url = $url_parts['scheme'] . '://' . $url_parts['host'] . $url_parts['path'] . '?' . $new_query; // Reconstroi a URL completa com a query string atualizada
+
+    header("Location: $new_url"); // Redireciona o usuário de volta para a página de login com o parâmetro usererror atualizado
+    exit();

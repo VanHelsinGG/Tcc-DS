@@ -11,6 +11,14 @@ input {
     background-color: #131211 !important;
 }
 
+.toggleSenha {
+    border: none !important;
+    border-radius: 0 !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.4) !important;
+    outline: none !important;
+    color: white !important;
+}
+
 ::placeholder {
     color: rgba(255, 255, 255, 0.5) !important;
 }
@@ -19,9 +27,6 @@ input:focus {
     box-shadow: none !important;
 }
 
-.btn {
-    border-radius: 0;
-}
 
 #circulo {
     background-color: #ca7f16;

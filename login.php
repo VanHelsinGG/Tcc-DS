@@ -28,6 +28,11 @@ include("./php/functions.php");
         <div class="row h-100">
             <div class="col-md-6 col-12 d-flex align-items-center justify-content-center text-white">
                 <form action="login_action.php" method="post">
+                    <div class="row">
+                        <div class="col-12">
+                            <h1 class="display-4 text-center">Conectar-se</h1>
+                        </div>
+                    </div>
                     <?php
                     $emailDuplicado = isset($_GET['usererror']) ? $_GET['usererror'] : null; // Caso email error tiver setado = 1 caso não = null
                     if ($emailDuplicado) {
@@ -44,7 +49,7 @@ include("./php/functions.php");
                         <div class="col-12">
                             <div class="form-group">
                                 <label for="email" class="form-label">EMAIL</label>
-                                <input type="text" class="form-control" id="email" name="email" placeholder="Digite seu email" required maxlength="50">
+                                <input type="text" class="form-control" id="email" name="email" autocomplete="off" placeholder="Digite seu email" required maxlength="50">
                             </div>
                         </div>
                     </div>
@@ -52,15 +57,20 @@ include("./php/functions.php");
                         <div class="col-12">
                             <div class="form-group">
                                 <label for="senha" class="form-label">SENHA</label>
-                                <input type="password" class="form-control" id="senha" name="senha" placeholder="Digite sua senha" required maxlength="12" minlength="4">
+                                <div class="input-group">
+                                    <input type="password" class="form-control" id="senha" name="senha" autocomplete="off" placeholder="Digite sua senha" required maxlength="12" minlength="4">
+                                    <button class="btn toggleSenha" style="border:none; border-radius:0; border-bottom: 1px solid rgba(255, 255, 255, 0.4); color:rgba(255, 255, 255, 0.5);" type="button" id="toggleSenha" onclick="mudarVisibilidadeSenha('senha');">
+                                        <i class="bi bi-eye"></i>
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col">
                             <?php
-                                if(verificarLogado()){
-                                    echo '<div class="row py-3">
+                            if (verificarLogado()) {
+                                echo '<div class="row py-3">
                                         <div class="col-12">
                                             <div class="alert alert-danger mb-0">
                                                 Você já está logado!
@@ -79,18 +89,20 @@ include("./php/functions.php");
                                         }
                                     </style>
                                     ';
-                                }
-                                else{
-                                    echo '<button class="btn text-light mt-5" style="background-color: #005cb2;border:none;" id="continuar">CONECTAR-SE</button>';
-                                }
+                            } else {
+                                echo '<button class="btn text-light mt-5 btn-lg w-100" style="background-color: #005cb2;border:none;border-radius:20px;" id="continuar">Conectar-se</button>';
+                            }
                             ?>
                         </div>
                     </div>
                 </form>
             </div>
-            <div class="col-12 col-md-6 bg-white d-flex text-center align-items-center justify-content-center text-white position-relative titulo" style="background-color: #ff9f1a !important;">
-                <div class="col-6">
-                    <h1>Conectar-se</h1>
+            <div class="col-12 col-md-6 d-flex text-center align-items-center justify-content-center text-white position-relative titulo" style="background: #ff9f1a url('data:image/svg+xml,%3Csvg width=&quot;6&quot; height=&quot;6&quot; viewBox=&quot;0 0 6 6&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;%3E%3Cg fill=&quot;%23ca7f16&quot; fill-opacity=&quot;1&quot; fill-rule=&quot;evenodd&quot;%3E%3Cpath d=&quot;M5 0h1L0 6V5zM6 5v1H5z&quot;/&gt;%3C/g%3E%3C/svg%3E');">
+                <a href="index.php" class="btn text-white"><i class="bi bi-x display-4" style="position:absolute; right:0; top:0;"></i></a>
+                <div class="col-7">
+                    <h2 class="font-weight-bold fs-1">Quer se tornar membro?</h2>
+                    <p class="text-white text-opacity-75">Inscreva-se agora mesmo e aproveite todos os benefícios exclusivos!</p>
+                    <a href="register.php" class="btn btn-outline-light w-100 btn-lg" style="border-radius:20px;">Inscrever-se</a>
                 </div>
                 <div class="col-6 d-lg-flex d-none position-absolute top-50 end-0 p-2 rounded-circle justify-content-center align-items-center" id="circulo">
                     <a href="register.php" class="btn">

@@ -26,7 +26,7 @@ include("./php/functions.php");
 
 <body style="background-color: #ca7f16;">
     <!-- Header / NavBar -->
-    <header class="header container-fluid sticky-top" id="header">
+    <header class="header container-fluid" id="header">
         <div class="row h-100 d-flex">
             <div class="col-6 bg-white d-flex justify-content-center h-100 align-items-center">
                 <div class="col-6">
@@ -51,7 +51,6 @@ include("./php/functions.php");
                             </li>
                         </ul>
                         <?php
-                        session_start();
                         if (isset($_COOKIE['logado'])) {
                             echo '<ul class="navbar-nav d-md-block d-none ms-3">
                     <li class="nav-item dropdown">
