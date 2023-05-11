@@ -14,6 +14,11 @@ class functions
     {
         return time() + ($tempo * 24 * 60 * 60);
     }
+
+    public function verificarLogado()
+    {
+        return ((isset($_COOKIE['logado']) && $_COOKIE['logado'])) ? true : false;
+    }
 }
 
 
@@ -92,22 +97,25 @@ class userSessionToken extends functions
 
     public function validToken($token)
     {
+        // Token completo
+        $token_parts = explode(":", $token);
+        if (!count($token_parts) === 3) {
+            return 0;
+        }
+
+        // Token expirado
         $expiration = $this->getTokenExpiration($token);
 
         if (time()  > $expiration) {
             return 0;
-        } else {
-            return 1;
         }
+
+        return 1;
     }
 }
 
 class user
 {
-    public function verificarLogado()
-    {
-        return ((isset($_COOKIE['logado']) && $_COOKIE['logado'])) ? true : false;
-    }
     public function getUserID_byName($nome)
     {
         include("connector.php");
@@ -140,6 +148,42 @@ class user
         if (mysqli_num_rows($resultados) > 0) {
             $row = mysqli_fetch_assoc($resultados);
             return $row["nome"];
+        }
+        return -1;
+    }
+
+    public function getUserName_byToken($token)
+    {
+        include("connector.php");
+
+        $query = "SELECT * FROM users WHERE token = ?";
+        $stmt = mysqli_prepare($db, $query);
+        mysqli_stmt_bind_param($stmt, "s", $token);
+        mysqli_stmt_execute($stmt);
+
+        $resultados = mysqli_stmt_get_result($stmt);
+
+        if (mysqli_num_rows($resultados) > 0) {
+            $row = mysqli_fetch_assoc($resultados);
+            return $row["nome"];
+        }
+        return -1;
+    }
+
+    public function getUserToken_byName($nome)
+    {
+        include("connector.php");
+
+        $query = "SELECT * FROM users WHERE nome = ?";
+        $stmt = mysqli_prepare($db, $query);
+        mysqli_stmt_bind_param($stmt, "s", $nome);
+        mysqli_stmt_execute($stmt);
+
+        $resultados = mysqli_stmt_get_result($stmt);
+
+        if (mysqli_num_rows($resultados) > 0) {
+            $row = mysqli_fetch_assoc($resultados);
+            return $row["token"];
         }
         return -1;
     }

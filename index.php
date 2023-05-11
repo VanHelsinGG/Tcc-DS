@@ -1,3 +1,38 @@
+<?php
+include("./php/connector.php");
+include("./php/functions.php");
+
+$erro = 0;
+
+if ($func->verificarLogado()) {
+
+    $cookieToken = $_COOKIE["logado"];
+
+    if ($nome = $user->getUserName_byToken($cookieToken)) {
+
+        $user_token = $user->getUserToken_byName($nome);
+        if ($user_token == -1) {
+            $erro = 1;
+        }
+
+        if (!strcmp($user_token, $cookieToken)) {
+            if ($userToken->validToken($user_token)) {
+                $GLOBALS['userNome'] = $nome;
+            } else {
+                $erro = 1;
+            }
+        } else {
+            $erro = 1;
+        }
+    }
+
+    if ($erro) {
+        $redirect = urlencode("deslogar.php");
+        header("Location: $redirect");
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -20,50 +55,6 @@
 </head>
 
 <body style="background-color: #ca7f16;">
-    <?php
-    include("./php/connector.php");
-    include("./php/functions.php");
-
-    // if (verificarLogado()) {
-    //     $token = $_COOKIE["logado"];
-    //     $token_parts = explode(":", $token);
-
-    //     if (!(count($token_parts) === 3)) {
-    //         $erro = 1;
-    //         return 1;
-    //     }
-
-    //     if (!validToken($token)) {
-    //         $erro = 1;
-    //         return 1;
-    //     }
-
-    //     $query = "SELECT * FROM users WHERE token = ?";
-    //     $stmt = mysqli_prepare($db, $query);
-    //     mysqli_stmt_bind_param($stmt, "s", $token);
-    //     mysqli_stmt_execute($stmt);
-
-    //     $resultado = mysqli_stmt_get_result($stmt);
-
-    //     // Verifica se existe cadastro no email
-    //     if (mysqli_num_rows($resultado) > 0) {
-    //         $rows = mysqli_fetch_assoc($resultado);
-    //         $nome = $rows["nome"];
-    //     } else {
-    //         $erro = 1;
-    //     }
-    // } else {
-    //     $erro = 1;
-    // }
-
-    // if ($erro) {
-    //     echo '<div class="alert alert-primary alert-dismissible fade show" role="alert" style="position: fixed; right: 0; z-index:9999; bottom: 0; width: 150px; height: 150px;">
-    //     Sua sessão foi expirada, conecte-se novamente!
-    //     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    //     </div>';
-    // }
-
-    ?>
     <!-- Header / NavBar -->
     <header class="header container-fluid" id="header">
         <div class="row h-100 d-flex">
@@ -90,12 +81,12 @@
                             </li>
                         </ul>
                         <?php
-                        if (isset($_COOKIE['logado'])) {
+                        if (isset($GLOBALS["userNome"])) {
                             echo '<ul class="navbar-nav d-md-block d-none ms-3">
                     <li class="nav-item dropdown">
                         <a href="#" id="profile" class="nav-link text-white d-flex align-items-center nav-link dropdown-toggle" data-bs-toggle="dropdown">
                             <i class="bi bi-person-circle fs-2 me-2"></i>
-                            ' . $nome . '
+                            ' . $GLOBALS["userNome"] . '
                         </a>
                         <div class="dropdown-menu p-0" id="dropdown-menu" style="width:200px;background-color:var(--azul-complementar);">
                             <a class="dropdown-item dropdown-item-hover text-light py-2" href="#"><i class="bi bi-person-circle me-2"></i>Perfil</a>
@@ -231,7 +222,7 @@
                     Invista em sua saúde e bem-estar, e experimente os benefícios transformadores da saúde e nutrição em
                     sua jornada para uma vida mais vibrante e plena!</p>
                 <?php
-                echo ($user->verificarLogado()) ? '<a href="#" class="btn btn-success w-100 ms-md-4">Descubra agora!</a>' : '<a href="register.php" class="btn btn-success w-100 ms-md-4">Descubra agora!</a>';
+                echo ($func->verificarLogado()) ? '<a href="#" class="btn btn-success w-100 ms-md-4">Descubra agora!</a>' : '<a href="register.php" class="btn btn-success w-100 ms-md-4">Descubra agora!</a>';
                 ?>
             </div>
         </div>
@@ -246,7 +237,7 @@
                     trás da atividade física e potencialize seus resultados, levando sua prática esportiva a um novo
                     nível!</p>
                 <?php
-                echo ($user->verificarLogado()) ? '<a href="#" class="btn btn-azul btn-primary" style="width: 97%;">Explore o mundo do conhecimento!</a>' : '<a href="register.php" class="btn btn-azul btn-primary" style="width: 97%;">Explore o mundo do conhecimento!</a>';
+                echo ($func->verificarLogado()) ? '<a href="#" class="btn btn-azul btn-primary" style="width: 97%;">Explore o mundo do conhecimento!</a>' : '<a href="register.php" class="btn btn-azul btn-primary" style="width: 97%;">Explore o mundo do conhecimento!</a>';
                 ?>
             </div>
             <div class="col-12 col-md-6 d-flex align-items-center justify-content-center">
@@ -265,7 +256,7 @@
                     de exercícios em uma jornada gratificante de bem-estar. Descubra como nosso acompanhamento pode
                     impulsionar seu estilo de vida ativo e saudável!!</p>
                 <?php
-                echo ($user->verificarLogado()) ? '<a href="#" class="btn btn-success btn-roxo ms-md-4 w-100">Experimente Agora!</a>' : '<a href="register.php" class="btn btn-success btn-roxo ms-md-4 w-100">Experimente Agora!</a>';
+                echo ($func->verificarLogado()) ? '<a href="#" class="btn btn-success btn-roxo ms-md-4 w-100">Experimente Agora!</a>' : '<a href="register.php" class="btn btn-success btn-roxo ms-md-4 w-100">Experimente Agora!</a>';
                 ?>
             </div>
         </div>
