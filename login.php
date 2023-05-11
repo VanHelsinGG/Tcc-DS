@@ -39,7 +39,7 @@ include("./php/functions.php");
                         echo '<div class="row py-3">
                                     <div class="col-12">
                                         <div class="alert alert-danger mb-0">
-                                            Usuário ou senha inválidos.
+                                            Usuário ou senha inválidos. <a href="">Esqueceu a senha?</a>
                                         </div>
                                     </div>
                                 </div>';

@@ -1,8 +1,3 @@
-<?php
-include("./php/connector.php");
-include("./php/functions.php");
-?>
-
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -25,6 +20,50 @@ include("./php/functions.php");
 </head>
 
 <body style="background-color: #ca7f16;">
+    <?php
+    include("./php/connector.php");
+    include("./php/functions.php");
+
+    if (verificarLogado()) {
+        $token = $_COOKIE["logado"];
+        $token_parts = explode(":", $token);
+
+        if (!(count($token_parts) === 3)) {
+            $erro = 1;
+            return 1;
+        }
+
+        if (!validToken($token)) {
+            $erro = 1;
+            return 1;
+        }
+
+        $query = "SELECT * FROM users WHERE token = ?";
+        $stmt = mysqli_prepare($db, $query);
+        mysqli_stmt_bind_param($stmt, "s", $token);
+        mysqli_stmt_execute($stmt);
+
+        $resultado = mysqli_stmt_get_result($stmt);
+
+        // Verifica se existe cadastro no email
+        if (mysqli_num_rows($resultado) > 0) {
+            $rows = mysqli_fetch_assoc($resultado);
+            $nome = $rows["nome"];
+        } else {
+            $erro = 1;
+        }
+    } else {
+        $erro = 1;
+    }
+
+    if ($erro) {
+        echo '<div class="alert alert-primary alert-dismissible fade show" role="alert" style="position: fixed; right: 0; z-index:9999; bottom: 0; width: 150px; height: 150px;">
+        Sua sessão foi expirada, conecte-se novamente!
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>';
+    }
+
+    ?>
     <!-- Header / NavBar -->
     <header class="header container-fluid" id="header">
         <div class="row h-100 d-flex">
@@ -56,7 +95,7 @@ include("./php/functions.php");
                     <li class="nav-item dropdown">
                         <a href="#" id="profile" class="nav-link text-white d-flex align-items-center nav-link dropdown-toggle" data-bs-toggle="dropdown">
                             <i class="bi bi-person-circle fs-2 me-2"></i>
-                            ' . $_COOKIE['logado'] . '
+                            ' . $nome . '
                         </a>
                         <div class="dropdown-menu p-0" id="dropdown-menu" style="width:200px;background-color:var(--azul-complementar);">
                             <a class="dropdown-item dropdown-item-hover text-light py-2" href="#"><i class="bi bi-person-circle me-2"></i>Perfil</a>

@@ -1,6 +1,7 @@
 <?php
 // Inclui a conexão com o banco
 include("./php/connector.php");
+include("./php/functions.php");
 
 // Pega os valores do formulário
 $nome = ucwords($_POST['nome']); // ucwords() = transforma a primeira letra de cada palavra em maiúscula
@@ -23,6 +24,13 @@ switch ($sexo) {
         $sexo = "I";
         break;
 }
+
+// Pegar o proximo ID
+
+$query = "SELECT MAX(userid) AS id_max FROM users";
+$resultados = mysqli_query($db, $query);
+$value = mysqli_fetch_assoc($resultados);
+$id = ($value['id_max'] == 0) ? 0 : $value['id_max'];
 
 // Verifica se já existe uma conta criada com o mesmo email
 $query = "SELECT * FROM users WHERE email = ?";

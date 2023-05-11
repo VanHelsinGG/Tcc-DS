@@ -29,10 +29,16 @@
 
             // Verifica se as senhas forem iguais
             if ($hashedSenha === $rows['senha']) {
-                // Se sim...
                 $nome = $rows['nome'];
 
-                setarCookie("logado", $nome, 7); // Define o cookie de logado para verdadeiro
+                $token = generateRandomToken();
+
+                setarCookie("logado", $token, 1); // Define o cookie de logado para verdadeiro
+
+                $query = "UPDATE users SET token = ? WHERE userid = ?";
+                $stmt = mysqli_prepare($db, $query);
+                mysqli_stmt_bind_param($stmt, "ss", $token,$rows['userid']);
+                mysqli_stmt_execute($stmt);
 
                 // Retorna ao index
                 $redirectUrl = urlencode("index.php");

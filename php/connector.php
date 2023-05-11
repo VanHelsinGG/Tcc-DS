@@ -7,7 +7,7 @@ $user = "root";
 $password = "";
 $database = "db_olympiaworkout";
 
-// Conecção
+// Conexão
 $db = mysqli_connect($hostname, $user, $password, $database);
 
 // Tratamento de erros
