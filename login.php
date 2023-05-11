@@ -69,7 +69,7 @@ include("./php/functions.php");
                     <div class="row">
                         <div class="col">
                             <?php
-                            if (verificarLogado()) {
+                            if ($user->verificarLogado()) {
                                 echo '<div class="row py-3">
                                         <div class="col-12">
                                             <div class="alert alert-danger mb-0">

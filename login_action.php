@@ -31,13 +31,15 @@
             if ($hashedSenha === $rows['senha']) {
                 $nome = $rows['nome'];
 
-                $token = generateRandomToken();
+                $userToken->generateRandomToken();
 
-                setarCookie("logado", $token, 1); // Define o cookie de logado para verdadeiro
+                $func->setarCookie("logado", $token, 1); // Define o cookie de logado para verdadeiro
+
+                $token_hash = $userToken->getTokenHash($token);
 
                 $query = "UPDATE users SET token = ? WHERE userid = ?";
                 $stmt = mysqli_prepare($db, $query);
-                mysqli_stmt_bind_param($stmt, "ss", $token,$rows['userid']);
+                mysqli_stmt_bind_param($stmt, "ss", $token_hash,$rows['userid']);
                 mysqli_stmt_execute($stmt);
 
                 // Retorna ao index

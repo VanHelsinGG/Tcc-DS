@@ -24,44 +24,44 @@
     include("./php/connector.php");
     include("./php/functions.php");
 
-    if (verificarLogado()) {
-        $token = $_COOKIE["logado"];
-        $token_parts = explode(":", $token);
+    // if (verificarLogado()) {
+    //     $token = $_COOKIE["logado"];
+    //     $token_parts = explode(":", $token);
 
-        if (!(count($token_parts) === 3)) {
-            $erro = 1;
-            return 1;
-        }
+    //     if (!(count($token_parts) === 3)) {
+    //         $erro = 1;
+    //         return 1;
+    //     }
 
-        if (!validToken($token)) {
-            $erro = 1;
-            return 1;
-        }
+    //     if (!validToken($token)) {
+    //         $erro = 1;
+    //         return 1;
+    //     }
 
-        $query = "SELECT * FROM users WHERE token = ?";
-        $stmt = mysqli_prepare($db, $query);
-        mysqli_stmt_bind_param($stmt, "s", $token);
-        mysqli_stmt_execute($stmt);
+    //     $query = "SELECT * FROM users WHERE token = ?";
+    //     $stmt = mysqli_prepare($db, $query);
+    //     mysqli_stmt_bind_param($stmt, "s", $token);
+    //     mysqli_stmt_execute($stmt);
 
-        $resultado = mysqli_stmt_get_result($stmt);
+    //     $resultado = mysqli_stmt_get_result($stmt);
 
-        // Verifica se existe cadastro no email
-        if (mysqli_num_rows($resultado) > 0) {
-            $rows = mysqli_fetch_assoc($resultado);
-            $nome = $rows["nome"];
-        } else {
-            $erro = 1;
-        }
-    } else {
-        $erro = 1;
-    }
+    //     // Verifica se existe cadastro no email
+    //     if (mysqli_num_rows($resultado) > 0) {
+    //         $rows = mysqli_fetch_assoc($resultado);
+    //         $nome = $rows["nome"];
+    //     } else {
+    //         $erro = 1;
+    //     }
+    // } else {
+    //     $erro = 1;
+    // }
 
-    if ($erro) {
-        echo '<div class="alert alert-primary alert-dismissible fade show" role="alert" style="position: fixed; right: 0; z-index:9999; bottom: 0; width: 150px; height: 150px;">
-        Sua sessão foi expirada, conecte-se novamente!
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>';
-    }
+    // if ($erro) {
+    //     echo '<div class="alert alert-primary alert-dismissible fade show" role="alert" style="position: fixed; right: 0; z-index:9999; bottom: 0; width: 150px; height: 150px;">
+    //     Sua sessão foi expirada, conecte-se novamente!
+    //     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    //     </div>';
+    // }
 
     ?>
     <!-- Header / NavBar -->
@@ -231,7 +231,7 @@
                     Invista em sua saúde e bem-estar, e experimente os benefícios transformadores da saúde e nutrição em
                     sua jornada para uma vida mais vibrante e plena!</p>
                 <?php
-                echo (verificarLogado()) ? '<a href="#" class="btn btn-success w-100 ms-md-4">Descubra agora!</a>' : '<a href="register.php" class="btn btn-success w-100 ms-md-4">Descubra agora!</a>';
+                echo ($user->verificarLogado()) ? '<a href="#" class="btn btn-success w-100 ms-md-4">Descubra agora!</a>' : '<a href="register.php" class="btn btn-success w-100 ms-md-4">Descubra agora!</a>';
                 ?>
             </div>
         </div>
@@ -246,7 +246,7 @@
                     trás da atividade física e potencialize seus resultados, levando sua prática esportiva a um novo
                     nível!</p>
                 <?php
-                echo (verificarLogado()) ? '<a href="#" class="btn btn-azul btn-primary" style="width: 97%;">Explore o mundo do conhecimento!</a>' : '<a href="register.php" class="btn btn-azul btn-primary" style="width: 97%;">Explore o mundo do conhecimento!</a>';
+                echo ($user->verificarLogado()) ? '<a href="#" class="btn btn-azul btn-primary" style="width: 97%;">Explore o mundo do conhecimento!</a>' : '<a href="register.php" class="btn btn-azul btn-primary" style="width: 97%;">Explore o mundo do conhecimento!</a>';
                 ?>
             </div>
             <div class="col-12 col-md-6 d-flex align-items-center justify-content-center">
@@ -265,7 +265,7 @@
                     de exercícios em uma jornada gratificante de bem-estar. Descubra como nosso acompanhamento pode
                     impulsionar seu estilo de vida ativo e saudável!!</p>
                 <?php
-                echo (verificarLogado()) ? '<a href="#" class="btn btn-success btn-roxo ms-md-4 w-100">Experimente Agora!</a>' : '<a href="register.php" class="btn btn-success btn-roxo ms-md-4 w-100">Experimente Agora!</a>';
+                echo ($user->verificarLogado()) ? '<a href="#" class="btn btn-success btn-roxo ms-md-4 w-100">Experimente Agora!</a>' : '<a href="register.php" class="btn btn-success btn-roxo ms-md-4 w-100">Experimente Agora!</a>';
                 ?>
             </div>
         </div>
