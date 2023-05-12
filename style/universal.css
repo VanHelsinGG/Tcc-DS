@@ -44,6 +44,13 @@ img{
     border-color: var(--azul-complementar) !important;
 }
 
+.btn-laranja{
+    background-color: var(--laranja-principal) !important;
+    border-color: var(--laranja-principal) !important;
+    color: white !important;
+}
+
+
 .bg-escuro-secundario{
     background-color: var(--escuro-secundario) !important;
 }
@@ -55,6 +62,10 @@ img{
 
 .escuro {
     background-color: #131211;
+}
+
+.bg-escuro-principal{
+    background-color: var(--escuro-principal) !important;
 }
 
 .laranja{

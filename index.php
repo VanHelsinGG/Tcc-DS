@@ -147,7 +147,7 @@ if ($func->verificarLogado()) {
                     <img class="switcher-images" src="./images/carousel-images/Carousel-Item-7.jpeg" alt="Fourth slide">
                 </div>
             </div>
-            <button class="botao carousel-control-prev hidden-sm" id="botaobug" href="" role="button" data-slide="prev" onclick="atualizarSwitcher(2);" style="background: linear-gradient(to right, rgb(0, 0, 1), rgba(0,0,0,0));">
+            <button class="botao carousel-control-prev hidden-sm" href="" role="button" data-slide="prev" onclick="atualizarSwitcher(2);" style="background: linear-gradient(to right, rgb(0, 0, 1), rgba(0,0,0,0));">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
             </button>
             <button class="botao carousel-control-next hidden-sm" href="" role="button" data-slide="next" onclick="atualizarSwitcher(1);" style="background: linear-gradient(to left, rgba(0,0,0,1), rgba(0,0,0,0));">

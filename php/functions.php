@@ -1,20 +1,36 @@
 <?php
 
+include("connector.php");
 // Cria um cookie
 
-class functions
+class Functions
 {
+    /**
+     * Define um cookie HTTPs.
+     * @param string $nome Nome do cookie.
+     * @param mixed $valor Conteúdo do cookie.
+     * @param int $tempo Define a vida util do cookie (em dias).
+     * @return void
+     */
     public function setarCookie($nome, $valor, $tempo)
     {
         setcookie($nome, $valor, $this->converterTempoDias($tempo), "/", $_SERVER['HTTP_HOST'], true, true);
     }
 
-    // Converte o tempo inserido para dias. $tempo = 1 == 1 dia.
+    /**
+     * Converte o tempo atual, adicionando $tempo a ele.
+     * @param mixed $tempo Número de dias a serem adicionados
+     * @return int
+     */
     public function converterTempoDias($tempo)
     {
         return time() + ($tempo * 24 * 60 * 60);
     }
 
+    /**
+     * Verifica se o usuario está com uma sessão ativa através da existencia do Cookie "logado".
+     * @return bool
+     */
     public function verificarLogado()
     {
         return ((isset($_COOKIE['logado']) && $_COOKIE['logado'])) ? true : false;
@@ -22,77 +38,61 @@ class functions
 }
 
 
-class userSessionToken extends functions
+class UserSessionToken extends Functions
 {
+    private const SECRET_KEY = "schadenfreude";
+    private $ip_address, $salt, $expiry_time;
+    
+    function __construct()
+    {
+        $this->ip_address = $_SERVER['REMOTE_ADDR'];
+        $this->salt = bin2hex(random_bytes(16));
+        $this->expiry_time = self::converterTempoDias(1);
+    }
+
+    /**
+     * Gera um token aleatorio, com salt aleatorio, no padrão "hash:salt:expiration".
+     * @return string
+     */
     public function generateRandomToken()
     {
-        include("connector.php");
-        // Gerar um salt aleatório de 32 bytes
-        $salt = bin2hex(random_bytes(16));
-
-        // Definir a chave secreta
-        $secret_key = 'schadenfreude';
-
-        // Obter o endereço IP do usuário
-        $ip_address = $_SERVER['REMOTE_ADDR'];
-
-        // Definir o tempo de expiração em 30 minutos
-        $expiry_time = functions::converterTempoDias(1);
-
         // Concatenar o salt, endereço IP e tempo de expiração
-        $token_data = $salt . $ip_address;
+        $token_data = $this->salt . $this->ip_address;
 
         // Gerar o hash usando SHA-256
-        $token = hash('sha256', $secret_key . $token_data);
+        $token = hash('sha256', self::SECRET_KEY . $token_data);
 
         // Adicionar o salt e o tempo de expiração ao token
-        $token .= ':' . $salt . ':' . $expiry_time;
+        $token .= ':' . $this->salt . ':' . $this->expiry_time;
 
         return $token;
     }
 
+    /**
+     * Gera um token aleatorio, com um salt pré-definido, no padrão "hash:salt:expiration". Com isso, é possivel refazer um token gerado previamente.
+     * @param string $salt salt utilizado para gerar o token.
+     * @return string
+     */
     public function generateTokenWithSalt($salt)
     {
-        // Definir a chave secreta
-        $secret_key = 'schadenfreude';
-
-        // Obter o endereço IP do usuário
-        $ip_address = $_SERVER['REMOTE_ADDR'];
-
-        // Definir o tempo de expiração em 30 minutos
-        $expiry_time = functions::converterTempoDias(1);
-
         // Concatenar o salt, endereço IP e tempo de expiração
-        $token_data = $salt . $ip_address;
+        $token_data = $salt . $this->ip_address;
 
         // Gerar o hash usando SHA-256
-        $token = hash('sha256', $secret_key . $token_data);
+        $token = hash('sha256', self::SECRET_KEY . $token_data);
 
         // Adicionar o salt e o tempo de expiração ao token
-        $token .= ':' . $salt . ':' . $expiry_time;
+        $token .= ':' . $salt . ':' . $this->expiry_time;
 
         // Retornar o token
         return $token;
     }
 
-    public function getTokenSalt($token)
+    // Continua daqui
+    public function getTokenPart($token, $part_index)
     {
-        $token_partes = explode(":", $token);
-        return $token_partes[1];
-    }
-
-    public function getTokenExpiration($token)
-    {
-        $token_partes = explode(":", $token);
-        $expiration = $token_partes[2];
-        return $expiration;
-    }
-
-    public function getTokenHash($token)
-    {
-        $token_partes = explode(":", $token);
-        $hash = $token_partes[0];
-        return $hash;
+        $token_parts = explode(":", $token);
+        return $token_parts[$part_index];
     }
 
     public function validToken($token)
@@ -104,7 +104,7 @@ class userSessionToken extends functions
         }
 
         // Token expirado
-        $expiration = $this->getTokenExpiration($token);
+        $expiration = $this->getTokenPart($token, 2);
 
         if (time()  > $expiration) {
             return 0;
@@ -114,81 +114,56 @@ class userSessionToken extends functions
     }
 }
 
-class user
+class User
 {
+    private $db;
+
+    public function __construct($db)
+    {
+        $this->db = $db;
+    }
+
     public function getUserID_byName($nome)
     {
-        include("connector.php");
-
-        $query = "SELECT * FROM users WHERE nome = ?";
-        $stmt = mysqli_prepare($db, $query);
-        mysqli_stmt_bind_param($stmt, "s", $nome);
-        mysqli_stmt_execute($stmt);
-
-        $resultados = mysqli_stmt_get_result($stmt);
-
-        if (mysqli_num_rows($resultados) > 0) {
-            $row = mysqli_fetch_assoc($resultados);
-            return $row["userid"];
-        }
-        return -1;
+        $stmt = $this->db->prepare("SELECT userid FROM users WHERE nome = ?");
+        $stmt->bind_param("s", $nome);
+        $stmt->execute();
+        $resultados = $stmt->get_result();
+        $row = $resultados->fetch_assoc();
+        return $row ? $row["userid"] : null;
     }
 
     public function getUserName_byID($id)
     {
-        include("connector.php");
-
-        $query = "SELECT * FROM users WHERE userid = ?";
-        $stmt = mysqli_prepare($db, $query);
-        mysqli_stmt_bind_param($stmt, "s", $id);
-        mysqli_stmt_execute($stmt);
-
-        $resultados = mysqli_stmt_get_result($stmt);
-
-        if (mysqli_num_rows($resultados) > 0) {
-            $row = mysqli_fetch_assoc($resultados);
-            return $row["nome"];
-        }
-        return -1;
+        $stmt = $this->db->prepare("SELECT nome FROM users WHERE userid = ?");
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $resultados = $stmt->get_result();
+        $row = $resultados->fetch_assoc();
+        return $row ? $row["nome"] : null;
     }
 
     public function getUserName_byToken($token)
     {
-        include("connector.php");
-
-        $query = "SELECT * FROM users WHERE token = ?";
-        $stmt = mysqli_prepare($db, $query);
-        mysqli_stmt_bind_param($stmt, "s", $token);
-        mysqli_stmt_execute($stmt);
-
-        $resultados = mysqli_stmt_get_result($stmt);
-
-        if (mysqli_num_rows($resultados) > 0) {
-            $row = mysqli_fetch_assoc($resultados);
-            return $row["nome"];
-        }
-        return -1;
+        $stmt = $this->db->prepare("SELECT nome FROM users WHERE token = ?");
+        $stmt->bind_param("s", $token);
+        $stmt->execute();
+        $resultados = $stmt->get_result();
+        $row = $resultados->fetch_assoc();
+        return $row ? $row["nome"] : null;
     }
 
     public function getUserToken_byName($nome)
     {
-        include("connector.php");
-
-        $query = "SELECT * FROM users WHERE nome = ?";
-        $stmt = mysqli_prepare($db, $query);
-        mysqli_stmt_bind_param($stmt, "s", $nome);
-        mysqli_stmt_execute($stmt);
-
-        $resultados = mysqli_stmt_get_result($stmt);
-
-        if (mysqli_num_rows($resultados) > 0) {
-            $row = mysqli_fetch_assoc($resultados);
-            return $row["token"];
-        }
-        return -1;
+        $stmt = $this->db->prepare("SELECT token FROM users WHERE nome = ?");
+        $stmt->bind_param("s", $nome);
+        $stmt->execute();
+        $resultados = $stmt->get_result();
+        $row = $resultados->fetch_assoc();
+        return $row ? $row["token"] : null;
     }
 }
 
-$userToken = new userSessionToken();
-$user = new user();
-$func = new functions();
+$userToken = new UserSessionToken();
+$user = new User($db);
+$func = new Functions();
