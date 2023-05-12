@@ -14,7 +14,7 @@ class Functions
      */
     public function setarCookie($nome, $valor, $tempo)
     {
-        setcookie($nome, $valor, $this->converterTempoDias($tempo), "/", $_SERVER['HTTP_HOST'], true, true);
+        setcookie($nome, $valor, $this->converterTempoDias($tempo), "/", $_SERVER['HTTP_HOST'], false, false);
     }
 
     /**
@@ -88,13 +88,23 @@ class UserSessionToken extends Functions
         return $token;
     }
 
-    // Continua daqui
+    /**
+     * Retorna uma parte do token.
+     * @param string $token Token.
+     * @param int $part_index Parte desejada.
+     * @return string 
+     */
     public function getTokenPart($token, $part_index)
     {
         $token_parts = explode(":", $token);
         return $token_parts[$part_index];
     }
 
+    /**
+     * Verifica a validade do token.
+     * @param string $token Token.
+     * @return int
+     */
     public function validToken($token)
     {
         // Token completo
@@ -123,6 +133,11 @@ class User
         $this->db = $db;
     }
 
+    /**
+     * Retorna o ID do usuário através do nome.
+     * @param string $nome Nome.
+     * @return mixed
+     */
     public function getUserID_byName($nome)
     {
         $stmt = $this->db->prepare("SELECT userid FROM users WHERE nome = ?");
@@ -132,7 +147,21 @@ class User
         $row = $resultados->fetch_assoc();
         return $row ? $row["userid"] : null;
     }
+    public function getUserID_byToken($token)
+    {
+        $stmt = $this->db->prepare("SELECT userid FROM users WHERE token = ?");
+        $stmt->bind_param("s", $token);
+        $stmt->execute();
+        $resultados = $stmt->get_result();
+        $row = $resultados->fetch_assoc();
+        return $row ? $row["token"] : null;
+    }
 
+    /**
+     * Retorna o nome do usuário através do ID.
+     * @param int $id ID.
+     * @return mixed.
+     */
     public function getUserName_byID($id)
     {
         $stmt = $this->db->prepare("SELECT nome FROM users WHERE userid = ?");
@@ -143,6 +172,11 @@ class User
         return $row ? $row["nome"] : null;
     }
 
+    /**
+     * Retorna o nome do usuário através do token.
+     * @param string $token Token.
+     * @return mixed
+     */
     public function getUserName_byToken($token)
     {
         $stmt = $this->db->prepare("SELECT nome FROM users WHERE token = ?");
@@ -153,6 +187,11 @@ class User
         return $row ? $row["nome"] : null;
     }
 
+    /**
+     * Retorna o token através do nome do usuário.
+     * @param string $nome
+     * @return mixed
+     */
     public function getUserToken_byName($nome)
     {
         $stmt = $this->db->prepare("SELECT token FROM users WHERE nome = ?");
@@ -161,6 +200,20 @@ class User
         $resultados = $stmt->get_result();
         $row = $resultados->fetch_assoc();
         return $row ? $row["token"] : null;
+    }
+
+    /**
+     * Retorna o objetivo através do nome do usuário.
+     * @param string $nome
+     * @return mixed
+     */
+    public function getUserObjective_byID($id){
+        $stmt = $this->db->prepare("SELECT objetivo FROM users WHERE userid = ?");
+        $stmt->bind_param("s", $id);
+        $stmt->execute();
+        $resultados = $stmt->get_result();
+        $row = $resultados->fetch_assoc();
+        return $row ? $row["objetivo"] : null;
     }
 }
 

@@ -7,6 +7,7 @@ $erro = 0;
 if ($func->verificarLogado()) {
 
     $cookieToken = $_COOKIE["logado"];
+    echo $cookieToken;
 
     if ($nome = $user->getUserName_byToken($cookieToken)) {
 

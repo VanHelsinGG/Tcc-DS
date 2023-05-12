@@ -34,12 +34,20 @@
                 $token = $userToken->generateRandomToken();
 
                 $func->setarCookie("logado", $token, 1); // Define o cookie de logado para verdadeiro
+                echo "<script>alert('setado')</script>";
 
                 $query = "UPDATE users SET token = ? WHERE userid = ?";
                 $stmt = mysqli_prepare($db, $query);
                 mysqli_stmt_bind_param($stmt, "ss", $token,$rows['userid']);
                 mysqli_stmt_execute($stmt);
 
+                if($user->getUserObjective_byID($rows['userid']) === -1){
+                    echo $user->getUserObjective_byID($rows['userid']);
+                    
+                    $redirectUrl = urlencode("objetivo.php");
+                    header("Location: $redirectUrl");
+                    exit();
+                }
                 // Retorna ao index
                 $redirectUrl = urlencode("index.php");
                 header("Location: $redirectUrl");
