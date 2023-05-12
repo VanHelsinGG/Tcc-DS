@@ -84,14 +84,14 @@
 
     if (!isset($_GET['objetivo'])) {
         echo '<div class="sumir bg-escuro-principal p-5 alert show">
-            <div class="row">
+            <div class="row mb-4" style="border-bottom:2px dashed #ff9f1a;">
                 <div class="col">
-                    <h3 class="text-center fs-1 mb-4">Aprimore sua experiência!</h1>
+                    <h3 class="text-center fs-1">Aprimore sua experiência!</h1>
                 </div>
             </div>
             <div class="row">
                 <div class="col text-center">
-                    <p class="fs-5">Após o cadastro, escolha seu objetivo e deixe que nós o guiemos rumo ao sucesso.</p>
+                    <p class="fs-5">Seu cadastro foi um sucesso e agora você pode aproveitar ao máximo nossos recursos personalizados. Escolha seu objetivo e deixe que nossa equipe especializada o guie rumo à conquista de suas metas. Vamos juntos alcançar o sucesso!</p>
                 </div>
             </div>
             <div class="row">
@@ -108,19 +108,14 @@
 
         echo '<meta http-equiv="refresh" content="5; url=index.php">';
         echo '<div class="sumir bg-escuro-principal p-5 alert show">
-        <div class="row">
+        <div class="row mb-4" style="border-bottom:2px dashed #ff9f1a;">
             <div class="col">
-                <h3 class="text-center fs-1 mb-4">Certo!</h1>
+                <h3 class="text-center fs-1">Estamos quase lá!</h1>
             </div>
         </div>
         <div class="row">
             <div class="col text-center">
-                <p class="fs-5">Você realizou sua escolha!</p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col text-center mt-3">
-                <button class="btn btn-laranja w-100" data-bs-dismiss="alert" aria-label="Close">Continuar</a>
+                <p class="fs-5">Em breve você estará na página principal e terá acesso a todo o nosso conteúdo incrível. Preparado para explorar o melhor que temos a oferecer? Vamos lá!</p>
             </div>
         </div>
     </div>';

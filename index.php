@@ -4,6 +4,10 @@ include("./php/functions.php");
 
 $erro = 0;
 
+if(isset($_COOKIE["logado"])){
+    echo "certo";
+}
+
 if ($func->verificarLogado()) {
 
     $cookieToken = $_COOKIE["logado"];

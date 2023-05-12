@@ -6,6 +6,16 @@ include("connector.php");
 class Functions
 {
     /**
+     * Converte o tempo atual, adicionando $tempo a ele.
+     * @param mixed $tempo Número de dias a serem adicionados
+     * @return int
+     */
+    public function converterTempoDias($tempo)
+    {
+        return time() + ($tempo * 24 * 60 * 60);
+    }
+
+    /**
      * Define um cookie HTTPs.
      * @param string $nome Nome do cookie.
      * @param mixed $valor Conteúdo do cookie.
@@ -15,16 +25,6 @@ class Functions
     public function setarCookie($nome, $valor, $tempo)
     {
         setcookie($nome, $valor, $this->converterTempoDias($tempo), "/", $_SERVER['HTTP_HOST'], false, false);
-    }
-
-    /**
-     * Converte o tempo atual, adicionando $tempo a ele.
-     * @param mixed $tempo Número de dias a serem adicionados
-     * @return int
-     */
-    public function converterTempoDias($tempo)
-    {
-        return time() + ($tempo * 24 * 60 * 60);
     }
 
     /**
@@ -42,7 +42,7 @@ class UserSessionToken extends Functions
 {
     private const SECRET_KEY = "schadenfreude";
     private $ip_address, $salt, $expiry_time;
-    
+
     function __construct()
     {
         $this->ip_address = $_SERVER['REMOTE_ADDR'];
@@ -207,7 +207,8 @@ class User
      * @param string $nome
      * @return mixed
      */
-    public function getUserObjective_byID($id){
+    public function getUserObjective_byID($id)
+    {
         $stmt = $this->db->prepare("SELECT objetivo FROM users WHERE userid = ?");
         $stmt->bind_param("s", $id);
         $stmt->execute();

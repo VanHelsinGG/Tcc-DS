@@ -34,7 +34,6 @@
                 $token = $userToken->generateRandomToken();
 
                 $func->setarCookie("logado", $token, 1); // Define o cookie de logado para verdadeiro
-                echo "<script>alert('setado')</script>";
 
                 $query = "UPDATE users SET token = ? WHERE userid = ?";
                 $stmt = mysqli_prepare($db, $query);
