@@ -95,6 +95,11 @@ include("./php/functions.php");
                             ?>
                         </div>
                     </div>
+                    <?php
+                        if(isset($_GET['redirectpage'])){
+                            echo '<input type="hidden" value="'.$_GET['redirectpage'].'" name="redirectpage" id="redirectpage"/>';
+                        }
+                    ?>
                 </form>
             </div>
             <div class="col-12 col-md-6 d-flex text-center align-items-center justify-content-center text-white position-relative titulo" style="background: #ff9f1a url('data:image/svg+xml,%3Csvg width=&quot;6&quot; height=&quot;6&quot; viewBox=&quot;0 0 6 6&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;%3E%3Cg fill=&quot;%23ca7f16&quot; fill-opacity=&quot;1&quot; fill-rule=&quot;evenodd&quot;%3E%3Cpath d=&quot;M5 0h1L0 6V5zM6 5v1H5z&quot;/&gt;%3C/g%3E%3C/svg%3E');">

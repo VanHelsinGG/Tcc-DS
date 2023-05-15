@@ -6,6 +6,67 @@ include("connector.php");
 class Functions
 {
     /**
+     * Aparece um alerta personalizado.
+     * @param string $titulo Titulo do alerta.
+     * @param string $conteudo Conteudo do alerta.
+     * @param string $botaoConfirmar Conteúdo do botão de confirmação.
+     * @param string $botaoCancelar Conteúdo do botão de cancelar.
+     * @return null
+     */
+    public function showAlert($titulo, $conteudo, $botaoConfirmar = '', $botaoCancelar = '')
+    {
+        // Background inutilizavel
+        $modal = '<div class="modal-backdrop fade show" style="z-index: 9999;"></div>';
+        echo $modal;
+
+        // Alerta
+        $mensagem = '<div id="aviso" class="sumir bg-escuro-secundario p-5 alert show position-fixed" style="z-index: 10000;color: white;height: auto;width: auto;top: 50%;left: 50%;transform: translate(-50%, -50%);border-radius: 15px;">
+                <div class="row mb-4" style="border-bottom:2px dashed #ff9f1a;">
+                    <div class="col">
+                        <h3 class="text-center fs-1">' . $titulo . '</h1>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col text-center">
+                        <p class="fs-5">' . $conteudo . '</p>
+                    </div>
+                </div>';
+
+        if ($botaoConfirmar || $botaoCancelar) {
+            $mensagem .= '<div class="row">
+                        <div class="col text-center mt-3">';
+
+            if ($botaoConfirmar) {
+                $mensagem .= '<button class="btn btn-laranja w-100" data-bs-dismiss="modal" aria-label="Close">' . $botaoConfirmar . '</button>';
+            }
+
+            if ($botaoCancelar) {
+                $mensagem .= '<button class="btn btn-danger w-100" data-bs-dismiss="modal" aria-label="Close">' . $botaoCancelar . '</button>';
+            }
+
+            $mensagem .= '</div>
+                </div>';
+        }
+
+        $mensagem .= '</div>';
+        echo $mensagem;
+
+        // Adicione o código JavaScript para fechar o modal e o aviso quando o botão for clicado
+        echo '<script>
+        const modal = document.querySelector(".modal-backdrop");
+        const aviso = document.querySelector("#aviso");
+
+        document.querySelectorAll("[data-bs-dismiss=\'modal\']").forEach((button) => {
+            button.addEventListener("click", () => {
+                modal.remove();
+                aviso.remove();
+            });
+        });
+      </script>';
+    }
+
+
+    /**
      * Converte o tempo atual, adicionando $tempo a ele.
      * @param mixed $tempo Número de dias a serem adicionados
      * @return int
@@ -34,6 +95,12 @@ class Functions
     public function verificarLogado()
     {
         return ((isset($_COOKIE['logado']) && $_COOKIE['logado'])) ? true : false;
+    }
+
+    public function redirect_withParams($paramKey, $paramValue, $destinationUrl) {
+        $new_url = $destinationUrl . '?' . $paramKey . '=' . $paramValue;
+        header("Location: $new_url");
+        exit();
     }
 }
 
@@ -147,6 +214,12 @@ class User
         $row = $resultados->fetch_assoc();
         return $row ? $row["userid"] : null;
     }
+
+    /**
+     * Retorna o ID do usuário através do token.
+     * @param string $token Token.
+     * @return mixed
+     */
     public function getUserID_byToken($token)
     {
         $stmt = $this->db->prepare("SELECT userid FROM users WHERE token = ?");
@@ -154,7 +227,7 @@ class User
         $stmt->execute();
         $resultados = $stmt->get_result();
         $row = $resultados->fetch_assoc();
-        return $row ? $row["token"] : null;
+        return $row ? $row["userid"] : null;
     }
 
     /**
@@ -215,6 +288,25 @@ class User
         $resultados = $stmt->get_result();
         $row = $resultados->fetch_assoc();
         return $row ? $row["objetivo"] : null;
+    }
+
+    /**
+     * Retorna o token através do ID do usuário.
+     * @param string $id ID.
+     * @return mixed
+     */
+    public function getUserToken_byID($id)
+    {
+        $stmt = $this->db->prepare("SELECT token FROM users WHERE userid = ?");
+        $stmt->bind_param("s", $id);
+        $stmt->execute();
+        $resultados = $stmt->get_result();
+        $row = $resultados->fetch_assoc();
+        return $row ? $row["token"] : null;
+    }
+
+    public function userAuthenticated(){
+        return isset($_COOKIE['autenticado']) ? 1 : 0;
     }
 }
 

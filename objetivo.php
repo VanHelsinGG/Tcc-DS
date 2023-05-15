@@ -53,18 +53,6 @@
             background-color: black;
         }
 
-        .alert {
-            position: absolute;
-            z-index: 999;
-            color: white;
-            height: auto;
-            width: auto;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            border-radius: 15px;
-        }
-
         .alert.show+.container-fluid .background {
             pointer-events: none;
             opacity: 0.1;
@@ -79,48 +67,6 @@
 </head>
 
 <body>
-    <?php
-    include("./php/connector.php");
-
-    if (!isset($_GET['objetivo'])) {
-        echo '<div class="sumir bg-escuro-principal p-5 alert show">
-            <div class="row mb-4" style="border-bottom:2px dashed #ff9f1a;">
-                <div class="col">
-                    <h3 class="text-center fs-1">Aprimore sua experiência!</h1>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col text-center">
-                    <p class="fs-5">Seu cadastro foi um sucesso e agora você pode aproveitar ao máximo nossos recursos personalizados. Escolha seu objetivo e deixe que nossa equipe especializada o guie rumo à conquista de suas metas. Vamos juntos alcançar o sucesso!</p>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col text-center mt-3">
-                    <button class="btn btn-laranja w-100" data-bs-dismiss="alert" aria-label="Close">Continuar</a>
-                </div>
-            </div>
-        </div>';
-    } else {
-        $query = "UPDATE users SET objetivo = ? WHERE token = ?";
-        $stmt = mysqli_prepare($db, $query);
-        mysqli_stmt_bind_param($stmt, "ss", $_GET['objetivo'], $_COOKIE['logado']);
-        mysqli_stmt_execute($stmt);
-
-        echo '<meta http-equiv="refresh" content="5; url=index.php">';
-        echo '<div class="sumir bg-escuro-principal p-5 alert show">
-        <div class="row mb-4" style="border-bottom:2px dashed #ff9f1a;">
-            <div class="col">
-                <h3 class="text-center fs-1">Estamos quase lá!</h1>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col text-center">
-                <p class="fs-5">Em breve você estará na página principal e terá acesso a todo o nosso conteúdo incrível. Preparado para explorar o melhor que temos a oferecer? Vamos lá!</p>
-            </div>
-        </div>
-    </div>';
-    }
-    ?>
     <div class="container-fluid">
         <div class="row">
             <div class="col-4 background hipertrofia d-flex justify-content-center align-items-center">
@@ -140,5 +86,26 @@
     </form>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
 </body>
+<?php
+include("./php/connector.php");
+include("./php/functions.php");
+
+// if(!$user->userAuthenticated()){
+//     $func->redirect_withParams("redirectpage","objetivo.php","./login.php");
+//     return 0;
+// }
+
+if(!isset($_GET['objetivo'])){
+    $func->showAlert("Aprimore sua experiência!","Seu cadastro foi um sucesso e agora você pode aproveitar ao máximo nossos recursos personalizados. Escolha seu objetivo e deixe que nossa equipe especializada o guie rumo à conquista de suas metas. Vamos juntos alcançar o sucesso!","Continuar");
+}else {
+    $query = "UPDATE users SET objetivo = ? WHERE token = ?";
+    $stmt = mysqli_prepare($db, $query);
+    mysqli_stmt_bind_param($stmt, "ss", $_GET['objetivo'], $_COOKIE['logado']);
+    mysqli_stmt_execute($stmt);
+
+    $func->showAlert("Estamos quase lá!","Em breve você estará na página principal e terá acesso a todo o nosso conteúdo incrível. Preparado para explorar o melhor que temos a oferecer? Vamos lá!");
+    echo '<meta http-equiv="refresh" content="5; url=index.php">';
+}
+?>
 
 </html>

@@ -2,38 +2,41 @@
 include("./php/connector.php");
 include("./php/functions.php");
 
-$erro = 0;
-
-if(isset($_COOKIE["logado"])){
-    echo "certo";
-}
+$GLOBALS['erro'] = 0;
 
 if ($func->verificarLogado()) {
 
     $cookieToken = $_COOKIE["logado"];
-    echo $cookieToken;
 
-    if ($nome = $user->getUserName_byToken($cookieToken)) {
+    if ($id = $user->getUserID_byToken($cookieToken)) {
 
-        $user_token = $user->getUserToken_byName($nome);
+        $user_token = $user->getUserToken_byID($id);
         if ($user_token == -1) {
-            $erro = 1;
+            $GLOBALS['erro'];
         }
 
         if (!strcmp($user_token, $cookieToken)) {
             if ($userToken->validToken($user_token)) {
-                $GLOBALS['userNome'] = $nome;
+                $GLOBALS['userNome'] = $user->getUserName_byToken($user_token);
+
+                $func->setarCookie("autenticado", 1, 1);
+
+                // Verifica se já escolheu o objetivo
+                if ($user->getUserObjective_byID($id) === -1) {
+                    echo $user->getUserObjective_byID($id);
+
+                    $redirectUrl = urlencode("objetivo.php");
+                    header("Location: $redirectUrl");
+                    exit();
+                }
             } else {
-                $erro = 1;
+                $GLOBALS['erro'] = 1;
             }
         } else {
-            $erro = 1;
+            $GLOBALS['erro'] = 1;
         }
-    }
-
-    if ($erro) {
-        $redirect = urlencode("deslogar.php");
-        header("Location: $redirect");
+    } else {
+        $GLOBALS['erro'] = 1;
     }
 }
 ?>
@@ -49,6 +52,7 @@ if ($func->verificarLogado()) {
     <!-- <script src="./javascript/scroll.js" defer></script> -->
     <script src="./javascript/switcher.js" defer></script>
     <script src="./javascript/main.js" defer></script>
+    <script src="./javascript/index.js" defer></script>
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600&display=swap" rel="stylesheet">
@@ -322,3 +326,10 @@ if ($func->verificarLogado()) {
 </body>
 
 </html>
+
+<?php
+if ($GLOBALS['erro']) {
+    $func->setarCookie("autenticado", 0, 0);
+    $func->showAlert("Sessão expirada!", "Sua sessão foi encerrada. Para acessar sua conta, por favor faça login novamente.", "Continuar", "");
+}
+?>
