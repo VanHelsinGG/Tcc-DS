@@ -1,0 +1,32 @@
+.db {
+    background-image: url("https://s2.glbimg.com/LpqJmTucEZeVc1LYjCG6V89Appc=/607x429/smart/e.glbimg.com/og/ed/f/original/2022/03/18/gettyimages-982409358.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.dieta {
+    background-image: url("https://vitacheckup.com.br/wp-content/uploads/2019/07/alimenta%C3%A7%C3%A3o_900x600.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.relatorios {
+    background-image: url("https://blog.phonetrack.com.br/wp-content/uploads/2018/11/relat%C3%B3rio-de-marketing-digital-blog.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.action {
+    height: 500px;
+}
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+li:hover, .active{
+    background-color: #363330;
+    color: white !important;
+}
