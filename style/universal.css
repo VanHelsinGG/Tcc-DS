@@ -1,6 +1,7 @@
 :root {
     --escuro-principal: #131211;
     --escuro-secundario: #363330;
+    --escuro-terciario:#2e2d2d;
     --laranja-principal: #ff9f1a;
     --laranja-secundario: #ca7f16;
     --laranja-terciario: #985f0f;
@@ -70,6 +71,10 @@ img {
 
 .laranja {
     color: rgba(152, 95, 15, 1);
+}
+
+.bg-azul{
+    background-color: var(--azul-complementar);
 }
 
 .bg-laranja {
