@@ -1,0 +1,96 @@
+                <!-- <div class="container-fluid">
+                    <div class="row text-white bg-laranja p-2">
+                        <h3>Confira nossos principais serviços</h3>
+                    </div>
+                    <div class="row action text-white">
+                        <div class="col-4 db d-flex align-items-end actions">
+                            <h4>Database</h4>
+                        </div>
+                        <div class="col-4 dieta d-flex align-items-end actions">
+                            <h4>Database</h4>
+                        </div>
+                        <div class="col-4 relatorios d-flex align-items-end actions">
+                            <h4>Database</h4>
+                        </div>
+                    </div>
+                </div> -->
+
+                <!-- <div class="container-fluid mt-5 p-4 bg-dark-emphasis">
+                    <div class="row">
+                        <div class="col-4">
+                            <h3 class="text-secondary"><i class="bi bi-arrow-right me-2"></i>Top Diario</h3>
+                            <table class="table-dark table-striped table text-center">
+                                <tr>
+                                    <th>{posição}</th>
+                                    <th>{nome}</th>
+                                    <th>{tempo diario}</th>
+                                </tr>
+                                <tr>
+                                    <th>1</th>
+                                    <td>Victor</td>
+                                    <td>10 minutos</td>
+                                </tr>
+                                <tr>
+                                    <th>2</th>
+                                    <td>Kauê</td>
+                                    <td>12 minutos</td>
+                                </tr>
+                                <tr>
+                                    <th>...</th>
+                                    <td>...</td>
+                                    <td>...</td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="col-4">
+                            <h3 class="text-secondary"><i class="bi bi-arrow-right me-2"></i>Top Semanal</h3>
+                            <table class="table-dark table-striped table text-center">
+                                <tr>
+                                    <th>{posição}</th>
+                                    <th>{nome}</th>
+                                    <th>{tempo diario}</th>
+                                </tr>
+                                <tr>
+                                    <th>1</th>
+                                    <td>Victor</td>
+                                    <td>10 minutos</td>
+                                </tr>
+                                <tr>
+                                    <th>2</th>
+                                    <td>Kauê</td>
+                                    <td>12 minutos</td>
+                                </tr>
+                                <tr>
+                                    <th>...</th>
+                                    <td>...</td>
+                                    <td>...</td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="col-4">
+                            <h3 class="text-secondary"><i class="bi bi-arrow-right me-2"></i>Top Mensal</h3>
+                            <table class="table-dark table-striped table text-center">
+                                <tr>
+                                    <th>{posição}</th>
+                                    <th>{nome}</th>
+                                    <th>{tempo diario}</th>
+                                </tr>
+                                <tr>
+                                    <th>1</th>
+                                    <td>Victor</td>
+                                    <td>10 minutos</td>
+                                </tr>
+                                <tr>
+                                    <th>2</th>
+                                    <td>Kauê</td>
+                                    <td>12 minutos</td>
+                                </tr>
+                                <tr>
+                                    <th>...</th>
+                                    <td>...</td>
+                                    <td>...</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div> -->

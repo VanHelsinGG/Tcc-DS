@@ -1,7 +1,7 @@
 :root {
     --escuro-principal: #131211;
     --escuro-secundario: #363330;
-    --escuro-terciario:#2e2d2d;
+    --escuro-terciario:#d3d3d3;
     --laranja-principal: #ff9f1a;
     --laranja-secundario: #ca7f16;
     --laranja-terciario: #985f0f;
@@ -54,6 +54,10 @@ img {
 
 .bg-escuro-secundario {
     background-color: var(--escuro-secundario) !important;
+}
+
+.bg-escuro-terciario{
+    background-color: var(--escuro-terciario) !important;
 }
 
 .btn-roxo {
