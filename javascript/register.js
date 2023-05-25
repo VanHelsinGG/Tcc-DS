@@ -1,30 +1,32 @@
+let allGood = [0,0];
+
+const botao = document.getElementById("continuar");
+
+setInterval(liberarBotao, 1000);
+
 // Verifica se as senhas são compatíveis
 function checkCampos() {
     const senha2Element = document.getElementById("senha2");
     if (senha2Element) {
         const senha = document.getElementById("senha").value;
         const confirmacaoSenha = senha2Element.value;
-        const botao = document.getElementById("continuar");
-        const aviso = document.getElementById("sumir-senha-certa");
-        const data = document.getElementById("data");
+        const avisoSenha = document.getElementById("sumir-senha-certa");
 
         if (senha !== confirmacaoSenha) {
             // Senhas diferentes
-            if (!botao.classList.contains("disabled")) {
-                botao.classList.add("disabled");
-                aviso.style.display = "block";
-            }
+
+            avisoSenha.style.display = "block";
+
             return false; // retorna falso
         } else {
             // Senhas iguais
-            aviso.style.display = "none";
+            avisoSenha.style.display = "none";
 
             // Seta a data para o protocolo POST
             data.value = formatDate(new Date());
 
-            // Ativa o botão
-            botao.classList.remove("disabled");
-            return true; // retorna verdadeiro
+            allGood[0] = 1;
+            return true;
         }
     }
     return true; // retorna verdadeiro caso não haja elemento com id "senha2"
@@ -47,6 +49,24 @@ document.getElementById('nome').addEventListener('input', function (event) {
     });
 });
 
+
+function validarEmail(email) {
+    var validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+
+    if (email.match(validRegex) || !email) {
+        allGood[1] = 1;
+        return 1;
+    } else {
+        return 0;
+    }
+}
+
+document.getElementById("email").addEventListener("focusout", (e) => {
+    const email = document.getElementById("email").value;
+    const avisoEmail = document.getElementById("sumir-email-certo");
+
+    avisoEmail.style.display = (validarEmail(email)) ? "none" : "block";
+});
 
 function getIPAddress(callback) {
     // Requisição para a API
@@ -84,4 +104,21 @@ function formatDate(date) {
             padTo2Digits(date.getSeconds()),
         ].join(':')
     );
+}
+
+function liberarBotao() {
+
+    let allGoodIndexes = true;
+    for (let i = 0; i < allGood.length; i++) {
+        if (allGood[i] !== 1) {
+            allGoodIndexes = false;
+            break;
+        }
+    }
+
+    if (allGoodIndexes) {
+        botao.classList.remove("disabled");
+    } else {
+        botao.classList.add("disabled");
+    }
 }

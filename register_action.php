@@ -5,7 +5,7 @@ include("./php/functions.php");
 
 // Pega os valores do formulário
 $nome = ucwords($_POST['nome']); // ucwords() = transforma a primeira letra de cada palavra em maiúscula
-$email = $_POST['email'];
+$email = strtolower($_POST['email']);
 $senha = $_POST['senha'];
 $sexo = $_POST['sexo'];
 $hashedSenha = hash('sha256', $senha);

@@ -9,7 +9,7 @@ if (isset($_POST['senha']) && isset($_POST['email'])) {
 
     // Retoma informações do formulario
     $senha = $_POST['senha'];
-    $email = $_POST['email'];
+    $email = strtolower($_POST['email']);
 
     // Criptografa a senha inserida, para compara-la com a do banco
     $hashedSenha = hash('sha256', $senha);

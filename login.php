@@ -59,7 +59,7 @@ include("./php/functions.php");
                                 <label for="senha" class="form-label">SENHA</label>
                                 <div class="input-group">
                                     <input type="password" class="form-control" id="senha" name="senha" autocomplete="off" placeholder="Digite sua senha" required maxlength="12" minlength="4">
-                                    <button class="btn toggleSenha" style="border:none; border-radius:0; border-bottom: 1px solid rgba(255, 255, 255, 0.4); color:rgba(255, 255, 255, 0.5);" type="button" id="toggleSenha" onclick="mudarVisibilidadeSenha('senha');">
+                                    <button class="btn toggleSenha" tabindex="-1" style="border:none; border-radius:0; border-bottom: 1px solid rgba(255, 255, 255, 0.4); color:rgba(255, 255, 255, 0.5);" type="button" id="toggleSenha" onclick="mudarVisibilidadeSenha('senha');">
                                         <i class="bi bi-eye"></i>
                                     </button>
                                 </div>

@@ -79,7 +79,7 @@ include("./php/functions.php");
                         </div>
                         <div class="col-4">
                             <p class="form-label">SEXO</p>
-                            <select id="sexo" name="sexo" class="form-control" style="box-shadow:none;background-color: #131211;border-radius: 0;border: 1px solid rgba(255, 255, 255, 0.4);outline: none;color: white;">
+                            <select id="sexo" name="sexo" tabindex="-1" class="form-control" style="box-shadow:none;background-color: #131211;border-radius: 0;border: 1px solid rgba(255, 255, 255, 0.4);outline: none;color: white;">
                                 <option value="Masculino">Masculino</option>
                                 <option value="Feminino">Feminino</option>
                                 <option value="Outro">Outro</option>
@@ -92,7 +92,7 @@ include("./php/functions.php");
                                 <label for="senha" class="form-label">SENHA</label>
                                 <div class="input-group">
                                     <input type="password" class="form-control" id="senha" name="senha" autocomplete="off" placeholder="Digite sua senha" required maxlength="12" minlength="4" oninput="checkCampos()">
-                                    <button class="btn toggleSenha" style="border:none; border-radius:0; border-bottom: 1px solid rgba(255, 255, 255, 0.4); margin-left:0.01rem; color:rgba(255, 255, 255, 0.5);" type="button" id="toggleSenha" onclick="mudarVisibilidadeSenha('senha');">
+                                    <button class="btn toggleSenha" tabindex="-1" style="border:none; border-radius:0; border-bottom: 1px solid rgba(255, 255, 255, 0.4); margin-left:0.01rem; color:rgba(255, 255, 255, 0.5);" type="button" id="toggleSenha" onclick="mudarVisibilidadeSenha('senha');">
                                         <i class="bi bi-eye"></i>
                                     </button>
                                 </div>
@@ -103,7 +103,7 @@ include("./php/functions.php");
                                 <label for="senha2" class="form-label">CONFIRME SUA SENHA</label>
                                 <div class="input-group">
                                     <input type="password" class="form-control" id="senha2" name="senha2" autocomplete="off" placeholder="Repita sua senha" required maxlength="12" minlength="4" oninput="checkCampos()">
-                                    <button class="btn toggleSenha" style="border:none; border-radius:0; border-bottom: 1px solid rgba(255, 255, 255, 0.4); margin-left:0.01rem; color:rgba(255, 255, 255, 0.5);" type="button" id="toggleSenha2" onclick="mudarVisibilidadeSenha('senha2');">
+                                    <button class="btn toggleSenha" tabindex="-1" style="border:none; border-radius:0; border-bottom: 1px solid rgba(255, 255, 255, 0.4); margin-left:0.01rem; color:rgba(255, 255, 255, 0.5);" type="button" id="toggleSenha2" onclick="mudarVisibilidadeSenha('senha2');">
                                         <i class="bi bi-eye"></i>
                                     </button>
                                 </div>
@@ -118,6 +118,11 @@ include("./php/functions.php");
                     <div class="row py-1" id="sumir-senha-certa" style="display: none;">
                         <div class="alert p-1 alert-danger mb-0 text-center">
                             As senhas inseridas não são iguais!
+                        </div>
+                    </div>
+                    <div class="row py-1" id="sumir-email-certo" style="display: none;">
+                        <div class="alert p-1 alert-danger mb-0 text-center">
+                            O email está em um formato inválido!
                         </div>
                     </div>
                     <div class="row">
