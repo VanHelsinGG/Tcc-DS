@@ -140,7 +140,7 @@ include("../main/lib/php/include.php");
                                         <div class="col-12">
                                             <div class="alert alert-danger mb-0">
                                                     Você já está logado!
-                                                    <a href="./actions/deslogar.php">Deslogar-se</a>
+                                                    <a href="./actions/deslogar.php?redirect=../login.php">Deslogar-se</a>
                                             </div>
                                         </div>
                                     </div>
@@ -179,6 +179,7 @@ include("../main/lib/php/include.php");
             </div>
         </div>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
 </body>
 
 </html>

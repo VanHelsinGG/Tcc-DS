@@ -10,6 +10,7 @@ $sexo = $_POST['sexo'];
 $hashedSenha = hash('sha256', $senha);
 $data = $_POST['data'];
 $ip = $_POST['ip'];
+$imagem = file_get_contents("User circle.png");
 
 // Correção do sexo
 switch ($sexo) {
@@ -56,9 +57,9 @@ if (mysqli_num_rows($resultados) > 0) {
     exit();
 } else {
     // Query preparada para evitar sql injection
-    $query = "INSERT INTO users(nome, email, senha, sexo, data_criacao, ip) VALUES (?, ?, ?, ?, ?, ?)";
+    $query = "INSERT INTO users(nome, email, senha, sexo, data_criacao, ip, imagem) VALUES (?, ?, ?, ?, ?, ?, ?)";
     $stmt = mysqli_prepare($db, $query);
-    mysqli_stmt_bind_param($stmt, "ssssss", $nome, $email, $hashedSenha, $sexo, $data, $ip);
+    mysqli_stmt_bind_param($stmt, "sssssss", $nome, $email, $hashedSenha, $sexo, $data, $ip, $imagem);
     mysqli_stmt_execute($stmt);
 
     header("Location: ../login.php");

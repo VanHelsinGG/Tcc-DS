@@ -39,15 +39,15 @@
         }
 
         .hipertrofia {
-            background-image: url("https://s2.glbimg.com/RGikXR-60XyINwunHAuXUWAa3qg=/e.glbimg.com/og/ed/f/original/2021/01/08/jonathan-borba-lrqptqs7nqq-unsplash.jpg");
+            background-image: url("https://p2.trrsf.com/image/fget/cf/1200/1600/middle/images.terra.com/2022/09/12/1204075820-atalhos-para-a-hipertrofia-1.jpg");
         }
 
         .manter-peso {
-            background-image: url("https://static.mundoeducacao.uol.com.br/mundoeducacao/2019/07/alimentacao.jpg");
+            background-image: url("https://img.freepik.com/fotos-gratis/flay-leigos-de-escala-e-pesos_23-2148262188.jpg?w=2000");
         }
 
         .emagrecimento {
-            background-image: url("https://conteudo.imguol.com.br/blogs/235/files/2018/03/iStock-140465120-1024x681.jpg");
+            background-image: url("../main/lib/images/Emagrecimento.jpg");
         }
 
         .container-fluid {
@@ -104,7 +104,7 @@ if (!isset($_GET['objetivo'])) {
     mysqli_stmt_execute($stmt);
 
     $func->showAlert("Estamos quase lá!", "Em breve você estará na página principal e terá acesso a todo o nosso conteúdo incrível. Preparado para explorar o melhor que temos a oferecer? Vamos lá!");
-    echo '<meta http-equiv="refresh" content="5; url=index.php">';
+    echo '<meta http-equiv="refresh" content="5; url=main.php">';
 }
 ?>
 

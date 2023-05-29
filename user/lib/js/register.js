@@ -11,6 +11,7 @@ function checkCampos() {
         const senha = document.getElementById("senha").value;
         const confirmacaoSenha = senha2Element.value;
         const avisoSenha = document.getElementById("sumir-senha-certa");
+        const data = document.getElementById("data");
 
         if (senha !== confirmacaoSenha) {
             // Senhas diferentes

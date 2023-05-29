@@ -13,7 +13,7 @@ class Functions
      * @param string $botaoCancelar Conteúdo do botão de cancelar.
      * @return null
      */
-    public function showAlert($titulo, $conteudo, $botaoConfirmar = '', $botaoCancelar = '')
+    public function showAlert($titulo, $conteudo, $botaoConfirmar = '', $botaoCancelar = '', $acaoConfirmar = "", $acaoCancelar = "")
     {
         // Background inutilizavel
         $modal = '<div class="modal-backdrop fade show" style="z-index: 9999;"></div>';
@@ -37,11 +37,19 @@ class Functions
                         <div class="col text-center mt-3">';
 
             if ($botaoConfirmar) {
-                $mensagem .= '<button class="btn btn-laranja w-100" data-bs-dismiss="modal" aria-label="Close">' . $botaoConfirmar . '</button>';
+                if ($acaoConfirmar) {
+                    $mensagem .= '<a href="#" onclick="window.location.href=\'' . $acaoConfirmar . '\'" class="btn btn-laranja w-100" data-bs-dismiss="modal" aria-label="Close">' . $botaoConfirmar . '</a>';
+                } else {
+                    $mensagem .= '<button class="btn btn-laranja w-100" data-bs-dismiss="modal" aria-label="Close">' . $botaoConfirmar . '</a>';
+                }
             }
 
             if ($botaoCancelar) {
-                $mensagem .= '<button class="btn btn-danger w-100" data-bs-dismiss="modal" aria-label="Close">' . $botaoCancelar . '</button>';
+                if ($acaoCancelar) {
+                    $mensagem .= '<a href="#" onclick="window.location.href=\'' . $acaoCancelar . '\'" class="btn btn-danger w-100" data-bs-dismiss="modal" aria-label="Close">' . $acaoCancelar . '</a>';
+                } else {
+                    $mensagem .= '<button class="btn btn-danger w-100" data-bs-dismiss="modal" aria-label="Close">' . $acaoCancelar . '</a>';
+                }
             }
 
             $mensagem .= '</div>
@@ -97,7 +105,8 @@ class Functions
         return ((isset($_COOKIE['logado']) && $_COOKIE['logado'])) ? true : false;
     }
 
-    public function redirect_withParams($paramKey, $paramValue, $destinationUrl) {
+    public function redirect_withParams($paramKey, $paramValue, $destinationUrl)
+    {
         $new_url = $destinationUrl . '?' . $paramKey . '=' . $paramValue;
         header("Location: $new_url");
         exit();
@@ -305,7 +314,8 @@ class User
         return $row ? $row["token"] : null;
     }
 
-    public function userAuthenticated(){
+    public function userAuthenticated()
+    {
         return isset($_COOKIE['autenticado']) ? 1 : 0;
     }
 }

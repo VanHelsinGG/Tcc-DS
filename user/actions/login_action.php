@@ -39,7 +39,7 @@ if (isset($_POST['senha']) && isset($_POST['email'])) {
             mysqli_stmt_execute($stmt);
 
             // Retorna ao index
-            header("Location: ../index.php");
+            header("Location: ../main.php");
             exit();
         }
     }
