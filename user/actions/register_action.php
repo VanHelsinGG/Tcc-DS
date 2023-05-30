@@ -10,7 +10,7 @@ $sexo = $_POST['sexo'];
 $hashedSenha = hash('sha256', $senha);
 $data = $_POST['data'];
 $ip = $_POST['ip'];
-$imagem = file_get_contents("User circle.png");
+$imagem = file_get_contents("../../main/lib/images/User circle.png");
 
 // Correção do sexo
 switch ($sexo) {

@@ -180,7 +180,7 @@ if ($func->verificarLogado()) {
             <!-- Histórico diário -->
             <div class="col-6">
                 <h3 class="fs-5">Histórico Diario</h3>
-                <a href="" class="btn btn-outline-success text-white d-flex">
+                <!-- <a href="" class="btn btn-outline-success text-white d-flex">
                     <div class="col-3 align-items-center justify-content-center">
                         <div class="row">
                             <span>{Nome do treino}</span>
@@ -200,28 +200,50 @@ if ($func->verificarLogado()) {
                             <span>Tempo: 01:30:52</span>
                         </div>
                     </div>
-                </a>
-                <a href="" class="btn btn-outline-success text-white d-flex my-2">
-                    <div class="col-3 align-items-center justify-content-center">
-                        <div class="row">
-                            <span>{Nome do treino}</span>
-                        </div>
-                        <div class="row">
-                            <span>{Professor}</span>
-                        </div>
-                    </div>
-                    <div class="col-1 align-items-center justify-content-center pt-1 fs-3">
-                        <i class="bi bi-caret-right text-center"></i>
-                    </div>
-                    <div class="col-8 align-items-center justify-content-center">
-                        <div class="row">
-                            <span>{Tipo do treino}</span>
-                        </div>
-                        <div class="row">
-                            <span>Tempo: 01:30:52</span>
-                        </div>
-                    </div>
-                </a>
+                </a> -->
+                <?php 
+                    if(isset($_COOKIE['logado'])){
+                        $userToken = $_COOKIE['logado'];
+                    }
+
+                    $query = "SELECT * FROM exercicios_diarios WHERE aluno = ?";
+
+                    $userID = $user->getUserID_byToken($userToken);
+
+                    $stmt = mysqli_prepare($db, $query);
+                    mysqli_stmt_bind_param($stmt, "s", $userID);
+                    mysqli_stmt_execute($stmt);
+
+                    $resultados = mysqli_stmt_get_result($stmt);
+
+                    if(mysqli_num_rows($resultados) > 0){
+                        while($row = mysqli_fetch_assoc($resultados)){
+                            $professor = $user->getUserName_byID($row['professor']);
+
+                            echo '<a href="" class="btn btn-outline-success text-white d-flex my-2">
+                                <div class="col-3 align-items-center justify-content-center">
+                                    <div class="row">
+                                        <span>'.$row["nome_treino"].'</span>
+                                    </div>
+                                    <div class="row">
+                                        <span>'.$professor.'</span>
+                                    </div>
+                                </div>
+                                <div class="col-1 align-items-center justify-content-center pt-1 fs-3">
+                                    <i class="bi bi-caret-right text-center"></i>
+                                </div>
+                                <div class="col-8 align-items-center justify-content-center">
+                                    <div class="row">
+                                        <span>'.$row['foco'].'</span>
+                                    </div>
+                                    <div class="row">
+                                        <span>'.$row['tempo_decorrido'].'</span>
+                                    </div>
+                                </div>
+                            </a>';
+                        }
+                    }
+                ?>
             </div>
             <!-- Fim histórico diário -->
         </div>
@@ -232,7 +254,7 @@ if ($func->verificarLogado()) {
     <div class="container-fluid p-4 escuro shadow text-white ">
         <!-- Titulo -->
         <div class="row mb-4" style="border-bottom: 1px solid #363330;">
-            <h2 class="fs-4">Geral</h2>
+            <h2 class="fs-4">Estatísticas Gerais</h2>
         </div>
         <div class="row">
             <!-- Inicio publicações recentes -->

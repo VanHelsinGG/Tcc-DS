@@ -110,3 +110,35 @@
   `objetivo` int(11) NOT NULL DEFAULT -1,
   PRIMARY KEY (`userid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE `treinos` (
+  `idtreino` int(11) NOT NULL AUTO_INCREMENT,
+  `aluno` int(11) NOT NULL,
+  `professor` int(11) NOT NULL,
+  `nome` varchar(45) NOT NULL,
+  `foco` varchar(45) NOT NULL,
+  `duracao` int(11) NOT NULL,
+  `exercicios` varchar(900) NOT NULL,
+  `series` varchar(120) NOT NULL,
+  `observacoes` varchar(255) NOT NULL,
+  PRIMARY KEY (`idtreino`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE `exercicios_diarios` (
+  `idexercicios_diarios` int(11) NOT NULL AUTO_INCREMENT,
+  `nome_treino` varchar(45) NOT NULL,
+  `professor` int(11) NOT NULL,
+  `aluno` int(11) NOT NULL,
+  `foco` varchar(45) NOT NULL,
+  `tempo_decorrido` time NOT NULL,
+  `exclusao` date DEFAULT NULL,
+  PRIMARY KEY (`idexercicios_diarios`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE `posts` (
+  `postid` int(11) NOT NULL AUTO_INCREMENT,
+  `user` varchar(90) NOT NULL,
+  `content` varchar(120) NOT NULL,
+  `data` datetime NOT NULL,
+  PRIMARY KEY (`postid`)
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;

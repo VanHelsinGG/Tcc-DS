@@ -1,3 +1,34 @@
+<?php
+    include("./main/lib/php/include.php");
+    $query = "SELECT * FROM treinos";
+
+    $stmt = mysqli_prepare($db, $query);
+    mysqli_stmt_execute($stmt);
+    $resultado = mysqli_stmt_get_result($stmt);
+
+    if(mysqli_num_rows($resultado) > 0){
+        while($rows = mysqli_fetch_assoc($resultado)){
+            $exercicio = explode(";",$rows['exercicios']);
+            $serie = explode(";",$rows['series']);
+            $observacoes = explode(";",$rows['observacoes']);
+
+            foreach($exercicio as $i => $e){
+                $series = explode(",", $serie[$i]);
+                echo 'Exercício '.($i+1).': '.$e.'<br>';
+                
+                foreach($series as $j => $s){
+                    echo 'Série '.($j+1).': '.$s.'<br>';
+                }
+
+                echo 'Observação: '.$observacoes[$i].'<br>';
+            }
+        }
+    }
+?>
+
+
+
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
