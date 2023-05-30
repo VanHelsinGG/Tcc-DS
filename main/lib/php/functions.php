@@ -299,9 +299,37 @@ class Treino
         return $result ? 1 : 0;
     }
 
-    public function deStrcatExercises($trainingID)
+    public function createTraining($trainingData)
     {
-        $exercises = $this->getTrainingExercises($trainingID);
+        $stmt = $this->db->prepare("INSERT INTO treinos (aluno, professor,nome, foco, duracao, exercicios, series, observacoes) VALUES (?,?,?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("ssssssss", $trainingData['aluno'], $trainingData['professor'], $trainingData['nome'], $trainingData['foco'], $trainingData['duracao'], $trainingData['exercicios'], $trainingData['series'], $trainingData['observacoes']);
+
+        if ($stmt->execute()) {
+            return $stmt->insert_id;
+        } else {
+            return false;
+        }
+    }
+    /*$trainingData = [
+    'nome' => 'Treino A',
+    'foco' => 'Força',
+    'aluno' => 17,
+    'professor' => 17,
+    'duracao' => '60 minutos',
+    'exercicios' => 'Supino, Agachamento, Remada',
+    'series' => '3',
+    'observacoes' => 'Descansar 1 minuto entre séries',
+    ];
+
+    $trainingID = $training->createTraining($trainingData);
+    if ($trainingID) {
+        echo "Treino criado com sucesso! ID: " . $trainingID;
+    } else {
+        echo "Erro ao criar treino.";
+    }
+    */
+    public function deStrcatExercises($exercises)
+    {;
         return explode(";", $exercises);
     }
 
@@ -315,7 +343,7 @@ class Treino
 
     public function deStrcatSeries_solo($seriesAll)
     {
-        return explode(",",$seriesAll);
+        return explode(",", $seriesAll);
     }
 
 

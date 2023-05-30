@@ -1,46 +1,56 @@
 <?php
-    include("./main/lib/php/include.php");
+include("./main/lib/php/include.php");
+// $exercicio = $training->getTrainingExercises(1);
+// $serie = $training->getTrainingSeries(1);
 
-    $exercicio = $training->getTrainingExercises(1);
-    $serie = $training->getTrainingSeries(1);
+// $exercicio = $training->deStrcatExercises($exercicio);
 
-    $exercicio = $training->deStrcatExercises($exercicio);
-    
-    foreach($exercicio as $i => $e){
-        $serie = $training->deStrcatSeries_all(1,$i);
-        $serieSolo = $training->deStrcatSeries_solo($serie);
-
-        echo "Exercício: " . $e;
-        echo "Serie " .$i.": ". $serieSolo[$i];
-    }
+// foreach ($exercicio as $i => $e) {
+//     $serieAll = $training->deStrcatSeries_all(1, $i);
+//     $serieSolo = $training->deStrcatSeries_solo($serieAll);
 
 
-    die();
+//     echo '<div class="card " style="width: 18rem;">
+//         <img src="..." class="card-img-top" alt="...">
+//         <div class="card-body">
+//         <h5 class="card-title">' . $e . '</h5>
+//         <p class="card-text">';
 
-    $query = "SELECT * FROM treinos";
+//     foreach ($serieSolo as $j => $s) {
+//         echo '<input type="checkbox" id="serie-' . $j . '" name="series[]" value="' . $s . '">
+//               <label class="text-dark" for="serie-' . $j . '">Serie ' . ($j + 1) . ': ' . $s . '</label><br>';
+//     }
 
-    $stmt = mysqli_prepare($db, $query);
-    mysqli_stmt_execute($stmt);
-    $resultado = mysqli_stmt_get_result($stmt);
+//     echo '</p>
+//         <a href="#" class="btn btn-primary">Go somewhere</a>
+//         </div>
+//     </div>';
+// 
 
-    if(mysqli_num_rows($resultado) > 0){
-        while($rows = mysqli_fetch_assoc($resultado)){
-            $exercicio = explode(";",$rows['exercicios']);
-            $serie = explode(";",$rows['series']);
-            $observacoes = explode(";",$rows['observacoes']);
+$query = "SELECT * FROM treinos";
 
-            foreach($exercicio as $i => $e){
-                $series = explode(",", $serie[$i]);
-                echo 'Exercício '.($i+1).': '.$e.'<br>';
-                
-                foreach($series as $j => $s){
-                    echo 'Série '.($j+1).': '.$s.'<br>';
-                }
+$stmt = mysqli_prepare($db, $query);
+mysqli_stmt_execute($stmt);
+$resultado = mysqli_stmt_get_result($stmt);
 
-                echo 'Observação: '.$observacoes[$i].'<br>';
+if (mysqli_num_rows($resultado) > 0) {
+    while ($rows = mysqli_fetch_assoc($resultado)) {
+        $exercicio = explode(";", $rows['exercicios']);
+        $serie = explode(";", $rows['series']);
+        $observacoes = explode(";", $rows['observacoes']);
+
+        foreach ($exercicio as $i => $e) {
+            $series = explode(",", $serie[$i]);
+            echo 'Exercício ' . ($i + 1) . ': ' . $e . '<br>';
+
+            foreach ($series as $j => $s) {
+                echo 'Série ' . ($j + 1) . ': ' . $s . '<br>';
             }
+
+            echo 'Observação: ' . $observacoes[$i] . '<br>';
         }
     }
+}
 ?>
 
 
