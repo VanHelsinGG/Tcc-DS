@@ -25,13 +25,6 @@ switch ($sexo) {
         break;
 }
 
-// Pegar o proximo ID
-
-$query = "SELECT MAX(userid) AS id_max FROM users";
-$resultados = mysqli_query($db, $query);
-$value = mysqli_fetch_assoc($resultados);
-$id = ($value['id_max'] == 0) ? 0 : $value['id_max'];
-
 // Verifica se já existe uma conta criada com o mesmo email
 $query = "SELECT * FROM users WHERE email = ?";
 $stmt = mysqli_prepare($db, $query);

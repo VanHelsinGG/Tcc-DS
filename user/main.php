@@ -4,40 +4,31 @@ include("../main/lib/php/include.php");
 $GLOBALS['erro'] = 0;
 
 if ($func->verificarLogado()) {
-
     $cookieToken = $_COOKIE["logado"];
 
     if ($id = $user->getUserID_byToken($cookieToken)) {
-
         $user_token = $user->getUserToken_byID($id);
-        if ($user_token == -1) {
-            $GLOBALS['erro'];
-        }
 
-        if (!strcmp($user_token, $cookieToken)) {
-            if ($userToken->validToken($user_token)) {
-                $GLOBALS['userNome'] = $user->getUserName_byToken($user_token);
-
-                $func->setarCookie("autenticado", 1, 1);
-
-                // Verifica se já escolheu o objetivo
-                if ($user->getUserObjective_byID($id) === -1) {
-                    $redirectUrl = urlencode("objetivo.php");
-                    header("Location: $redirectUrl");
-                    exit();
-                }
-
-                echo '<script>var userName = "' . $GLOBALS['userNome'] . '"</script>';
-            } else {
-                $GLOBALS['erro'] = 1;
-            }
-        } else {
+        if ($user_token == -1 || strcmp($user_token, $cookieToken) || !$userToken->validToken($user_token)) {
             $GLOBALS['erro'] = 1;
+        } else {
+            $GLOBALS['userNome'] = $user->getUserName_byToken($user_token);
+            $func->setarCookie("autenticado", 1, 1);
+
+            // Verifica se já escolheu o objetivo
+            if ($user->getUserObjective_byID($id) === -1) {
+                $redirectUrl = urlencode("objetivo.php");
+                header("Location: $redirectUrl");
+                exit();
+            }
+
+            echo '<script>var userName = "' . $GLOBALS['userNome'] . '"</script>';
         }
     } else {
         $GLOBALS['erro'] = 1;
     }
 } else {
+
     $GLOBALS['erro'] = 1;
 }
 ?>
@@ -201,12 +192,14 @@ if ($func->verificarLogado()) {
                         </div>
                     </div>
                 </a> -->
-                <?php 
-                    if(isset($_COOKIE['logado'])){
-                        $userToken = $_COOKIE['logado'];
-                    }
+                <?php
+                if ($func->verificarLogado()) {
+                    $userToken = $_COOKIE['logado'];
 
-                    $query = "SELECT * FROM exercicios_diarios WHERE aluno = ?";
+                    $query = "SELECT exercicios_diarios.nome_treino, exercicios_diarios.foco, exercicios_diarios.tempo_decorrido, users.nome AS professor
+                              FROM exercicios_diarios
+                              INNER JOIN users ON exercicios_diarios.professor = users.userid
+                              WHERE exercicios_diarios.aluno = ?";
 
                     $userID = $user->getUserID_byToken($userToken);
 
@@ -216,17 +209,15 @@ if ($func->verificarLogado()) {
 
                     $resultados = mysqli_stmt_get_result($stmt);
 
-                    if(mysqli_num_rows($resultados) > 0){
-                        while($row = mysqli_fetch_assoc($resultados)){
-                            $professor = $user->getUserName_byID($row['professor']);
-
+                    if (mysqli_num_rows($resultados) > 0) {
+                        while ($row = mysqli_fetch_assoc($resultados)) {
                             echo '<a href="" class="btn btn-outline-success text-white d-flex my-2">
                                 <div class="col-3 align-items-center justify-content-center">
                                     <div class="row">
-                                        <span>'.$row["nome_treino"].'</span>
+                                        <span>' . $row["nome_treino"] . '</span>
                                     </div>
                                     <div class="row">
-                                        <span>'.$professor.'</span>
+                                        <span>' . $row["professor"] . '</span>
                                     </div>
                                 </div>
                                 <div class="col-1 align-items-center justify-content-center pt-1 fs-3">
@@ -234,15 +225,19 @@ if ($func->verificarLogado()) {
                                 </div>
                                 <div class="col-8 align-items-center justify-content-center">
                                     <div class="row">
-                                        <span>'.$row['foco'].'</span>
+                                        <span>' . $row["foco"] . '</span>
                                     </div>
                                     <div class="row">
-                                        <span>'.$row['tempo_decorrido'].'</span>
+                                        <span>' . $row["tempo_decorrido"] . '</span>
                                     </div>
                                 </div>
                             </a>';
                         }
+                    } else {
+                        echo "<p>Não há treinos registrados hoje!</p>";
                     }
+                }
+
                 ?>
             </div>
             <!-- Fim histórico diário -->
@@ -277,7 +272,12 @@ if ($func->verificarLogado()) {
                     </div>
                     <?php
 
-                    $query = "SELECT * FROM posts ORDER BY postid DESC LIMIT 3";
+                    $query = "SELECT posts.*, users.imagem 
+                            FROM posts 
+                            INNER JOIN users ON posts.user = users.nome 
+                            ORDER BY posts.postid DESC 
+                            LIMIT 3";
+
                     $stmt = mysqli_prepare($db, $query);
                     mysqli_stmt_execute($stmt);
                     $resultado = mysqli_stmt_get_result($stmt);
@@ -286,14 +286,7 @@ if ($func->verificarLogado()) {
 
                     if (mysqli_num_rows($resultado) > 0) {
                         while ($rows = mysqli_fetch_assoc($resultado)) {
-                            // Buscar a imagem do usuário
-                            $userQuery = "SELECT imagem FROM users WHERE nome = ?";
-                            $userStmt = mysqli_prepare($db, $userQuery);
-                            mysqli_stmt_bind_param($userStmt, "s", $rows['user']);
-                            mysqli_stmt_execute($userStmt);
-                            $userResult = mysqli_stmt_get_result($userStmt);
-                            $userRow = mysqli_fetch_assoc($userResult);
-                            $imagemUsuario = $userRow['imagem'];
+                            $imagemUsuario = $rows['imagem'];
 
                             echo '<div class="row mt-4 p-4 rounded bg-escuro-secundario" style="outline:1px solid #363330;">
                                 <div class="col">
@@ -345,25 +338,43 @@ if ($func->verificarLogado()) {
                             <h3 class="fs-5"><i class="bi bi-arrow-right me-2"></i>Top Diario</h3>
                             <table class="table-dark table-striped table text-center">
                                 <tr>
-                                    <th>{posição}</th>
-                                    <th>{nome}</th>
-                                    <th>{tempo diario}</th>
+                                    <th>Classificação</th>
+                                    <th>Usuário</th>
+                                    <th>Tempo diário</th>
                                 </tr>
-                                <tr>
-                                    <th>1</th>
-                                    <td>Victor</td>
-                                    <td>10 minutos</td>
-                                </tr>
-                                <tr>
-                                    <th>2</th>
-                                    <td>Kauê</td>
-                                    <td>12 minutos</td>
-                                </tr>
-                                <tr>
-                                    <th>...</th>
-                                    <td>...</td>
-                                    <td>...</td>
-                                </tr>
+                                <?php
+                                $query = "SELECT aluno, tempo_decorrido FROM exercicios_diarios ORDER BY tempo_decorrido DESC LIMIT 3";
+
+                                $stmt = mysqli_prepare($db, $query);
+                                mysqli_stmt_execute($stmt);
+
+                                $resultados = mysqli_stmt_get_result($stmt);
+
+                                $contador = 0;
+
+                                while ($row = mysqli_fetch_assoc($resultados)) {
+                                    $query_users = "SELECT nome FROM users WHERE userid = ?";
+
+                                    $stmt_users = mysqli_prepare($db, $query_users);
+                                    mysqli_stmt_bind_param($stmt_users, "s", $row['aluno']);
+                                    mysqli_stmt_execute($stmt_users);
+
+                                    $resultados_users = mysqli_stmt_get_result($stmt_users);
+                                    $resultado = mysqli_fetch_assoc($resultados_users);
+
+                                    $contador++;
+                                ?>
+                                    <tr>
+                                        <th><?php echo $contador ?></th>
+                                        <td><?php echo $resultado['nome'] ?></td>
+                                        <td><?php echo $row['tempo_decorrido'] ?></td>
+                                    </tr>
+
+                                <?php
+                                }
+
+                                ?>
+
                             </table>
                         </div>
                     </div>

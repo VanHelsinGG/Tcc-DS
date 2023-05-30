@@ -2,8 +2,7 @@
 
 #image {
     height: 500px;
-    background: url("../../../main/lib/images/header.jpg");
-    background-repeat: no-repeat;
+    background: url("../../../main/lib/images/header.jpg") no-repeat;
     background-size: cover;
 }
 
@@ -11,7 +10,7 @@
 #pesquisa-icon {
     background-color: transparent;
     outline: none;
-    border: 0;
+    border: none;
     color: #e7e7e7;
 }
 
@@ -28,7 +27,6 @@
     box-shadow: none;
 }
 
-
 .dropdown-item-hover:hover {
     color: black !important;
 }
@@ -41,28 +39,25 @@
     margin-top: -0.18rem !important;
 }
 
-.nav-item-hover:hover{
-    outline: 1px solid rgba(255, 255, 255,0.8);
+.nav-item-hover:hover {
+    outline: 1px solid rgba(255, 255, 255, 0.8);
 }
 
-#postagem, #postagem-icon{
-    border:0;
+#postagem,
+#postagem-icon {
+    border: none;
     background-color: var(--escuro-terciario);
-    color:rgba(255, 255, 255,0.8);
+    color: rgba(255, 255, 255, 0.8);
 }
 
-#postagem::placeholder{
-    color:rgba(255, 255, 255,0.8);
+#postagem::placeholder {
+    color: rgba(255, 255, 255, 0.8);
 }
 
-#postagem-div{
-    border: 1px solid rgba(255, 255, 255,0.8);
+#postagem-div {
+    border: 1px solid rgba(255, 255, 255, 0.8);
 }
 
-#postagem:focus{
+#postagem:focus {
     box-shadow: none;
-}
-
-#postagem-icon{
-    content: "" !important;
 }

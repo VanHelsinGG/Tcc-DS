@@ -1,5 +1,22 @@
 <?php
     include("./main/lib/php/include.php");
+
+    $exercicio = $training->getTrainingExercises(1);
+    $serie = $training->getTrainingSeries(1);
+
+    $exercicio = $training->deStrcatExercises($exercicio);
+    
+    foreach($exercicio as $i => $e){
+        $serie = $training->deStrcatSeries_all(1,$i);
+        $serieSolo = $training->deStrcatSeries_solo($serie);
+
+        echo "Exercício: " . $e;
+        echo "Serie " .$i.": ". $serieSolo[$i];
+    }
+
+
+    die();
+
     $query = "SELECT * FROM treinos";
 
     $stmt = mysqli_prepare($db, $query);

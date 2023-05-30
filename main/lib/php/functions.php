@@ -209,117 +209,154 @@ class User
         $this->db = $db;
     }
 
-    /**
-     * Retorna o ID do usuário através do nome.
-     * @param string $nome Nome.
-     * @return mixed
-     */
     public function getUserID_byName($nome)
     {
-        $stmt = $this->db->prepare("SELECT userid FROM users WHERE nome = ?");
-        $stmt->bind_param("s", $nome);
-        $stmt->execute();
-        $resultados = $stmt->get_result();
-        $row = $resultados->fetch_assoc();
-        return $row ? $row["userid"] : null;
+        return $this->getUserInfo("userid", "nome", $nome);
     }
 
-    /**
-     * Retorna o ID do usuário através do token.
-     * @param string $token Token.
-     * @return mixed
-     */
     public function getUserID_byToken($token)
     {
-        $stmt = $this->db->prepare("SELECT userid FROM users WHERE token = ?");
-        $stmt->bind_param("s", $token);
-        $stmt->execute();
-        $resultados = $stmt->get_result();
-        $row = $resultados->fetch_assoc();
-        return $row ? $row["userid"] : null;
+        return $this->getUserInfo("userid", "token", $token);
     }
 
-    /**
-     * Retorna o nome do usuário através do ID.
-     * @param int $id ID.
-     * @return mixed.
-     */
     public function getUserName_byID($id)
     {
-        $stmt = $this->db->prepare("SELECT nome FROM users WHERE userid = ?");
-        $stmt->bind_param("i", $id);
-        $stmt->execute();
-        $resultados = $stmt->get_result();
-        $row = $resultados->fetch_assoc();
-        return $row ? $row["nome"] : null;
+        return $this->getUserInfo("nome", "userid", $id);
     }
 
-    /**
-     * Retorna o nome do usuário através do token.
-     * @param string $token Token.
-     * @return mixed
-     */
     public function getUserName_byToken($token)
     {
-        $stmt = $this->db->prepare("SELECT nome FROM users WHERE token = ?");
-        $stmt->bind_param("s", $token);
-        $stmt->execute();
-        $resultados = $stmt->get_result();
-        $row = $resultados->fetch_assoc();
-        return $row ? $row["nome"] : null;
+        return $this->getUserInfo("nome", "token", $token);
     }
 
-    /**
-     * Retorna o token através do nome do usuário.
-     * @param string $nome
-     * @return mixed
-     */
     public function getUserToken_byName($nome)
     {
-        $stmt = $this->db->prepare("SELECT token FROM users WHERE nome = ?");
-        $stmt->bind_param("s", $nome);
-        $stmt->execute();
-        $resultados = $stmt->get_result();
-        $row = $resultados->fetch_assoc();
-        return $row ? $row["token"] : null;
+        return $this->getUserInfo("token", "nome", $nome);
     }
 
-    /**
-     * Retorna o objetivo através do nome do usuário.
-     * @param string $nome
-     * @return mixed
-     */
     public function getUserObjective_byID($id)
     {
-        $stmt = $this->db->prepare("SELECT objetivo FROM users WHERE userid = ?");
-        $stmt->bind_param("s", $id);
-        $stmt->execute();
-        $resultados = $stmt->get_result();
-        $row = $resultados->fetch_assoc();
-        return $row ? $row["objetivo"] : null;
+        return $this->getUserInfo("objetivo", "userid", $id);
     }
 
-    /**
-     * Retorna o token através do ID do usuário.
-     * @param string $id ID.
-     * @return mixed
-     */
     public function getUserToken_byID($id)
     {
-        $stmt = $this->db->prepare("SELECT token FROM users WHERE userid = ?");
-        $stmt->bind_param("s", $id);
-        $stmt->execute();
-        $resultados = $stmt->get_result();
-        $row = $resultados->fetch_assoc();
-        return $row ? $row["token"] : null;
+        return $this->getUserInfo("token", "userid", $id);
     }
 
     public function userAuthenticated()
     {
         return isset($_COOKIE['autenticado']) ? 1 : 0;
     }
+
+    public function getUserActiveTrainingID_byID($id)
+    {
+        return $this->getUserInfo("idtreinoativo", "userid", $id);
+    }
+
+    private function getUserInfo($columnName, $conditionColumn, $conditionValue)
+    {
+        $query = "SELECT $columnName FROM users WHERE $conditionColumn = ?";
+
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param("s", $conditionValue);
+        $stmt->execute();
+        $resultados = $stmt->get_result();
+        $row = $resultados->fetch_assoc();
+
+        return $row ? $row[$columnName] : null;
+    }
+}
+
+class Treino
+{
+    private $db;
+
+    public function __construct($db)
+    {
+        $this->db = $db;
+    }
+
+    private function getTrainingData($trainingID)
+    {
+        $stmt = $this->db->prepare("SELECT nome, foco, duracao, exercicios, series, observacoes FROM treinos WHERE idtreino = ?");
+        $stmt->bind_param("s", $trainingID);
+        $stmt->execute();
+        $resultados = $stmt->get_result();
+        $row = $resultados->fetch_assoc();
+        return $row ? $row : null;
+    }
+
+    private function updateTrainingData($trainingID, $columnName, $conditionColumn, $conditionValue)
+    {
+        $query = "UPDATE treinos SET $columnName = ? WHERE idtreino = ?";
+
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param("ss", $conditionValue, $trainingID);
+        $stmt->execute();
+        $result = $stmt->affected_rows;
+
+        return $result ? 1 : 0;
+    }
+
+    public function deStrcatExercises($trainingID)
+    {
+        $exercises = $this->getTrainingExercises($trainingID);
+        return explode(";", $exercises);
+    }
+
+    public function deStrcatSeries_all($trainingID, $exerciseNum)
+    {
+        $series = $this->getTrainingSeries($trainingID);
+        $series = explode(";", $series);
+
+        return isset($series[$exerciseNum]) ? $series[$exerciseNum] : null;
+    }
+
+    public function deStrcatSeries_solo($seriesAll)
+    {
+        return explode(",",$seriesAll);
+    }
+
+
+    public function getTrainingName($trainingID)
+    {
+        $trainingData = $this->getTrainingData($trainingID);
+        return $trainingData ? $trainingData['nome'] : null;
+    }
+
+    public function getTrainingFocus($trainingID)
+    {
+        $trainingData = $this->getTrainingData($trainingID);
+        return $trainingData ? $trainingData['foco'] : null;
+    }
+
+    public function getTrainingDuration($trainingID)
+    {
+        $trainingData = $this->getTrainingData($trainingID);
+        return $trainingData ? $trainingData['duracao'] : null;
+    }
+
+    public function getTrainingExercises($trainingID)
+    {
+        $trainingData = $this->getTrainingData($trainingID);
+        return $trainingData ? $trainingData['exercicios'] : null;
+    }
+
+    public function getTrainingSeries($trainingID)
+    {
+        $trainingData = $this->getTrainingData($trainingID);
+        return $trainingData ? $trainingData['series'] : null;
+    }
+
+    public function getTrainingObservations($trainingID)
+    {
+        $trainingData = $this->getTrainingData($trainingID);
+        return $trainingData ? $trainingData['observacoes'] : null;
+    }
 }
 
 $userToken = new UserSessionToken();
 $user = new User($db);
 $func = new Functions();
+$training = new Treino($db);

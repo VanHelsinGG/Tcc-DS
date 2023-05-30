@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Escolha seu Objetivo • OlympiaWorkout</title>
     <script src="./lib/js/objetivo.js" defer></script>
     <link rel="stylesheet" href="../main/lib/css/universal.css">
     <link rel="stylesheet" href="../main/lib/images/bootstrap-icons-1.10.4/font/bootstrap-icons.css">
@@ -104,8 +104,10 @@ if (!isset($_GET['objetivo'])) {
     mysqli_stmt_execute($stmt);
 
     $func->showAlert("Estamos quase lá!", "Em breve você estará na página principal e terá acesso a todo o nosso conteúdo incrível. Preparado para explorar o melhor que temos a oferecer? Vamos lá!");
-    echo '<meta http-equiv="refresh" content="5; url=main.php">';
+    header("refresh:5; url=main.php");
+    exit(); // Termina a execução do código após o redirecionamento
 }
+
 ?>
 
 </html>
