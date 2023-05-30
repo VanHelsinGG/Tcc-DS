@@ -303,12 +303,7 @@ class Treino
     {
         $stmt = $this->db->prepare("INSERT INTO treinos (aluno, professor,nome, foco, duracao, exercicios, series, observacoes) VALUES (?,?,?, ?, ?, ?, ?, ?)");
         $stmt->bind_param("ssssssss", $trainingData['aluno'], $trainingData['professor'], $trainingData['nome'], $trainingData['foco'], $trainingData['duracao'], $trainingData['exercicios'], $trainingData['series'], $trainingData['observacoes']);
-
-        if ($stmt->execute()) {
-            return $stmt->insert_id;
-        } else {
-            return false;
-        }
+        return ($stmt->execute()) ? 1 : 0;
     }
     /*$trainingData = [
     'nome' => 'Treino A',
