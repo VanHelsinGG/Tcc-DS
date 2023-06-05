@@ -277,9 +277,30 @@ class Treino
         $this->db = $db;
     }
 
+    public function getTrainingTeacherName($trainingID)
+    {
+        $professorID = $this->getTrainingData($trainingID)["professor"];
+
+        $user = new User($this->db);
+
+        $nomeProfessor = $user->getUserName_byID($professorID);
+
+        return $nomeProfessor;
+    }
+
+    public function getTrainingStudentName($trainingID){
+        $studentID = $this->getTrainingData($trainingID)["aluno"];
+
+        $user = new User($this->db);
+
+        $nomeAluno = $user->getUserName_byID($studentID);
+        
+        return $nomeAluno;
+    }
+
     private function getTrainingData($trainingID)
     {
-        $stmt = $this->db->prepare("SELECT nome, foco, duracao, exercicios, series, observacoes FROM treinos WHERE idtreino = ?");
+        $stmt = $this->db->prepare("SELECT * FROM treinos WHERE idtreino = ?");
         $stmt->bind_param("s", $trainingID);
         $stmt->execute();
         $resultados = $stmt->get_result();
@@ -323,24 +344,62 @@ class Treino
         echo "Erro ao criar treino.";
     }
     */
-    public function deStrcatExercises($exercises)
-    {;
-        return explode(";", $exercises);
+
+    public function getExercisesTrated($trainingID, $focusNum)
+    {
+        $exercises = $this->getTrainingExercises($trainingID);
+        $exercises = $this->deStrcatExercises_all($exercises, $focusNum);
+        $exercises = $this->deStrcatExercises_solo($exercises);
+        return isset($exercises) ? $exercises : null;
     }
 
-    public function deStrcatSeries_all($trainingID, $exerciseNum)
+    private function deStrcatExercises_all($exercises, $focusNum)
+    {
+        $exercises = explode(";", $exercises);
+
+        return isset($exercises[$focusNum]) ? $exercises[$focusNum] : null;
+    }
+
+    private function deStrcatExercises_solo($exercisesAll)
+    {
+        return explode(",", $exercisesAll);
+    }
+
+    public function getTrainingsTrated($trainingID)
+    {
+        $focuses = $this->getTrainingFocus($trainingID);
+        return $this->deStrcatTrainings($focuses);
+    }
+    private function deStrcatTrainings($focus)
+    {
+        return explode(";", $focus);
+    }
+
+    public function getSeriesTrated($trainingID, $focusNum, $exerciseNum)
     {
         $series = $this->getTrainingSeries($trainingID);
-        $series = explode(";", $series);
-
-        return isset($series[$exerciseNum]) ? $series[$exerciseNum] : null;
+        $series = $this->deStrcatSeries_all($series, $focusNum);
+        $series = $this->deStrcatSeries_exercise($series, $exerciseNum);
+        $series = $this->deStrcatSeries_solo($series);
+        return $series;
     }
 
-    public function deStrcatSeries_solo($seriesAll)
+    private function deStrcatSeries_all($exercises, $focusNum)
     {
-        return explode(",", $seriesAll);
+        $exercises = explode(".", $exercises);
+
+        return isset($exercises[$focusNum]) ? $exercises[$focusNum] : null;
     }
 
+    private function deStrcatSeries_exercise($exercises, $exerciseNum)
+    {
+        $series = explode(";", $exercises);
+        return $series[$exerciseNum];
+    }
+    private function deStrcatSeries_solo($exercisesAll)
+    {
+        return explode(",", $exercisesAll);
+    }
 
     public function getTrainingName($trainingID)
     {

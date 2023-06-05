@@ -1,55 +1,25 @@
 <?php
 include("./main/lib/php/include.php");
-// $exercicio = $training->getTrainingExercises(1);
-// $serie = $training->getTrainingSeries(1);
 
-// $exercicio = $training->deStrcatExercises($exercicio);
+echo $training->getTrainingTeacherName(1);
 
-// foreach ($exercicio as $i => $e) {
-//     $serieAll = $training->deStrcatSeries_all(1, $i);
-//     $serieSolo = $training->deStrcatSeries_solo($serieAll);
+$treinos = $training->getTrainingsTrated(1);
 
+foreach($treinos as $t => $te){
+    echo "Treino " . $te . "<br>";
 
-//     echo '<div class="card " style="width: 18rem;">
-//         <img src="..." class="card-img-top" alt="...">
-//         <div class="card-body">
-//         <h5 class="card-title">' . $e . '</h5>
-//         <p class="card-text">';
+    $exercicios = $training->getExercisesTrated(1,$t);
 
-//     foreach ($serieSolo as $j => $s) {
-//         echo '<input type="checkbox" id="serie-' . $j . '" name="series[]" value="' . $s . '">
-//               <label class="text-dark" for="serie-' . $j . '">Serie ' . ($j + 1) . ': ' . $s . '</label><br>';
-//     }
+    foreach($exercicios as $e => $ee){
+        echo "Exercicio " . $ee . "<br>";
 
-//     echo '</p>
-//         <a href="#" class="btn btn-primary">Go somewhere</a>
-//         </div>
-//     </div>';
-// 
+        $series = $training->getSeriesTrated(1,$t,$e);
 
-$query = "SELECT * FROM treinos";
-
-$stmt = mysqli_prepare($db, $query);
-mysqli_stmt_execute($stmt);
-$resultado = mysqli_stmt_get_result($stmt);
-
-if (mysqli_num_rows($resultado) > 0) {
-    while ($rows = mysqli_fetch_assoc($resultado)) {
-        $exercicio = explode(";", $rows['exercicios']);
-        $serie = explode(";", $rows['series']);
-        $observacoes = explode(";", $rows['observacoes']);
-
-        foreach ($exercicio as $i => $e) {
-            $series = explode(",", $serie[$i]);
-            echo 'Exercício ' . ($i + 1) . ': ' . $e . '<br>';
-
-            foreach ($series as $j => $s) {
-                echo 'Série ' . ($j + 1) . ': ' . $s . '<br>';
-            }
-
-            echo 'Observação: ' . $observacoes[$i] . '<br>';
+        foreach($series as $s => $se){
+            echo "Serie " . ($s+1) . ": " . $se . "<br>";
         }
     }
+    echo "<br><br>";
 }
 ?>
 
