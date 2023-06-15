@@ -143,55 +143,59 @@ if ($func->verificarLogado()) {
         <div class="row">
             <!-- Próximo treino -->
             <div class="col-6" style="border-right: 1px solid #363330;">
-                <h3 class="fs-5">Próximo Treino</h3>
-                <a href="" class="btn btn-azul text-white d-flex">
-                    <div class="col-3 align-items-center justify-content-center">
-                        <div class="row">
-                            <span>{Nome do treino}</span>
-                        </div>
-                        <div class="row">
-                            <span>{Professor}</span>
-                        </div>
-                    </div>
-                    <div class="col-1 align-items-center justify-content-center pt-1 fs-3">
-                        <i class="bi bi-caret-right-fill text-center"></i>
-                    </div>
-                    <div class="col-8 align-items-center justify-content-center">
-                        <div class="row">
-                            <span>{Tipo do treino}</span>
-                        </div>
-                        <div class="row">
-                            <span>Tempo: Não iniciado</span>
-                        </div>
-                    </div>
-                </a>
+                <h3 class="fs-5 pb-2" style="border-bottom: 1px solid #363330;">Próximo Treino</h3>
+                <?php
+                if ($func->verificarLogado()) {
+                    $userToken = $_COOKIE['logado'];
+
+                    $userID = $user->getUserID_byToken($userToken);
+
+                    $query = "SELECT t.*, u.nome AS professor_nome 
+                            FROM treinos t 
+                            INNER JOIN users u ON t.professor = u.userid 
+                            WHERE t.aluno = ?";
+
+                    $stmt = mysqli_prepare($db, $query);
+                    mysqli_stmt_bind_param($stmt, "s", $userID);
+                    mysqli_stmt_execute($stmt);
+                    $resultado = mysqli_stmt_get_result($stmt);
+
+                    if (mysqli_num_rows($resultado) == 0) {
+                        echo "Não há treinos cadastrados para você!";
+                    } else {
+                        $row = mysqli_fetch_assoc($resultado);
+
+                        echo '<a href="treino.php?treinoid='.$row['idtreino'].'&treino=1" class="btn btn-azul text-white d-flex">
+                            <div class="col-3 align-items-center justify-content-center">
+                                <div class="row">
+                                    <span>' . $row['nome'] . '</span>
+                                </div>
+                                <div class="row">
+                                <span>' . $row['professor_nome'] . '</span>
+                                </div>
+                            </div>
+                            <div class="col-1 align-items-center justify-content-center pt-1 fs-3">
+                                <i class="bi bi-caret-right-fill text-center"></i>
+                            </div>
+                            <div class="col-8 align-items-center justify-content-center">
+                                <div class="row">
+                                    <span>' . $row['foco'] . '</span>
+                                </div>
+                                <div class="row">
+                                    <span>' . $row["vezes_feito"] . '/' . $row['duracao'] . '</span>
+                                </div>
+                            </div>
+                        </a>';
+                    }
+                }
+                ?>
+
             </div>
             <!-- Fim próximo treino -->
 
             <!-- Histórico diário -->
             <div class="col-6">
-                <h3 class="fs-5">Histórico Diario</h3>
-                <!-- <a href="" class="btn btn-outline-success text-white d-flex">
-                    <div class="col-3 align-items-center justify-content-center">
-                        <div class="row">
-                            <span>{Nome do treino}</span>
-                        </div>
-                        <div class="row">
-                            <span>{Professor}</span>
-                        </div>
-                    </div>
-                    <div class="col-1 align-items-center justify-content-center pt-1 fs-3">
-                        <i class="bi bi-caret-right text-center"></i>
-                    </div>
-                    <div class="col-8 align-items-center justify-content-center">
-                        <div class="row">
-                            <span>{Tipo do treino}</span>
-                        </div>
-                        <div class="row">
-                            <span>Tempo: 01:30:52</span>
-                        </div>
-                    </div>
-                </a> -->
+                <h3 class="fs-5 pb-2" style="border-bottom: 1px solid #363330;">Histórico Diario</h3>
                 <?php
                 if ($func->verificarLogado()) {
                     $userToken = $_COOKIE['logado'];
@@ -335,13 +339,8 @@ if ($func->verificarLogado()) {
                     </div>
                     <div class="row">
                         <div class="col bg-escuro-secundario rounded p-3">
-                            <h3 class="fs-5"><i class="bi bi-arrow-right me-2"></i>Top Diario</h3>
+                            <h3 class="fs-5 py-2" style="border-bottom: 1px solid #363330;"><i class="bi bi-arrow-right me-2"></i>Top Diario</h3>
                             <table class="table-dark table-striped table text-center">
-                                <tr>
-                                    <th>Classificação</th>
-                                    <th>Usuário</th>
-                                    <th>Tempo diário</th>
-                                </tr>
                                 <?php
                                 $query = "SELECT aluno, tempo_decorrido FROM exercicios_diarios ORDER BY tempo_decorrido DESC LIMIT 3";
 
@@ -350,27 +349,37 @@ if ($func->verificarLogado()) {
 
                                 $resultados = mysqli_stmt_get_result($stmt);
 
-                                $contador = 0;
+                                if (!mysqli_num_rows($resultados)) {
+                                    echo "Não há treinos recentes!";
+                                } else {
 
-                                while ($row = mysqli_fetch_assoc($resultados)) {
-                                    $query_users = "SELECT nome FROM users WHERE userid = ?";
+                                    echo "<tr>
+                                            <th>Classificação</th>
+                                            <th>Usuário</th>
+                                            <th>Tempo diário</th>
+                                        </tr>";
 
-                                    $stmt_users = mysqli_prepare($db, $query_users);
-                                    mysqli_stmt_bind_param($stmt_users, "s", $row['aluno']);
-                                    mysqli_stmt_execute($stmt_users);
+                                    $contador = 0;
 
-                                    $resultados_users = mysqli_stmt_get_result($stmt_users);
-                                    $resultado = mysqli_fetch_assoc($resultados_users);
+                                    while ($row = mysqli_fetch_assoc($resultados)) {
+                                        $query_users = "SELECT nome FROM users WHERE userid = ?";
 
-                                    $contador++;
+                                        $stmt_users = mysqli_prepare($db, $query_users);
+                                        mysqli_stmt_bind_param($stmt_users, "s", $row['aluno']);
+                                        mysqli_stmt_execute($stmt_users);
+
+                                        $resultados_users = mysqli_stmt_get_result($stmt_users);
+                                        $resultado = mysqli_fetch_assoc($resultados_users);
+
+                                        $contador++;
                                 ?>
-                                    <tr>
-                                        <th><?php echo $contador ?></th>
-                                        <td><?php echo $resultado['nome'] ?></td>
-                                        <td><?php echo $row['tempo_decorrido'] ?></td>
-                                    </tr>
-
+                                        <tr>
+                                            <th><?php echo $contador ?></th>
+                                            <td><?php echo $resultado['nome'] ?></td>
+                                            <td><?php echo $row['tempo_decorrido'] ?></td>
+                                        </tr>
                                 <?php
+                                    }
                                 }
 
                                 ?>
@@ -380,7 +389,7 @@ if ($func->verificarLogado()) {
                     </div>
                     <div class="row">
                         <div class="col bg-escuro-secundario p-3">
-                            <h3 class="fs-5"><i class="bi bi-arrow-right me-2"></i>Top Semanal</h3>
+                            <h3 class="fs-5 py-2" style="border-bottom: 1px solid #363330;"><i class="bi bi-arrow-right me-2"></i>Top Semanal</h3>
                             <table class="table-dark table-striped table text-center">
                                 <tr>
                                     <th>{posição}</th>
@@ -407,7 +416,7 @@ if ($func->verificarLogado()) {
                     </div>
                     <div class="row">
                         <div class="col bg-escuro-secundario p-3">
-                            <h3 class="fs-5"><i class="bi bi-arrow-right me-2"></i>Top Mensal</h3>
+                            <h3 class="fs-5 py-2" style="border-bottom: 1px solid #363330;"><i class="bi bi-arrow-right me-2"></i>Top Mensal</h3>
                             <table class="table-dark table-striped table text-center">
                                 <tr>
                                     <th>{posição}</th>

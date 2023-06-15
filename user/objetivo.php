@@ -104,7 +104,7 @@ if (!isset($_GET['objetivo'])) {
     mysqli_stmt_execute($stmt);
 
     $func->showAlert("Estamos quase lá!", "Em breve você estará na página principal e terá acesso a todo o nosso conteúdo incrível. Preparado para explorar o melhor que temos a oferecer? Vamos lá!");
-    header("refresh:5; url=main.php");
+    echo '<meta http-equiv="refresh" content="3; URL=main.php" />';
     exit(); // Termina a execução do código após o redirecionamento
 }
 

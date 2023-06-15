@@ -4,6 +4,7 @@ verificarPreferenciaCookies();
 // Muda automaticamente a data do copyright
 function direitosAutorais() {
     const dataElement = document.getElementById("data");
+
     if (dataElement) {
         dataElement.textContent = new Date().getFullYear();
     }

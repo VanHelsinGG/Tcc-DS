@@ -52,16 +52,25 @@ if ($func->verificarLogado()) {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
 </head>
 
-<body style="background-color:#1d1c1a;">
-    <a href="index.php" class="btn text-white"><i class="bi bi-x display-4" style="position:absolute; left:0; top:0;"></i></a>
+<body style="background-color:#1d1c1a;color:white;">
 
-    <div class="card">
-        <div class="card-body">
-            <h5 class="card-title">Nome do exercício</h5>
-            <p class="card-text text-dark">Observações</p>
-            <p class="card-text text-dark">Séries</p>
-        </div>
-    </div>
+    <?php
+    $treinoID = $_GET['treinoid'];
+    $treino = $_GET['treino'];
+
+    $exercicios = $training->getExercisesTrated($treinoID, $treino);
+
+    foreach ($exercicios as $e => $ee) {
+        echo "Exercicio " . $ee . "<br>";
+
+        $series = $training->getSeriesTrated($treinoID, $treino, $e);
+
+        foreach ($series as $s => $se) {
+            echo "Serie " . ($s + 1) . ": " . $se . "<br>";
+        }
+    }
+    ?>
+
     <!-- Aviso de uso de cookies -->
     <div id="aviso-cookies" class="alert alert-info fixed-bottom mb-0 rounded-0 text-dark" style="display: none;">
         <div class="container">
