@@ -244,6 +244,22 @@ class User
         return $this->getUserInfo("token", "userid", $id);
     }
 
+    public function getUserAccess_byID($id)
+    {
+        return $this->getUserInfo("estado", "userid", $id);
+    }
+
+    public function getUserAccess_byToken($token)
+    {
+        return $this->getUserInfo("estado", "token", $token);
+    }
+
+    public function getUserAccess_byName($name)
+    {
+        return $this->getUserInfo("estado", "nome", $name);
+    }
+
+
     public function userAuthenticated()
     {
         return isset($_COOKIE['autenticado']) ? 1 : 0;
@@ -288,13 +304,14 @@ class Treino
         return $nomeProfessor;
     }
 
-    public function getTrainingStudentName($trainingID){
+    public function getTrainingStudentName($trainingID)
+    {
         $studentID = $this->getTrainingData($trainingID)["aluno"];
 
         $user = new User($this->db);
 
         $nomeAluno = $user->getUserName_byID($studentID);
-        
+
         return $nomeAluno;
     }
 
@@ -365,10 +382,10 @@ class Treino
         return explode(",", $exercisesAll);
     }
 
-    public function getTrainingsTrated($trainingID)
+    public function getTrainingsTrated($trainingID, $trainingNum)
     {
         $focuses = $this->getTrainingFocus($trainingID);
-        return $this->deStrcatTrainings($focuses);
+        return $this->deStrcatFocus($focuses,$trainingNum);
     }
     private function deStrcatTrainings($focus)
     {
@@ -407,10 +424,16 @@ class Treino
         return $trainingData ? $trainingData['nome'] : null;
     }
 
-    public function getTrainingFocus($trainingID)
+    private function getTrainingFocus($trainingID)
     {
         $trainingData = $this->getTrainingData($trainingID);
         return $trainingData ? $trainingData['foco'] : null;
+    }
+
+    public function deStrcatFocus($focus,$focusNum){
+        $focus = explode(";",$focus);
+
+        return isset($focus[$focusNum]) ? $focus[$focusNum] : null;
     }
 
     public function getTrainingDuration($trainingID)

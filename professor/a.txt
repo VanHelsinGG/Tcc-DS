@@ -1,0 +1,144 @@
+                <!-- <div class="container-fluid">
+                    <div class="row text-white bg-laranja p-2">
+                        <h3>Confira nossos principais serviços</h3>
+                    </div>
+                    <div class="row action text-white">
+                        <div class="col-4 db d-flex align-items-end actions">
+                            <h4>Database</h4>
+                        </div>
+                        <div class="col-4 dieta d-flex align-items-end actions">
+                            <h4>Database</h4>
+                        </div>
+                        <div class="col-4 relatorios d-flex align-items-end actions">
+                            <h4>Database</h4>
+                        </div>
+                    </div>
+                </div> -->
+
+                <!-- <div class="container-fluid mt-5 p-4 bg-dark-emphasis">
+                    <div class="row">
+                        <div class="col-4">
+                            <h3 class="text-secondary"><i class="bi bi-arrow-right me-2"></i>Top Diario</h3>
+                            <table class="table-dark table-striped table text-center">
+                                <tr>
+                                    <th>{posição}</th>
+                                    <th>{nome}</th>
+                                    <th>{tempo diario}</th>
+                                </tr>
+                                <tr>
+                                    <th>1</th>
+                                    <td>Victor</td>
+                                    <td>10 minutos</td>
+                                </tr>
+                                <tr>
+                                    <th>2</th>
+                                    <td>Kauê</td>
+                                    <td>12 minutos</td>
+                                </tr>
+                                <tr>
+                                    <th>...</th>
+                                    <td>...</td>
+                                    <td>...</td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="col-4">
+                            <h3 class="text-secondary"><i class="bi bi-arrow-right me-2"></i>Top Semanal</h3>
+                            <table class="table-dark table-striped table text-center">
+                                <tr>
+                                    <th>{posição}</th>
+                                    <th>{nome}</th>
+                                    <th>{tempo diario}</th>
+                                </tr>
+                                <tr>
+                                    <th>1</th>
+                                    <td>Victor</td>
+                                    <td>10 minutos</td>
+                                </tr>
+                                <tr>
+                                    <th>2</th>
+                                    <td>Kauê</td>
+                                    <td>12 minutos</td>
+                                </tr>
+                                <tr>
+                                    <th>...</th>
+                                    <td>...</td>
+                                    <td>...</td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="col-4">
+                            <h3 class="text-secondary"><i class="bi bi-arrow-right me-2"></i>Top Mensal</h3>
+                            <table class="table-dark table-striped table text-center">
+                                <tr>
+                                    <th>{posição}</th>
+                                    <th>{nome}</th>
+                                    <th>{tempo diario}</th>
+                                </tr>
+                                <tr>
+                                    <th>1</th>
+                                    <td>Victor</td>
+                                    <td>10 minutos</td>
+                                </tr>
+                                <tr>
+                                    <th>2</th>
+                                    <td>Kauê</td>
+                                    <td>12 minutos</td>
+                                </tr>
+                                <tr>
+                                    <th>...</th>
+                                    <td>...</td>
+                                    <td>...</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div> -->
+
+                CREATE TABLE `users` (
+  `userid` int(11) NOT NULL AUTO_INCREMENT,
+  `nome` varchar(50) NOT NULL,
+  `email` varchar(50) NOT NULL,
+  `senha` varchar(255) NOT NULL,
+  `sexo` char(1) NOT NULL,
+  `estado` int(11) NOT NULL DEFAULT 0,
+  `peso` decimal(4,2) DEFAULT 0.00,
+  `altura` decimal(3,2) DEFAULT 0.00,
+  `data_criacao` datetime NOT NULL,
+  `ip` varchar(20) NOT NULL,
+  `token` varchar(256) DEFAULT '-1',
+  `objetivo` int(11) NOT NULL DEFAULT -1,
+  PRIMARY KEY (`userid`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE `treinos` (
+  `idtreino` int(11) NOT NULL AUTO_INCREMENT,
+  `aluno` int(11) NOT NULL,
+  `professor` int(11) NOT NULL,
+  `nome` varchar(45) NOT NULL,
+  `foco` varchar(45) NOT NULL,
+  `duracao` int(11) NOT NULL,
+  `exercicios` varchar(900) NOT NULL,
+  `series` varchar(120) NOT NULL,
+  `observacoes` varchar(255) NOT NULL,
+  PRIMARY KEY (`idtreino`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE `exercicios_diarios` (
+  `idexercicios_diarios` int(11) NOT NULL AUTO_INCREMENT,
+  `nome_treino` varchar(45) NOT NULL,
+  `professor` int(11) NOT NULL,
+  `aluno` int(11) NOT NULL,
+  `foco` varchar(45) NOT NULL,
+  `tempo_decorrido` time NOT NULL,
+  `exclusao` date DEFAULT NULL,
+  PRIMARY KEY (`idexercicios_diarios`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE `posts` (
+  `postid` int(11) NOT NULL AUTO_INCREMENT,
+  `user` varchar(90) NOT NULL,
+  `content` varchar(120) NOT NULL,
+  `data` datetime NOT NULL,
+  PRIMARY KEY (`postid`)
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
