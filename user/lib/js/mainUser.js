@@ -1,4 +1,4 @@
-document.getElementById("postagem").addEventListener("input", () =>{
+document.getElementById("postagem").addEventListener("input", () => {
     const data = document.getElementById("data");
     const user = document.getElementById("criador");
 
@@ -13,7 +13,7 @@ document.getElementById('postagem-icon').addEventListener('submit', function (ev
     }
 });
 
-function checkText(){
+function checkText() {
     const content = document.getElementById("postagem").value;
     return (content == "") ? 0 : 1;
 }

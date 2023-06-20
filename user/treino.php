@@ -52,12 +52,26 @@ if ($func->verificarLogado()) {
     ?>
     <script src="../main/lib/js/main.js" defer></script>
     <link rel="stylesheet" href="../main/lib/css/universal.css">
+    <link rel="stylesheet" href="./lib/css/treino.css">
     <link rel="stylesheet" href="../main/lib/images/bootstrap-icons-1.10.4/font/bootstrap-icons.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
 </head>
 
 <body style="background-color:#1d1c1a;color:white;">
-
+        <!-- Inicio header/navbar -->
+        <header class="header container-fluid bg-laranja fixed-top p-1" id="header">
+        <div class="row">
+            <div class="col-3 pt-1 d-flex ps-5 align-items-center">
+                <div class="col-6">
+                    <h1 class="fs-4 text-white" id="title">OlympiaWorkout</h1>
+                </div>
+            </div>
+            <div class="col">
+                
+            </div>
+        </div>
+    </header>
+    <!-- Fim Header -->
     <?php
 
     $exercicios = $training->getExercisesTrated($GLOBALS['treinoID'], $GLOBALS['treino']);

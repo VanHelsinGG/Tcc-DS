@@ -170,9 +170,12 @@ if ($func->verificarLogado()) {
                     } else {
                         $row = mysqli_fetch_assoc($resultado);
                         $proxTreino = $training->deStrcatFocus($row['foco'], $row['proximo_treino']);
-                    ?>
-                        <a href="treino.php?treinoid=<?php echo $row['idtreino']; ?>&treino=1" class="btn btn-azul text-white d-flex">
-                            <div class="col-3 align-items-center justify-content-center">
+                        $treinos = $training->deStrcatFocus_all($row['foco']);
+                        $treinoid = $row['idtreino'];
+                ?>
+                        <form method="get" action="treino.php" class="btn btn-azul text-white d-flex align-items-center justify-content-center" id="form-treino" style="cursor: default;">
+                            <?php echo "<input name='treinoid' type='hidden' value='$treinoid'?>";?>
+                            <div class="col-3">
                                 <div class="row">
                                     <span><?php echo $row['nome']; ?></span>
                                 </div>
@@ -181,18 +184,36 @@ if ($func->verificarLogado()) {
                                 </div>
                             </div>
                             <div class="col-1 align-items-center justify-content-center pt-1 fs-3">
-                                <i class="bi bi-caret-right-fill text-center"></i>
+                                <i class="bi bi-plus-lg text-center"></i>
                             </div>
-                            <div class="col-8 align-items-center justify-content-center">
-                                <div class="row">
-                                    <span><?php echo $proxTreino; ?></span>
+                            <div class="col-7">
+                                <div class="row justify-content-center">
+                                    <div class="input-group">
+                                        <select id="treino" name="treino" tabindex="-1" class="form-control text-center" style="cursor:pointer;outline: 0; background-color: transparent; color: white; border: 0; border-bottom: 1px solid white; border-radius: 0;">
+                                            <?php foreach ($treinos as $t => $tc) {
+                                                if (!strcmp($tc, $proxTreino)) {
+                                                    echo "<option value='$t' selected class='text-black'>Treino " . ($t + 1) . " - $tc</option>";
+                                                } else {
+                                                    echo "<option value='$t' class='text-black'>Treino " . ($t + 1) . " - $tc</option>";
+                                                }
+                                            } ?>
+                                        </select>
+                                        <div class="input-group-append" style="border-bottom: 1px solid white;">
+                                            <span class="input-group-text bg-transparent border-0 text-white">
+                                                <i class="bi bi-caret-down-fill"></i>
+                                            </span>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="row">
+                                <div class="row mt-1 justify-content-center">
                                     <span><?php echo $row["vezes_feito"] . '/' . $row['duracao']; ?></span>
                                 </div>
                             </div>
-                        </a>
-                    <?php
+                            <div class="col-2">
+                                <button type="submit" class="btn"><i class="bi bi-play text-white fs-2"></i></button>
+                            </div>
+                        </form>
+                <?php
                     }
                 }
                 ?>

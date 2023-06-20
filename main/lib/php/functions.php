@@ -424,7 +424,7 @@ class Treino
         return $trainingData ? $trainingData['nome'] : null;
     }
 
-    private function getTrainingFocus($trainingID)
+    public function getTrainingFocus($trainingID)
     {
         $trainingData = $this->getTrainingData($trainingID);
         return $trainingData ? $trainingData['foco'] : null;
@@ -434,6 +434,11 @@ class Treino
         $focus = explode(";",$focus);
 
         return isset($focus[$focusNum]) ? $focus[$focusNum] : null;
+    }
+
+    public function deStrcatFocus_all($focus){
+        $index = explode (";",$focus);
+        return isset($index) ? $index : null;
     }
 
     public function getTrainingDuration($trainingID)

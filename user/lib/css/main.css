@@ -61,3 +61,6 @@
 #postagem:focus {
     box-shadow: none;
 }
+#form-treino {
+    cursor: default;
+}
