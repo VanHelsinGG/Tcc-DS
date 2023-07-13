@@ -1,0 +1,18 @@
+@import url("../../../main/lib/css/universal.css");
+
+li, #user-icon{
+    transition: all .3s ease;
+}
+
+li:hover:not(li#user-icon){
+    background-color: var(--azul-complementar);
+    cursor: pointer;
+}
+
+#user-icon:hover{
+    background-color: var(--escuro-terciario);
+}
+
+.active{
+    background-color: var(--escuro-terciario);
+}

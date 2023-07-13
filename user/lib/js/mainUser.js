@@ -3,7 +3,7 @@ document.getElementById("postagem").addEventListener("input", () => {
     const user = document.getElementById("criador");
 
     data.value = formatDate(new Date());
-    user.value = userName;
+    user.value = userid;
 });
 
 document.getElementById('postagem-icon').addEventListener('submit', function (event) {

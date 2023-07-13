@@ -28,6 +28,10 @@ if ($func->verificarLogado()) {
                     header("Location: $redirectUrl");
                     exit();
                 }
+
+                $redirectUrl = urlencode("main.php");
+                header("Location: $redirectUrl");
+                exit();
             } else {
                 $GLOBALS['erro'] = 1;
             }

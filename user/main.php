@@ -1,36 +1,8 @@
 <?php
-include("../main/lib/php/include.php");
-
-$GLOBALS['erro'] = 0;
-
-if ($func->verificarLogado()) {
-    $cookieToken = $_COOKIE["logado"];
-
-    if ($id = $user->getUserID_byToken($cookieToken)) {
-        $user_token = $user->getUserToken_byID($id);
-
-        if ($user_token == -1 || strcmp($user_token, $cookieToken) || !$userToken->validToken($user_token)) {
-            $GLOBALS['erro'] = 1;
-        } else {
-            $GLOBALS['userNome'] = $user->getUserName_byToken($user_token);
-            $func->setarCookie("autenticado", 1, 1);
-
-            // Verifica se já escolheu o objetivo
-            if ($user->getUserObjective_byID($id) === -1) {
-                $redirectUrl = urlencode("objetivo.php");
-                header("Location: $redirectUrl");
-                exit();
-            }
-
-            echo '<script>var userName = "' . $GLOBALS['userNome'] . '"</script>';
-        }
-    } else {
-        $GLOBALS['erro'] = 1;
+    if(isset($_SESSION["id"])){
+        echo "<script>var userid =". $_SESSION['id']."</script>";
     }
-} else {
 
-    $GLOBALS['erro'] = 1;
-}
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -40,8 +12,8 @@ if ($func->verificarLogado()) {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <?php
-    if (isset($GLOBALS['userNome'])) {
-        echo "<title>" . $GLOBALS['userNome'] . " • OlympiaWorkout</title>";
+    if (isset($_SESSION['nome'])) {
+        echo "<title>" . $_SESSION['nome'] . " • OlympiaWorkout</title>";
     } else {
         echo "<title>OlympiaWorkout: Promovendo Saúde e Bem-Estar</title>";
     }
@@ -63,7 +35,7 @@ if ($func->verificarLogado()) {
                     <h1 class="fs-4 text-white" id="title">OlympiaWorkout</h1>
                 </div>
             </div>
-            <div class="col-4 d-flex align-items-center">
+            <div class="col-3 d-flex align-items-center">
                 <form action="#" method="get">
                     <div class="input-group rounded" id="pesquisa-div">
                         <span class="input-group-text" id="pesquisa-icon"><i class="bi bi-search"></i></span>
@@ -71,7 +43,7 @@ if ($func->verificarLogado()) {
                     </div>
                 </form>
             </div>
-            <div class="col-5">
+            <div class="col-6 d-flex justify-content-end pe-2">
                 <nav class="navbar navbar-expand-md navbar-light">
                     <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon text-white" style="filter: invert(1);"></span>
@@ -92,16 +64,21 @@ if ($func->verificarLogado()) {
                             </li>
                             <li class="nav-item mx-2 not-hover" style="border-left: 1px solid white;">
                                 <?php
-                                if (isset($GLOBALS['userNome'])) {
+                                // Verifica se a variável $GLOBALS['userNome'] está definida
+                                if (isset($_SESSION['nome'])) {
+                                    // Exibe o menu para usuários logados
                                     echo '<ul class="navbar-nav ms-3 d-flex align-items-center justify-content-center">';
-                                    if ($user->getUserAccess_byName($GLOBALS['userNome']) > 0) {
+                                    // Verifica se o usuário possui acesso de professor
+                                    if ($user->getUserAccess_byName($_SESSION['nome']) > 0) {
+                                        // Exibe o link para o painel do professor
                                         echo '<li class="nav-item">
-                                                <a class="painel btn btn-outline-light me-2" href="../professor/dashboard.php">Painel do professor</a>
-                                              </li>';
+                                                <a class="painel btn btn-outline-light me-2" href="../professor/dashboard.php">Professor</a>
+                                            </li>';
                                     }
+                                    // Exibe o menu dropdown com o nome do usuário logado
                                     echo '<li class="nav-item dropdown">
                                             <a href="#" id="profile" class="nav-link text-white d-flex align-items-center nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                                                ' . $GLOBALS["userNome"] . '
+                                                ' . $_SESSION['nome'] . '
                                             </a>
                                             <div class="dropdown-menu p-0" id="dropdown-menu" style="width:200px;background-color:var(--azul-complementar);">
                                                 <a class="dropdown-item dropdown-item-hover text-light py-2" href="#"><i class="bi bi-person-circle me-2"></i>Perfil</a>
@@ -111,15 +88,17 @@ if ($func->verificarLogado()) {
                                         </li>
                                     </ul>';
                                 } else {
+                                    // Exibe o menu para usuários não logados
                                     echo '<ul class="navbar-nav d-md-block d-none ms-3">
-                                    <li class="nav-item">
-                                        <a href="login.php" id="profile" class="nav-link text-white d-flex align-items-center nav-link">
-                                            Conectar-se
-                                        </a>
-                                    </li>
-                                </ul>';
+                                        <li class="nav-item">
+                                            <a href="login.php" id="profile" class="nav-link text-white d-flex align-items-center nav-link">
+                                                Conectar-se
+                                            </a>
+                                        </li>
+                                    </ul>';
                                 }
                                 ?>
+
                             </li>
                         </ul>
                     </div>
@@ -166,7 +145,7 @@ if ($func->verificarLogado()) {
                     $resultado = mysqli_stmt_get_result($stmt);
 
                     if (mysqli_num_rows($resultado) == 0) {
-                        echo "Não há treinos cadastrados para você!";
+                        echo "<p>Não há treinos cadastrados para você!</p>";
                     } else {
                         $row = mysqli_fetch_assoc($resultado);
                         $proxTreino = $training->deStrcatFocus($row['foco'], $row['proximo_treino']);
@@ -174,7 +153,7 @@ if ($func->verificarLogado()) {
                         $treinoid = $row['idtreino'];
                 ?>
                         <form method="get" action="treino.php" class="btn btn-azul text-white d-flex align-items-center justify-content-center" id="form-treino" style="cursor: default;">
-                            <?php echo "<input name='treinoid' type='hidden' value='$treinoid'?>";?>
+                            <?php echo "<input name='treinoid' type='hidden' value='$treinoid'?>"; ?>
                             <div class="col-3">
                                 <div class="row">
                                     <span><?php echo $row['nome']; ?></span>
@@ -307,7 +286,7 @@ if ($func->verificarLogado()) {
 
                     $query = "SELECT posts.*, users.imagem 
                             FROM posts 
-                            INNER JOIN users ON posts.user = users.nome 
+                            INNER JOIN users ON posts.user = users.userid 
                             ORDER BY posts.postid DESC 
                             LIMIT 3";
 
@@ -320,6 +299,7 @@ if ($func->verificarLogado()) {
                     if (mysqli_num_rows($resultado) > 0) {
                         while ($rows = mysqli_fetch_assoc($resultado)) {
                             $imagemUsuario = $rows['imagem'];
+                            $userNome = $user->getUserName_byID($rows['user']);
 
                             echo '<div class="row mt-4 p-4 rounded bg-escuro-secundario" style="outline:1px solid #363330;">
                                 <div class="col">
@@ -328,7 +308,7 @@ if ($func->verificarLogado()) {
                                             <img src="data:image/jpeg;base64,' . base64_encode($imagemUsuario) . '" style="height:65px; width:65px;border-radius:50%;">
                                         </div>
                                         <div class="col-11">
-                                            <div class="row"><span>' . $rows['user'] . '</span></div>
+                                            <div class="row"><span>' . $userNome . '</span></div>
                                             <div class="row"><span>' . $rows['data'] . '</span></div>
                                         </div>
                                     </div>
@@ -352,7 +332,7 @@ if ($func->verificarLogado()) {
                             </div>
                         </div>';
                     } else {
-                        echo "Não existem postagens recentes!";
+                        echo "<p class='text-center mt-5'>Não existem postagens recentes!</p>";
                     }
                     ?>
 
@@ -420,26 +400,39 @@ if ($func->verificarLogado()) {
                         <div class="col bg-escuro-secundario p-3">
                             <h3 class="fs-5 py-2" style="border-bottom: 1px solid #363330;"><i class="bi bi-arrow-right me-2"></i>Top Semanal</h3>
                             <table class="table-dark table-striped table text-center">
-                                <tr>
-                                    <th>{posição}</th>
-                                    <th>{nome}</th>
-                                    <th>{tempo diario}</th>
-                                </tr>
-                                <tr>
-                                    <th>1</th>
-                                    <td>Victor</td>
-                                    <td>10 minutos</td>
-                                </tr>
-                                <tr>
-                                    <th>2</th>
-                                    <td>Kauê</td>
-                                    <td>12 minutos</td>
-                                </tr>
-                                <tr>
-                                    <th>...</th>
-                                    <td>...</td>
-                                    <td>...</td>
-                                </tr>
+                                <?php
+                                $query = "SELECT nome, tempo_semanal FROM users ORDER BY tempo_semanal DESC LIMIT 3";
+
+                                $stmt = mysqli_prepare($db, $query);
+                                mysqli_stmt_execute($stmt);
+
+                                $resultados = mysqli_stmt_get_result($stmt);
+
+                                if (!mysqli_num_rows($resultados)) {
+                                    echo "Não há treinos recentes!";
+                                } else {
+
+                                    echo "<tr>
+                                            <th>Classificação</th>
+                                            <th>Usuário</th>
+                                            <th>Tempo</th>
+                                        </tr>";
+
+                                    $contador = 0;
+
+                                    while ($row = mysqli_fetch_assoc($resultados)) {
+                                        $contador++;
+                                ?>
+                                        <tr>
+                                            <th><?php echo $contador ?></th>
+                                            <td><?php echo $row['nome'] ?></td>
+                                            <td><?php echo $row['tempo_semanal'] ?></td>
+                                        </tr>
+                                <?php
+                                    }
+                                }
+
+                                ?>
                             </table>
                         </div>
                     </div>
@@ -447,26 +440,39 @@ if ($func->verificarLogado()) {
                         <div class="col bg-escuro-secundario p-3">
                             <h3 class="fs-5 py-2" style="border-bottom: 1px solid #363330;"><i class="bi bi-arrow-right me-2"></i>Top Mensal</h3>
                             <table class="table-dark table-striped table text-center">
-                                <tr>
-                                    <th>{posição}</th>
-                                    <th>{nome}</th>
-                                    <th>{tempo diario}</th>
-                                </tr>
-                                <tr>
-                                    <th>1</th>
-                                    <td>Victor</td>
-                                    <td>10 minutos</td>
-                                </tr>
-                                <tr>
-                                    <th>2</th>
-                                    <td>Kauê</td>
-                                    <td>12 minutos</td>
-                                </tr>
-                                <tr>
-                                    <th>...</th>
-                                    <td>...</td>
-                                    <td>...</td>
-                                </tr>
+                                <?php
+                                $query = "SELECT nome, tempo_mensal FROM users ORDER BY tempo_mensal DESC LIMIT 3";
+
+                                $stmt = mysqli_prepare($db, $query);
+                                mysqli_stmt_execute($stmt);
+
+                                $resultados = mysqli_stmt_get_result($stmt);
+
+                                if (!mysqli_num_rows($resultados)) {
+                                    echo "Não há treinos recentes!";
+                                } else {
+
+                                    echo "<tr>
+                                            <th>Classificação</th>
+                                            <th>Usuário</th>
+                                            <th>Tempo</th>
+                                        </tr>";
+
+                                    $contador = 0;
+
+                                    while ($row = mysqli_fetch_assoc($resultados)) {
+                                        $contador++;
+                                ?>
+                                        <tr>
+                                            <th><?php echo $contador ?></th>
+                                            <td><?php echo $row['nome'] ?></td>
+                                            <td><?php echo $row['tempo_mensal'] ?></td>
+                                        </tr>
+                                <?php
+                                    }
+                                }
+
+                                ?>
                             </table>
                         </div>
                     </div>
@@ -534,10 +540,7 @@ if ($func->verificarLogado()) {
 </body>
 
 </html>
-
 <?php
-if ($GLOBALS['erro']) {
-    $func->setarCookie("autenticado", 0, 0);
-    $func->showAlert("Sessão expirada!", "Sua sessão foi encerrada. Para acessar sua conta, por favor faça login novamente.", "Continuar", "", "./actions/deslogar.php?redirect=../login.php");
-}
+session_abort();
+
 ?>

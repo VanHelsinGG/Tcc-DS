@@ -40,6 +40,10 @@ if (isset($_POST['senha']) && isset($_POST['email'])) {
 
             // Retorna ao index
             header("Location: ../main.php");
+
+            $txt = "[login] Conta logada com o nome : $nome";
+            $func->Log("contas",$txt);
+
             exit();
         }
     }

@@ -55,6 +55,9 @@ if (mysqli_num_rows($resultados) > 0) {
     mysqli_stmt_bind_param($stmt, "sssssss", $nome, $email, $hashedSenha, $sexo, $data, $ip, $imagem);
     mysqli_stmt_execute($stmt);
 
+    $txt = "[registro] Conta criada com o nome : $nome";
+    $func->Log("contas",$txt);
+
     header("Location: ../login.php");
     exit(); // Termina a execução do código após o redirecionamento
 }

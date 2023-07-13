@@ -1,0 +1,2 @@
+[07/07/2023 12:32:25am] - [users] Foram resetados 0 registros.
+[07/07/2023 12:36:28am] - [users] Foram resetados 1 registros.

@@ -1,10 +1,16 @@
 <?php
 
 include("connector.php");
-// Cria um cookie
 
 class Functions
 {
+
+    private $db;
+
+    public function __construct($db)
+    {
+        $this->db = $db;
+    }
     /**
      * Aparece um alerta personalizado.
      * @param string $titulo Titulo do alerta.
@@ -105,11 +111,63 @@ class Functions
         return ((isset($_COOKIE['logado']) && $_COOKIE['logado'])) ? true : false;
     }
 
+    public function verificarAutenticado()
+    {
+        if (!$this->verificarLogado()) {
+            return ['resultado' => 0];
+        }
+
+        $user = new User($this->db);
+        $userToken = new UserSessionToken();
+
+        $tokenNavegador = $_COOKIE['logado'];
+
+        $userID = $user->getUserID_byToken($tokenNavegador);
+        if (!$userID) {
+            return ['resultado' => 0];
+        }
+
+        $tokenDB = $user->getUserToken_byID($userID);
+        if ($tokenDB === -1 || strcmp($tokenDB, $tokenNavegador) !== 0 || !$userToken->validToken($tokenDB)) {
+            return ['resultado' => 0];
+        }
+
+        $userName = $user->getUserName_byToken($tokenDB);
+
+        $this->setarCookie("autenticado", 1, 1);
+
+        return [
+            "nome" => $userName,
+            "resultado" => 1,
+            'id' => $userID,
+        ];
+    }
+
     public function redirect_withParams($paramKey, $paramValue, $destinationUrl)
     {
         $new_url = $destinationUrl . '?' . $paramKey . '=' . $paramValue;
         header("Location: $new_url");
         exit();
+    }
+
+    public function Log($file, $text)
+    {
+        if (ENABLE_LOG) {
+            $file = fopen($_SERVER['DOCUMENT_ROOT'] . "/tcc/main/logs/$file.txt", "a") or die("erro");
+            fwrite($file, "[" . date("d/m/Y h:i:sa") . "] - $text\n");
+            fclose($file);
+        }
+    }
+
+    public function refreshWeekRanks()
+    {
+        $query = "UPDATE users SET tempo_semanal = '00:00:00'";
+        mysqli_query($this->db, "START TRANSACTION");
+        mysqli_query($this->db, $query);
+        $numRowsUpdated = mysqli_affected_rows($this->db);
+        mysqli_query($this->db, "COMMIT");
+
+        return $numRowsUpdated;
     }
 }
 
@@ -385,7 +443,7 @@ class Treino
     public function getTrainingsTrated($trainingID, $trainingNum)
     {
         $focuses = $this->getTrainingFocus($trainingID);
-        return $this->deStrcatFocus($focuses,$trainingNum);
+        return $this->deStrcatFocus($focuses, $trainingNum);
     }
     private function deStrcatTrainings($focus)
     {
@@ -430,14 +488,16 @@ class Treino
         return $trainingData ? $trainingData['foco'] : null;
     }
 
-    public function deStrcatFocus($focus,$focusNum){
-        $focus = explode(";",$focus);
+    public function deStrcatFocus($focus, $focusNum)
+    {
+        $focus = explode(";", $focus);
 
         return isset($focus[$focusNum]) ? $focus[$focusNum] : null;
     }
 
-    public function deStrcatFocus_all($focus){
-        $index = explode (";",$focus);
+    public function deStrcatFocus_all($focus)
+    {
+        $index = explode(";", $focus);
         return isset($index) ? $index : null;
     }
 
@@ -468,5 +528,5 @@ class Treino
 
 $userToken = new UserSessionToken();
 $user = new User($db);
-$func = new Functions();
+$func = new Functions($db);
 $training = new Treino($db);
