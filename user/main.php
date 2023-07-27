@@ -1,4 +1,5 @@
 <?php
+    include("../main/lib/php/include.php");
     if(isset($_SESSION["id"])){
         echo "<script>var userid =". $_SESSION['id']."</script>";
     }
@@ -72,7 +73,7 @@
                                     if ($user->getUserAccess_byName($_SESSION['nome']) > 0) {
                                         // Exibe o link para o painel do professor
                                         echo '<li class="nav-item">
-                                                <a class="painel btn btn-outline-light me-2" href="../professor/dashboard.php">Professor</a>
+                                                <a class="painel btn btn-outline-light me-2" href="../professor/dashboard/index.php">Professor</a>
                                             </li>';
                                     }
                                     // Exibe o menu dropdown com o nome do usuário logado
