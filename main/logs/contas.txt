@@ -8,3 +8,10 @@
 [09/07/2023 03:16:33pm] - [registro] Conta criada com o nome : Stefanie Raquel Lopes Da Silva
 [09/07/2023 03:17:26pm] - [login] Conta logada com o nome : Stefanie Raquel Lopes Da Silva
 [27/07/2023 11:36:56am] - [login] Conta logada com o nome : Olympia Workout
+[31/07/2023 09:37:17am] - [login] Conta logada com o nome : Olympia Workout
+[31/07/2023 10:12:54am] - [login] Conta logada com o nome : Olympia Workout
+[02/08/2023 07:55:35am] - [login] Conta logada com o nome : Olympia Workout
+[03/08/2023 10:56:59am] - [login] Conta logada com o nome : Olympia Workout
+[03/08/2023 11:12:25am] - [login] Conta logada com o nome : Olympia Workout
+[21/08/2023 11:04:01am] - [login] Conta logada com o nome : Olympia Workout
+[21/08/2023 11:09:18am] - [login] Conta logada com o nome : Olympia Workout

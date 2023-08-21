@@ -1,8 +1,8 @@
 <?php
-    include("../main/lib/php/include.php");
-    if(isset($_SESSION["id"])){
-        echo "<script>var userid =". $_SESSION['id']."</script>";
-    }
+include("../main/lib/php/include.php");
+if (isset($_SESSION["id"])) {
+    echo "<script>var userid =" . $_SESSION['id'] . "</script>";
+}
 
 ?>
 <!DOCTYPE html>
@@ -352,47 +352,44 @@
                             <h3 class="fs-5 py-2" style="border-bottom: 1px solid #363330;"><i class="bi bi-arrow-right me-2"></i>Top Diario</h3>
                             <table class="table-dark table-striped table text-center">
                                 <?php
-                                $query = "SELECT aluno, tempo_decorrido FROM exercicios_diarios ORDER BY tempo_decorrido DESC LIMIT 3";
+                                // Supondo que você já tenha estabelecido a conexão com o banco de dados ($db)
+
+                                $query = "SELECT ed.aluno, ed.tempo_decorrido, u.nome FROM exercicios_diarios AS ed
+                                        JOIN users AS u ON ed.aluno = u.userid
+                                        ORDER BY ed.tempo_decorrido DESC
+                                        LIMIT 3";
 
                                 $stmt = mysqli_prepare($db, $query);
                                 mysqli_stmt_execute($stmt);
-
                                 $resultados = mysqli_stmt_get_result($stmt);
 
                                 if (!mysqli_num_rows($resultados)) {
                                     echo "Não há treinos recentes!";
                                 } else {
+                                    $rows = mysqli_fetch_all($resultados, MYSQLI_ASSOC);
+                                    mysqli_free_result($resultados);
+                                    mysqli_stmt_close($stmt);
 
-                                    echo "<tr>
+                                    echo "<table>
+                                        <tr>
                                             <th>Classificação</th>
                                             <th>Usuário</th>
                                             <th>Tempo diário</th>
                                         </tr>";
 
-                                    $contador = 0;
-
-                                    while ($row = mysqli_fetch_assoc($resultados)) {
-                                        $query_users = "SELECT nome FROM users WHERE userid = ?";
-
-                                        $stmt_users = mysqli_prepare($db, $query_users);
-                                        mysqli_stmt_bind_param($stmt_users, "s", $row['aluno']);
-                                        mysqli_stmt_execute($stmt_users);
-
-                                        $resultados_users = mysqli_stmt_get_result($stmt_users);
-                                        $resultado = mysqli_fetch_assoc($resultados_users);
-
-                                        $contador++;
-                                ?>
-                                        <tr>
-                                            <th><?php echo $contador ?></th>
-                                            <td><?php echo $resultado['nome'] ?></td>
-                                            <td><?php echo $row['tempo_decorrido'] ?></td>
-                                        </tr>
-                                <?php
+                                    foreach ($rows as $contador => $row) {
+                                        echo "<tr>
+                                        <td>" . ($contador + 1) . "</td>
+                                        <td>" . $row['nome'] . "</td>
+                                        <td>" . $row['tempo_decorrido'] . "</td>
+                                    </tr>";
                                     }
+
+                                    echo "</table>";
                                 }
 
                                 ?>
+
 
                             </table>
                         </div>
@@ -442,16 +439,20 @@
                             <h3 class="fs-5 py-2" style="border-bottom: 1px solid #363330;"><i class="bi bi-arrow-right me-2"></i>Top Mensal</h3>
                             <table class="table-dark table-striped table text-center">
                                 <?php
-                                $query = "SELECT nome, tempo_mensal FROM users ORDER BY tempo_mensal DESC LIMIT 3";
+                                // Supondo que você já tenha estabelecido a conexão com o banco de dados ($db)
+
+                                $query = "SELECT nome, tempo_semanal FROM users ORDER BY tempo_semanal DESC LIMIT 3";
 
                                 $stmt = mysqli_prepare($db, $query);
                                 mysqli_stmt_execute($stmt);
-
                                 $resultados = mysqli_stmt_get_result($stmt);
 
                                 if (!mysqli_num_rows($resultados)) {
                                     echo "Não há treinos recentes!";
                                 } else {
+                                    $rows = mysqli_fetch_all($resultados, MYSQLI_ASSOC);
+                                    mysqli_free_result($resultados);
+                                    mysqli_stmt_close($stmt);
 
                                     echo "<tr>
                                             <th>Classificação</th>
@@ -459,21 +460,19 @@
                                             <th>Tempo</th>
                                         </tr>";
 
-                                    $contador = 0;
-
-                                    while ($row = mysqli_fetch_assoc($resultados)) {
-                                        $contador++;
-                                ?>
-                                        <tr>
-                                            <th><?php echo $contador ?></th>
-                                            <td><?php echo $row['nome'] ?></td>
-                                            <td><?php echo $row['tempo_mensal'] ?></td>
-                                        </tr>
-                                <?php
+                                    foreach ($rows as $contador => $row) {
+                                        echo "<tr>
+                                            <td>" . ($contador + 1) . "</td>
+                                            <td>" . $row['nome'] . "</td>
+                                            <td>" . $row['tempo_semanal'] . "</td>
+                                        </tr>";
                                     }
+
+                                    echo "</table>";
                                 }
 
                                 ?>
+
                             </table>
                         </div>
                     </div>

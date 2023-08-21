@@ -169,6 +169,7 @@ class Functions
 
         return $numRowsUpdated;
     }
+
 }
 
 
@@ -339,6 +340,16 @@ class User
         $row = $resultados->fetch_assoc();
 
         return $row ? $row[$columnName] : null;
+    }
+
+    public function getNumOf_users(){
+        $query = "SELECT * FROM users";
+
+        $query = mysqli_query($this->db,$query);
+
+        $numUsers = mysqli_num_rows($query);
+
+        return $numUsers;
     }
 }
 
@@ -523,6 +534,21 @@ class Treino
     {
         $trainingData = $this->getTrainingData($trainingID);
         return $trainingData ? $trainingData['observacoes'] : null;
+    }
+
+    public function getNumOfStudent_byToken($token){
+        $user = new User($this->db);
+
+        $userID = $user->getUserID_byToken($token);
+        
+        $query = "SELECT *  FROM treinos WHERE professor = $userID";
+
+        $query = mysqli_query($this->db,$query);
+
+        $returner = mysqli_num_rows($query);
+
+        return $returner;
+
     }
 }
 
