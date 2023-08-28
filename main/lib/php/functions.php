@@ -170,6 +170,28 @@ class Functions
         return $numRowsUpdated;
     }
 
+    public function verificarPalavrao($index) {
+        $filePath = "C:/xampp/htdocs/tcc/main/lib/docs/palavroes.txt";
+        $fileContents = file_get_contents($filePath);
+    
+        if ($fileContents !== false) {
+            $palavroes = explode("\n", $fileContents);
+    
+            foreach ($palavroes as $palavra) {
+                $palavra = trim($palavra);
+                if (stripos($index, $palavra) !== false) {
+                    $substituicao = str_repeat("*", mb_strlen($palavra, 'utf-8'));
+                    $index = str_ireplace($palavra, $substituicao, $index);
+                }
+            }
+    
+            return $index;
+        }
+    
+        return false;
+    }
+    
+
 }
 
 
@@ -251,7 +273,7 @@ class UserSessionToken extends Functions
         // Token expirado
         $expiration = $this->getTokenPart($token, 2);
 
-        if (time()  > $expiration) {
+        if (time() > $expiration) {
             return 0;
         }
 
@@ -342,10 +364,11 @@ class User
         return $row ? $row[$columnName] : null;
     }
 
-    public function getNumOf_users(){
+    public function getNumOf_users()
+    {
         $query = "SELECT * FROM users";
 
-        $query = mysqli_query($this->db,$query);
+        $query = mysqli_query($this->db, $query);
 
         $numUsers = mysqli_num_rows($query);
 
@@ -422,12 +445,11 @@ class Treino
     'series' => '3',
     'observacoes' => 'Descansar 1 minuto entre séries',
     ];
-
     $trainingID = $training->createTraining($trainingData);
     if ($trainingID) {
-        echo "Treino criado com sucesso! ID: " . $trainingID;
+    echo "Treino criado com sucesso! ID: " . $trainingID;
     } else {
-        echo "Erro ao criar treino.";
+    echo "Erro ao criar treino.";
     }
     */
 
@@ -536,14 +558,15 @@ class Treino
         return $trainingData ? $trainingData['observacoes'] : null;
     }
 
-    public function getNumOfStudent_byToken($token){
+    public function getNumOfStudent_byToken($token)
+    {
         $user = new User($this->db);
 
         $userID = $user->getUserID_byToken($token);
-        
+
         $query = "SELECT *  FROM treinos WHERE professor = $userID";
 
-        $query = mysqli_query($this->db,$query);
+        $query = mysqli_query($this->db, $query);
 
         $returner = mysqli_num_rows($query);
 

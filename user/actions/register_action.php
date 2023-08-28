@@ -58,6 +58,6 @@ if (mysqli_num_rows($resultados) > 0) {
     $txt = "[registro] Conta criada com o nome : $nome";
     $func->Log("contas",$txt);
 
-    header("Location: ../login.php");
+    header("Location: ../login.php?register=1");
     exit(); // Termina a execução do código após o redirecionamento
 }

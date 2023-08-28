@@ -38,11 +38,16 @@ if (isset($_POST['senha']) && isset($_POST['email'])) {
             mysqli_stmt_bind_param($stmt, "ss", $token, $rows['userid']);
             mysqli_stmt_execute($stmt);
 
-            // Retorna ao index
-            header("Location: ../main.php");
+            if (isset($_POST['registro']) && $_POST['registro'] == 1) {
+                header("Location: ../objetivo.php");
+            } else {
+
+                // Retorna ao index
+                header("Location: ../main.php");
+            }
 
             $txt = "[login] Conta logada com o nome : $nome";
-            $func->Log("contas",$txt);
+            $func->Log("contas", $txt);
 
             exit();
         }

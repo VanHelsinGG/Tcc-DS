@@ -59,7 +59,7 @@ if ($func->verificarLogado()) {
 
 <body style="background-color:#1d1c1a;color:white;">
         <!-- Inicio header/navbar -->
-        <header class="header container-fluid bg-laranja fixed-top p-1" id="header">
+        <header class="header container-fluid bg-laranja p-3" id="header">
         <div class="row">
             <div class="col-3 pt-1 d-flex ps-5 align-items-center">
                 <div class="col-6">

@@ -26,6 +26,8 @@ for (var i = 0; i < lis.length; i++) {
 }
 
 function adicionarInput(button) {
+    var divExercicio = button.closest(".container");
+    var divExercicioID = divExercicio.className.split("-")[1];
     var divPai = button.closest('[class^="row"]');
 
     if (!divPai) {
@@ -42,8 +44,7 @@ function adicionarInput(button) {
     // Adicione o novo input antes do botão
     divPai.insertBefore(novoInput, button);
 
-    var divPaiID = divPai.id.split("-")[1];
-    refreshTrainingInfos(divPaiID, 0, 1); // Atualize a contagem de séries
+    refreshTrainingInfos(divExercicioID, 0, 1); // Atualize a contagem de séries
 }
 
 function criarNovoTreino() {
@@ -54,6 +55,7 @@ function criarNovoTreino() {
         numTraining++;
 
         novoTreino.classList.remove(`treino-${numTraining - 1}`);
+        novoTreino.classList.remove("treino-template");
         novoTreino.classList.remove("d-none")
         novoTreino.classList.add(`treino-${numTraining}`);
 
@@ -88,6 +90,7 @@ function adicionarExercicio(button) {
 
     const todosExercicios = divPai.querySelectorAll(`[id^="exercicio-${divPaiID}-"]`);
     const ultimoExercicio = todosExercicios[todosExercicios.length - 1];
+
 
     const novoExercicio = ultimoExercicio.cloneNode(true);
 

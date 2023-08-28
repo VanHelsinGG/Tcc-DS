@@ -53,7 +53,7 @@ if ($func->verificarLogado()) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OlympiaWorkout: Promovendo Saúde e Bem-Estar</title>
     <!-- <script src="./javascript/scroll.js" defer></script> -->
-    <script src="./lib/js/switcher.js" defer></script>
+    <!-- <script src="./lib/js/switcher.js" defer></script> -->
     <script src="../main/lib/js/main.js" defer></script>
     <script src="./lib/js/index.js" defer></script>
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400&display=swap" rel="stylesheet">
@@ -372,8 +372,8 @@ if ($func->verificarLogado()) {
 </html>
 
 <?php
-if ($GLOBALS['erro']) {
-    $func->setarCookie("autenticado", 0, 0);
-    $func->showAlert("Sessão expirada!", "Sua sessão foi encerrada. Para acessar sua conta, por favor faça login novamente.", "Continuar", "");
-}
+// if ($GLOBALS['erro']) {
+//     $func->setarCookie("autenticado", 0, 0);
+//     $func->showAlert("Sessão expirada!", "Sua sessão foi encerrada. Para acessar sua conta, por favor faça login novamente.", "Continuar", "");
+// }
 ?>

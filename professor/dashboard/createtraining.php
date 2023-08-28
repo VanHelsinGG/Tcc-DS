@@ -1,4 +1,6 @@
-<?php include("../../main/lib/php/include.php") ?>
+<?php include("../../main/lib/php/include.php")
+
+    ?>
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -22,13 +24,14 @@
             <nav class="escuro col-md-2 m-0 col-lg-2 d-md-block text-white p-0 vh-100 sidebar fixed-top" id="navbar">
                 <h1 class="text-center fs-3 bg-laranja py-4">OlympiaWorkout</h1>
                 <ul class="list-unstyled list-group h-100">
-                    <li class="my-1 option ps-2"><a href="#" class="text-white btn my-2"><i
+                    <li class="my-1 option ps-2"><a href="index.php" class="text-white btn my-2 w-100 text-start"><i
                                 class="bi bi-house-fill me-3"></i>Inicio</a></li>
-                    <li class="active my-1 option ps-2"><a href="createtraining.php" class="text-white btn my-2"><i
-                                class="bi bi-fire me-3"></i>Criar Treino</a></li>
-                    <li class="my-1 option ps-2"><a href="#" class="text-white btn my-2"><i
+                    <li class="active my-1 option ps-2"><a href="createtraining.php"
+                            class="text-white btn my-2 w-100  text-start"><i class="bi bi-fire me-3"></i>Criar
+                            Treino</a></li>
+                    <li class="my-1 option ps-2"><a href="#" class="text-white btn my-2 w-100  text-start"><i
                                 class="bi bi-person-fill me-3"></i>Alunos</a></li>
-                    <li class="my-1 option ps-2"><a href="#" class="text-white btn my-2"><i
+                    <li class="my-1 option ps-2"><a href="#" class="text-white btn my-2 w-100  text-start"><i
                                 class="bi bi-clipboard2-data-fill me-3"></i>Relatorios</a></li>
                     <li class="my-1 option ps-2" style="border-top: 1px solid #363330;" id="user-icon"><a href=""
                             class="text-white btn my-2"><i class="bi bi-person-circle me-3"></i>Olympia Workout</a></li>
@@ -38,24 +41,23 @@
                 <header class="container-fluid text-center my-4 pb-4 pt-4">
                     <h1>Criar Treino - Painel do Professor</h1>
                 </header>
-                <form action="" method="get">
+                <form action="" method="get" class="py-4">
                     <div class="container rounded shadow-lg">
-                        <div class="row bg-primary rounded text-white p-3">
+                        <div class="row bg-azul rounded text-white p-3">
                             <h2>Informações Gerais</h2>
                         </div>
                         <div class="row my-3 p-3">
                             <div class="col-6">
                                 <div class="form-floating mb-3">
                                     <input type="text" class="form-control" disabled readonly id="Professor"
-                                        placeholder="Nome do Professor" value="Nome Professor">
+                                        placeholder="Professor">
                                     <label for="Professor">Professor</label>
 
                                 </div>
                             </div>
                             <div class="col-6">
                                 <div class="form-floating mb-3">
-                                    <input type="text" class="form-control" id="user" placeholder="Nome do Usuario"
-                                        value="Nome Aluno">
+                                    <input type="text" class="form-control" id="user" placeholder="Aluno">
                                     <label for="user">Aluno</label>
 
                                 </div>
@@ -64,22 +66,21 @@
                     </div>
 
                     <div class="container rounded shadow-lg mt-5">
-                        <div class="row bg-primary rounded text-white p-3">
+                        <div class="row bg-azul rounded text-white p-3">
                             <h2>Informações do Treino</h2>
                         </div>
                         <div class="row my-3 p-3">
                             <div class="col-6">
                                 <div class="form-floating mb-3">
                                     <input type="text" class="form-control" id="nome-treino"
-                                        placeholder="Nome do Treino" value="Nome do Treino">
+                                        placeholder="Nome do Treino">
                                     <label for="nome-treino">Nome do Treinamento</label>
 
                                 </div>
                             </div>
                             <div class="col-6">
                                 <div class="form-floating mb-3">
-                                    <input type="text" class="form-control" id="duracao" placeholder="Duração"
-                                        value="0">
+                                    <input type="number" class="form-control" id="duracao" placeholder="Duração">
                                     <label for="duracao">Duração (treinos)</label>
                                 </div>
                             </div>
@@ -91,13 +92,13 @@
                             <div class="col">
                                 <div class="container rounded shadow-lg mt-5" id="treinosContainer">
                                     <!-- Treino template -->
-                                    <div class="row container treino-template d-none" id="treino-1">
-                                        <div class="row bg-success rounded text-white p-3">
-                                            <h2 class="treino">Treino 1</h2>
+                                    <div class="my-2 row container treino-template d-none" id="treino-1">
+                                        <div class="row bg-laranja rounded text-white p-3">
+                                            <h2 id="titulo">Treino 1</h2>
                                         </div>
-                                        <div class="col-4 px-4 my-2" id="exercicio-1-1">
+                                        <div class="col-4 px-4 my-2" id="exercicio-1-1" class="exercicio">
                                             <div class="row">
-                                                <h3 class="bg-danger p-2 ps-3"><input type="text"
+                                                <h3 class="bg-escuro-terciario rounded  p-2 px-3"><input type="text"
                                                         class="form-control my-1" placeholder="Exercício 1"></h3>
                                             </div>
                                             <div class="row">
@@ -106,13 +107,13 @@
                                                 <input type="text" class="form-control my-1" placeholder="Serie 3">
                                                 <input type="text" class="form-control my-1" placeholder="Serie 3">
                                                 <button type="button" class="btn btn-success mt-1"
-                                                    onclick="adicionarInput(this)">+</button>
+                                                    onclick="adicionarInput(this)">Nova Serie</button>
                                             </div>
                                         </div>
-                                        <div class="col-4 px-4 my-2" id="exercicio-1-2">
+                                        <div class="col-4 px-4 my-2" id="exercicio-1-2" class="exercicio">
                                             <div class="row">
-                                                <h3 class="bg-danger p-2 ps-3"><input type="text"
-                                                        class="form-control my-1" placeholder="Exercício 1"></h3>
+                                                <h3 class="bg-escuro-terciario rounded  p-2 px-3"><input type="text"
+                                                        class="form-control my-1" placeholder="Exercício 2"></h3>
                                             </div>
                                             <div class="row">
                                                 <input type="text" class="form-control my-1" placeholder="Serie 1">
@@ -120,13 +121,13 @@
                                                 <input type="text" class="form-control my-1" placeholder="Serie 3">
                                                 <input type="text" class="form-control my-1" placeholder="Serie 3">
                                                 <button type="button" class="btn btn-success mt-1"
-                                                    onclick="adicionarInput(this)">+</button>
+                                                    onclick="adicionarInput(this)">Nova Serie</button>
                                             </div>
                                         </div>
-                                        <div class="col-4 px-4 my-2" id="exercicio-1-3">
+                                        <div class="col-4 px-4 my-2" id="exercicio-1-3" class="exercicio">
                                             <div class="row">
-                                                <h3 class="bg-danger p-2 ps-3"><input type="text"
-                                                        class="form-control my-1" placeholder="Exercício 1"></h3>
+                                                <h3 class="bg-escuro-terciario rounded  p-2 px-3"><input type="text"
+                                                        class="form-control my-1" placeholder="Exercício 3"></h3>
                                             </div>
                                             <div class="row">
                                                 <input type="text" class="form-control my-1" placeholder="Serie 1">
@@ -134,22 +135,27 @@
                                                 <input type="text" class="form-control my-1" placeholder="Serie 3">
                                                 <input type="text" class="form-control my-1" placeholder="Serie 3">
                                                 <button type="button" class="btn btn-success mt-1"
-                                                    onclick="adicionarInput(this)">+</button>
+                                                    onclick="adicionarInput(this)">Nova Serie</button>
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <button type="button" id="btn-criar-exercicio" class="btn btn-primary my-1"
-                                                onclick="adicionarExercicio(this)">+</button>
+                                            <div class="col">
+                                                <button type="button" id="btn-criar-exercicio"
+                                                    class="btn btn-primary my-2 w-100"
+                                                    onclick="adicionarExercicio(this)">Novo
+                                                    Exercício</button>
+                                            </div>
                                         </div>
                                     </div>
                                     <!-- Treino 1 -->
-                                    <div class="row container treino-1" id="treino-1">
-                                        <div class="row bg-success rounded text-white p-3">
+                                    <div class="row container treino-1" id="treino-1"
+                                        style="margin-top: 2rem;margin-bottom:2rem;">
+                                        <div class="row bg-laranja rounded text-white p-3">
                                             <h2 id="titulo">Treino 1</h2>
                                         </div>
-                                        <div class="col-4 px-4 my-2" id="exercicio-1-1">
+                                        <div class="col-4 px-4 my-2" id="exercicio-1-1" class="exercicio">
                                             <div class="row">
-                                                <h3 class="bg-danger p-2 ps-3"><input type="text"
+                                                <h3 class="bg-escuro-terciario rounded p-2 px-3"><input type="text"
                                                         class="form-control my-1" placeholder="Exercício 1"></h3>
                                             </div>
                                             <div class="row">
@@ -158,13 +164,13 @@
                                                 <input type="text" class="form-control my-1" placeholder="Serie 3">
                                                 <input type="text" class="form-control my-1" placeholder="Serie 3">
                                                 <button type="button" class="btn btn-success mt-1"
-                                                    onclick="adicionarInput(this)">+</button>
+                                                    onclick="adicionarInput(this)">Nova Serie</button>
                                             </div>
                                         </div>
-                                        <div class="col-4 px-4 my-2" id="exercicio-1-2">
+                                        <div class="col-4 px-4 my-2" id="exercicio-1-2" class="exercicio">
                                             <div class="row">
-                                                <h3 class="bg-danger p-2 ps-3"><input type="text"
-                                                        class="form-control my-1" placeholder="Exercício 1"></h3>
+                                                <h3 class="bg-escuro-terciario rounded  p-2 px-3"><input type="text"
+                                                        class="form-control my-1" placeholder="Exercício 2"></h3>
                                             </div>
                                             <div class="row">
                                                 <input type="text" class="form-control my-1" placeholder="Serie 1">
@@ -172,13 +178,13 @@
                                                 <input type="text" class="form-control my-1" placeholder="Serie 3">
                                                 <input type="text" class="form-control my-1" placeholder="Serie 3">
                                                 <button type="button" class="btn btn-success mt-1"
-                                                    onclick="adicionarInput(this)">+</button>
+                                                    onclick="adicionarInput(this)">Nova Serie</button>
                                             </div>
                                         </div>
-                                        <div class="col-4 px-4 my-2" id="exercicio-1-3">
+                                        <div class="col-4 px-4 my-2" id="exercicio-1-3" class="exercicio">
                                             <div class="row">
-                                                <h3 class="bg-danger p-2 ps-3"><input type="text"
-                                                        class="form-control my-1" placeholder="Exercício 1"></h3>
+                                                <h3 class="bg-escuro-terciario rounded  p-2 px-3"><input type="text"
+                                                        class="form-control my-1" placeholder="Exercício 3"></h3>
                                             </div>
                                             <div class="row">
                                                 <input type="text" class="form-control my-1" placeholder="Serie 1">
@@ -186,27 +192,31 @@
                                                 <input type="text" class="form-control my-1" placeholder="Serie 3">
                                                 <input type="text" class="form-control my-1" placeholder="Serie 3">
                                                 <button type="button" class="btn btn-success mt-1"
-                                                    onclick="adicionarInput(this)">+</button>
+                                                    onclick="adicionarInput(this)">Nova Serie</button>
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <button type="button" id="btn-criar-exercicio" class="btn btn-primary my-1"
-                                                onclick="adicionarExercicio(this)">+</button>
+                                            <div class="col">
+                                                <button type="button" id="btn-criar-exercicio"
+                                                    class="btn btn-primary my-2 w-100"
+                                                    onclick="adicionarExercicio(this)">Novo
+                                                    Exercício</button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                <button type="button" class="btn btn-success mt-1 criar-treino"
-                                    onclick="criarNovoTreino()">+</button>
                             </div>
                         </div>
                     </div>
-
-                    <div class="container-fluid my-4">
-                        <div class="row">
-                            <button type="button" class="btn btn-warning mt-1">+</button>
+                </form>
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col">
+                            <button type="button" class="btn btn-laranja mt-1 w-100 criar-treino"
+                                onclick="criarNovoTreino()">Novo Treino</button>
                         </div>
                     </div>
-                </form>
+                </div>
             </main>
         </div>
     </div>

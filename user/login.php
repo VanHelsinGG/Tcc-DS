@@ -64,6 +64,11 @@ include("../main/lib/php/include.php");
                                 </div>
                             </div>
                         </div>
+                        <?php
+                            if(isset($_GET['registro']) && $_GET['registro'] == 1){
+                                echo "<input type='hidden' id='registro' name='registro' value='1'>";
+                            }
+                        ?>
                     </div>
                     <div class="row">
                         <div class="col">

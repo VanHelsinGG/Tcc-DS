@@ -72,6 +72,10 @@ img {
     color: white !important;
 }
 
+.btn-laranja:hover{
+    background-color: var(--laranja-principal-escurecido) !important;
+    border-color: var(--laranja-principal-escurecido) !important;
+}
 
 .bg-escuro-secundario {
     background-color: var(--escuro-secundario) !important;

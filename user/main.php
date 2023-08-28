@@ -1,5 +1,6 @@
 <?php
 include("../main/lib/php/include.php");
+
 if (isset($_SESSION["id"])) {
     echo "<script>var userid =" . $_SESSION['id'] . "</script>";
 }
@@ -24,7 +25,8 @@ if (isset($_SESSION["id"])) {
     <link rel="stylesheet" href="../main/lib/css/universal.css">
     <link rel="stylesheet" href="../main/lib/images/bootstrap-icons-1.10.4/font/bootstrap-icons.css">
     <link rel="stylesheet" href="./lib/css/main.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
 </head>
 
 <body style="background-color:#1d1c1a;">
@@ -40,13 +42,16 @@ if (isset($_SESSION["id"])) {
                 <form action="#" method="get">
                     <div class="input-group rounded" id="pesquisa-div">
                         <span class="input-group-text" id="pesquisa-icon"><i class="bi bi-search"></i></span>
-                        <input type="text" class="form-control" id="pesquisa" name="pesquisa" autocomplete="off" placeholder="Pesquisar exercícios, dietas, pessoas...">
+                        <input type="text" class="form-control" id="pesquisa" name="pesquisa" autocomplete="off"
+                            placeholder="Pesquisar exercícios, dietas, pessoas...">
                     </div>
                 </form>
             </div>
             <div class="col-6 d-flex justify-content-end pe-2">
                 <nav class="navbar navbar-expand-md navbar-light">
-                    <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
+                        aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon text-white" style="filter: invert(1);"></span>
                     </button>
                     <div class="collapse navbar-collapse">
@@ -152,15 +157,21 @@ if (isset($_SESSION["id"])) {
                         $proxTreino = $training->deStrcatFocus($row['foco'], $row['proximo_treino']);
                         $treinos = $training->deStrcatFocus_all($row['foco']);
                         $treinoid = $row['idtreino'];
-                ?>
-                        <form method="get" action="treino.php" class="btn btn-azul text-white d-flex align-items-center justify-content-center" id="form-treino" style="cursor: default;">
+                        ?>
+                        <form method="get" action="treino.php"
+                            class="btn btn-azul text-white d-flex align-items-center justify-content-center" id="form-treino"
+                            style="cursor: default;">
                             <?php echo "<input name='treinoid' type='hidden' value='$treinoid'?>"; ?>
                             <div class="col-3">
                                 <div class="row">
-                                    <span><?php echo $row['nome']; ?></span>
+                                    <span>
+                                        <?php echo $row['nome']; ?>
+                                    </span>
                                 </div>
                                 <div class="row">
-                                    <span><?php echo $row['professor_nome']; ?></span>
+                                    <span>
+                                        <?php echo $row['professor_nome']; ?>
+                                    </span>
                                 </div>
                             </div>
                             <div class="col-1 align-items-center justify-content-center pt-1 fs-3">
@@ -169,7 +180,8 @@ if (isset($_SESSION["id"])) {
                             <div class="col-7">
                                 <div class="row justify-content-center">
                                     <div class="input-group">
-                                        <select id="treino" name="treino" tabindex="-1" class="form-control text-center" style="cursor:pointer;outline: 0; background-color: transparent; color: white; border: 0; border-bottom: 1px solid white; border-radius: 0;">
+                                        <select id="treino" name="treino" tabindex="-1" class="form-control text-center"
+                                            style="cursor:pointer;outline: 0; background-color: transparent; color: white; border: 0; border-bottom: 1px solid white; border-radius: 0;">
                                             <?php foreach ($treinos as $t => $tc) {
                                                 if (!strcmp($tc, $proxTreino)) {
                                                     echo "<option value='$t' selected class='text-black'>Treino " . ($t + 1) . " - $tc</option>";
@@ -186,14 +198,16 @@ if (isset($_SESSION["id"])) {
                                     </div>
                                 </div>
                                 <div class="row mt-1 justify-content-center">
-                                    <span><?php echo $row["vezes_feito"] . '/' . $row['duracao']; ?></span>
+                                    <span>
+                                        <?php echo $row["vezes_feito"] . '/' . $row['duracao']; ?>
+                                    </span>
                                 </div>
                             </div>
                             <div class="col-2">
                                 <button type="submit" class="btn"><i class="bi bi-play text-white fs-2"></i></button>
                             </div>
                         </form>
-                <?php
+                        <?php
                     }
                 }
                 ?>
@@ -275,10 +289,12 @@ if (isset($_SESSION["id"])) {
                         <div class="col">
                             <form action="./actions/post_action.php" method="get">
                                 <div class="input-group rounded" id="postagem-div">
-                                    <input type="text" class="form-control p-3" id="postagem" name="postagem" autocomplete="off" placeholder="Diga-nos oque está pensando!">
+                                    <input type="text" class="form-control p-3" id="postagem" name="postagem"
+                                        autocomplete="off" placeholder="Diga-nos oque está pensando!">
                                     <input type="hidden" name="data" id="data">
                                     <input type="hidden" name="criador" id="criador">
-                                    <button type="submit" class="input-group-text" id="postagem-icon"><i class="bi bi-send"></i></button>
+                                    <button type="submit" class="input-group-text" id="postagem-icon"><i
+                                            class="bi bi-send"></i></button>
                                 </div>
                             </form>
                         </div>
@@ -302,6 +318,8 @@ if (isset($_SESSION["id"])) {
                             $imagemUsuario = $rows['imagem'];
                             $userNome = $user->getUserName_byID($rows['user']);
 
+                            $mensagemCensurada = $func->verificarPalavrao($rows['content']);
+
                             echo '<div class="row mt-4 p-4 rounded bg-escuro-secundario" style="outline:1px solid #363330;">
                                 <div class="col">
                                     <div class="row">
@@ -309,12 +327,19 @@ if (isset($_SESSION["id"])) {
                                             <img src="data:image/jpeg;base64,' . base64_encode($imagemUsuario) . '" style="height:65px; width:65px;border-radius:50%;">
                                         </div>
                                         <div class="col-11">
-                                            <div class="row"><span>' . $userNome . '</span></div>
+                                            <div class="row">
+                                                <div class="col-11">
+                                                    <span>' . $userNome . '</span>
+                                                </div>
+                                                <div class="col-1">
+                                                    <a href="#" class="btn"><i class="bi bi-exclamation-triangle text-white"></i></a>
+                                                </div>
+                                            </div>
                                             <div class="row"><span>' . $rows['data'] . '</span></div>
                                         </div>
                                     </div>
                                     <div class="row mt-3">
-                                        <p>' . $rows['content'] . '</p>
+                                        <p>' . $mensagemCensurada . '</p>
                                     </div>
                                 </div>
                             </div>';
@@ -349,11 +374,12 @@ if (isset($_SESSION["id"])) {
                     </div>
                     <div class="row">
                         <div class="col bg-escuro-secundario rounded p-3">
-                            <h3 class="fs-5 py-2" style="border-bottom: 1px solid #363330;"><i class="bi bi-arrow-right me-2"></i>Top Diario</h3>
+                            <h3 class="fs-5 py-2" style="border-bottom: 1px solid #363330;"><i
+                                    class="bi bi-arrow-right me-2"></i>Top Diario</h3>
                             <table class="table-dark table-striped table text-center">
                                 <?php
                                 // Supondo que você já tenha estabelecido a conexão com o banco de dados ($db)
-
+                                
                                 $query = "SELECT ed.aluno, ed.tempo_decorrido, u.nome FROM exercicios_diarios AS ed
                                         JOIN users AS u ON ed.aluno = u.userid
                                         ORDER BY ed.tempo_decorrido DESC
@@ -396,7 +422,8 @@ if (isset($_SESSION["id"])) {
                     </div>
                     <div class="row">
                         <div class="col bg-escuro-secundario p-3">
-                            <h3 class="fs-5 py-2" style="border-bottom: 1px solid #363330;"><i class="bi bi-arrow-right me-2"></i>Top Semanal</h3>
+                            <h3 class="fs-5 py-2" style="border-bottom: 1px solid #363330;"><i
+                                    class="bi bi-arrow-right me-2"></i>Top Semanal</h3>
                             <table class="table-dark table-striped table text-center">
                                 <?php
                                 $query = "SELECT nome, tempo_semanal FROM users ORDER BY tempo_semanal DESC LIMIT 3";
@@ -420,13 +447,19 @@ if (isset($_SESSION["id"])) {
 
                                     while ($row = mysqli_fetch_assoc($resultados)) {
                                         $contador++;
-                                ?>
+                                        ?>
                                         <tr>
-                                            <th><?php echo $contador ?></th>
-                                            <td><?php echo $row['nome'] ?></td>
-                                            <td><?php echo $row['tempo_semanal'] ?></td>
+                                            <th>
+                                                <?php echo $contador ?>
+                                            </th>
+                                            <td>
+                                                <?php echo $row['nome'] ?>
+                                            </td>
+                                            <td>
+                                                <?php echo $row['tempo_semanal'] ?>
+                                            </td>
                                         </tr>
-                                <?php
+                                        <?php
                                     }
                                 }
 
@@ -436,11 +469,12 @@ if (isset($_SESSION["id"])) {
                     </div>
                     <div class="row">
                         <div class="col bg-escuro-secundario p-3">
-                            <h3 class="fs-5 py-2" style="border-bottom: 1px solid #363330;"><i class="bi bi-arrow-right me-2"></i>Top Mensal</h3>
+                            <h3 class="fs-5 py-2" style="border-bottom: 1px solid #363330;"><i
+                                    class="bi bi-arrow-right me-2"></i>Top Mensal</h3>
                             <table class="table-dark table-striped table text-center">
                                 <?php
                                 // Supondo que você já tenha estabelecido a conexão com o banco de dados ($db)
-
+                                
                                 $query = "SELECT nome, tempo_semanal FROM users ORDER BY tempo_semanal DESC LIMIT 3";
 
                                 $stmt = mysqli_prepare($db, $query);
@@ -536,7 +570,9 @@ if (isset($_SESSION["id"])) {
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+        crossorigin="anonymous"></script>
 </body>
 
 </html>

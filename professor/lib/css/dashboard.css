@@ -16,3 +16,8 @@ li:hover:not(li#user-icon){
 .active{
     background-color: var(--escuro-terciario);
 }
+
+.treino{
+    padding-top: 20rem;
+    padding-bottom: 20rem;
+}
