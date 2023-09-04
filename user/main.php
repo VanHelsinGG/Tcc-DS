@@ -1,6 +1,8 @@
 <?php
 include("../main/lib/php/include.php");
 
+$func->preload();
+
 if (isset($_SESSION["id"])) {
     echo "<script>var userid =" . $_SESSION['id'] . "</script>";
 }
@@ -104,7 +106,6 @@ if (isset($_SESSION["id"])) {
                                     </ul>';
                                 }
                                 ?>
-
                             </li>
                         </ul>
                     </div>
@@ -577,6 +578,7 @@ if (isset($_SESSION["id"])) {
 
 </html>
 <?php
+
 session_abort();
 
 ?>

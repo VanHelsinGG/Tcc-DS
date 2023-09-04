@@ -1,5 +1,7 @@
 'use strict';
 
+var exercicio = [];
+var treinos = [];
 var numTraining = 1;
 var trainingInfos = {
     1: {
@@ -69,7 +71,7 @@ function criarNovoTreino() {
 
         const novoTreinoTitulo = novoTreino.querySelector("#titulo");
         novoTreinoTitulo.innerHTML = "Treino " + numTraining;
-        
+
         const treinosContainer = document.getElementById('treinosContainer');
         treinosContainer.appendChild(novoTreino);
 
@@ -88,14 +90,12 @@ function adicionarExercicio(button) {
     var divPai = button.closest('.container');
     var divPaiID = divPai.className.split("-")[1];
 
-    const todosExercicios = divPai.querySelectorAll(`[id^="exercicio-${divPaiID}-"]`);
-    const ultimoExercicio = todosExercicios[todosExercicios.length - 1];
+    var classB = `exercicio-${divPaiID}-3`;
 
-
+    const ultimoExercicio = divPai.querySelector(`#${classB}`);
     const novoExercicio = ultimoExercicio.cloneNode(true);
 
-    const numExercicios = divPai.querySelectorAll(`[id^="exercicio-${divPaiID}"]`).length;
-    const novoNumero = numExercicios + 1;
+    var novoNumero = trainingInfos[divPaiID]['numExercises'] + 1;
 
     novoExercicio.id = `exercicio-${divPaiID}-${novoNumero}`;
     const inputs = novoExercicio.querySelectorAll('input');
@@ -103,10 +103,14 @@ function adicionarExercicio(button) {
         element.value = '';
     });
 
-    button.parentElement.insertBefore(novoExercicio, button.parentElement.lastElementChild);
+    var container = button.closest(".treinoContainer");
+
+    container.appendChild(novoExercicio);
 
     refreshTrainingInfos(divPaiID, 1, 0);
 }
+
+
 
 function refreshTrainingInfos(training = -1, exercise = -1, serie = -1) {
     let counter = 0;
@@ -129,4 +133,10 @@ function refreshTrainingInfos(training = -1, exercise = -1, serie = -1) {
             numSeries: 12
         };
     }
+}
+
+function criarTreino() {
+    let series = document.querySelectorAll(".input-i");
+
+    alert(series[12])
 }

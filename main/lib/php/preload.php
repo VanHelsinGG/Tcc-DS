@@ -6,15 +6,11 @@
  * Versão 08/07/23
  */
 
-// Verifica se o diretório atual é "xampp/tcc"
-$currentDirectory = dirname(__FILE__); // Obtém o diretório atual do arquivo em execução
-$expectedDirectory = 'C:\xampp\tcc'; // Caminho esperado para a pasta "xampp/tcc"
+ function preload(){
 
-if ($currentDirectory !== $expectedDirectory) {
-    // Inclui os arquivos necessários
-    include("connector.php"); // Arquivo que realiza a conexão com o banco de dados
-    include_once("settings.php"); // Arquivo de configurações gerais
-    include("functions.php"); // Arquivo com funções auxiliares
+    require("connector.php"); // Arquivo que realiza a conexão com o banco de dados
+    require("settings.php"); // Arquivo de configurações gerais
+    require("functions.php"); // Arquivo com funções auxiliares
 
     /** ATUALIZAÇÃO DOS RANKS */
     if (ENABLE_PRELOADFILE_ATT_RANKS) {
@@ -51,8 +47,15 @@ if ($currentDirectory !== $expectedDirectory) {
         $resultado = mysqli_stmt_get_result($stmt); // Obtém o resultado da consulta
         $row = mysqli_fetch_assoc($resultado); // Obtém a linha de resultado como um array associativo
 
+        if(!$row){
+            $query = "UPDATE configs SET prox_att_semanal = ?";
+            $stmt = mysqli_prepare($db, $query); // Prepara a consulta SQL
+            mysqli_stmt_bind_param($stmt, "s", $data_atual); // Define o valor do parâmetro
+            mysqli_stmt_execute($stmt);            
+        }
+
         // Verifica se a data atual é igual à próxima data de atualização semanal
-        if ($data_atual === $row['semanal']) {
+        else if ($data_atual === $row['semanal']) {
             // Realiza o reset dos registros semanais e registra um log
             $qnt = $func->refreshWeekRanks();
             $string = "[users] Foram resetados $qnt registros.";
@@ -88,3 +91,4 @@ if ($currentDirectory !== $expectedDirectory) {
         $_SESSION['id'] = $resultadoAuth['id'];
     }
 }
+

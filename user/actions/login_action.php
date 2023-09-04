@@ -41,8 +41,6 @@ if (isset($_POST['senha']) && isset($_POST['email'])) {
             if (isset($_POST['registro']) && $_POST['registro'] == 1) {
                 header("Location: ../objetivo.php");
             } else {
-
-                // Retorna ao index
                 header("Location: ../main.php");
             }
 
