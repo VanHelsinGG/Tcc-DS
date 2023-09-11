@@ -35,18 +35,26 @@ $('#user').on('input', function() {
 
     $('.sugestoes').empty();
 
+    if (suggestions.length === 0) {
+        $('#criar-treinamento').addClass("disabled");
+        $('#aviso-sugestao').show();
+    } else {
+        $('#criar-treinamento').removeClass("disabled");
+        $('#aviso-sugestao').hide();
+    }
+
     suggestions.forEach(function(suggestion) {
         $('.sugestoes').append('<li class="sugestao p-2">' + suggestion + '</li>');
     });
 });
 
-$(document).on('click', '.sugestoes li', function() {
+$(document).on('click', '.sugestoes li', function (){
     var selectedSuggestion = $(this).text();
     $('#user').val(selectedSuggestion);
     $('.sugestoes').empty(); 
 });
 
-$('.serie-i').on("focusout", function () {
+$('.serie-i').on("focusout", function (){
     atualizarTreinamento($(this));
 });
 
@@ -60,10 +68,6 @@ $('#duracao').on("input",function (){
 
 function adicionarInput(button) {
     var $button = $(button);
-
-    var $divTreino = $button.closest(".container");
-
-    var $divExercicio = $button.closest(".exercicio-c");
 
     var $novoInput = $("<input>", {
         type: "text",
@@ -94,7 +98,7 @@ function criarNovoTreino() {
 
         // Incrementa o objeto completo 'treinamento'
         if (numTraining > Object.keys(treinamento.treinos).length) {
-            var novoTreinoID = numTraining; // O novo ID do treino
+            var novoTreinoID = numTraining;
             var novoTreino = { nome: "", exercicios: [] };
             treinamento.treinos[novoTreinoID] = novoTreino;
         }
@@ -145,10 +149,16 @@ function atualizarTreinamento($input) {
     var $Treino = $input.closest(".container");
     var treinoID = $Treino.attr('class').split('-')[2];
 
-    var series = $exercicio.find('.serie-i').map(function () {
-        return $(this).val();
-    }).get();
+    var series = []; 
 
+    $exercicio.find(".serie-i").each(function() {
+        var valorCampo = $(this).val().trim();
+        
+        if (valorCampo !== "") {
+            series.push(valorCampo);
+        }
+    });
+    
     var treinoNome = $Treino.find(".treino-i").val().toLowerCase();
 
     var novoExercicio = { "nome": exercicioNome, "repeticoes": series };
@@ -248,6 +258,7 @@ function criarTreinamento() {
 
     $.post("../actions/criartreino.php", json)
         .done(function (data) {
+            console.log(data);
             if (data === "1") {
                 $("#aviso-sucesso").show();
     
@@ -277,7 +288,6 @@ function verificarInput($input) {
     if (!regex.test(entrada)) {
         $input.val(entrada.replace(/[^0-9]/g, ''));
     }
-
 
     if (entrada > 100) {
         $input.val('100');

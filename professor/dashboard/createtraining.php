@@ -13,7 +13,7 @@ $resultado = mysqli_query($db, $query);
 $users = [];
 
 while ($row = mysqli_fetch_assoc($resultado)) {
-    $users[] = strtolower($row['nome']);
+    $users[] = ucwords($row['nome']);
 }
 
 $users_json = json_encode($users);
@@ -55,7 +55,9 @@ echo "<script>var users = $users_json;</script>";
                     <li class="my-1 option ps-2"><a href="#" class="text-white btn my-2 w-100  text-start"><i
                                 class="bi bi-clipboard2-data-fill me-3"></i>Relatorios</a></li>
                     <li class="my-1 option ps-2" style="border-top: 1px solid #363330;" id="user-icon"><a href=""
-                            class="text-white btn my-2"><i class="bi bi-person-circle me-3"></i><?php echo $userNome;?></a></li>
+                            class="text-white btn my-2"><i class="bi bi-person-circle me-3"></i>
+                            <?php echo $userNome; ?>
+                        </a></li>
                 </ul>
             </nav>
             <main class="col-10 ms-auto col-lg-10 vh-100 p-0" style="overflow-x:hidden;">
@@ -71,8 +73,8 @@ echo "<script>var users = $users_json;</script>";
                             <div class="col-6">
                                 <div class="form-floating mb-3">
                                     <?php
-                                        echo '<input type="text" class="form-control" disabled readonly id="Professor"
-                                        placeholder="Professor" value="'.$userNome.'">';
+                                    echo '<input type="text" class="form-control" disabled readonly id="Professor"
+                                        placeholder="Professor" value="' . $userNome . '">';
                                     ?>
                                     <label for="Professor">Professor</label>
 
@@ -85,6 +87,13 @@ echo "<script>var users = $users_json;</script>";
                                 </div>
                                 <div class="sugestoes shadow-lg rounded" style="margin-top: -1rem;">
 
+                                </div>
+                                <div class="py-3" id="aviso-sugestao" style="display:none;">
+                                    <div>
+                                        <div class="alert alert-danger mb-0">
+                                            Não há nenhum usuario cadastrado com esse nome.
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -105,7 +114,8 @@ echo "<script>var users = $users_json;</script>";
                             </div>
                             <div class="col-6">
                                 <div class="form-floating mb-3">
-                                    <input type="text" class="form-control" id="duracao" placeholder="Duração" inputmode="numeric" min="1" max="100">
+                                    <input type="text" class="form-control" id="duracao" placeholder="Duração"
+                                        inputmode="numeric" min="1" max="100">
                                     <label for="duracao">Duração (treinos)</label>
                                 </div>
                             </div>
@@ -134,14 +144,18 @@ echo "<script>var users = $users_json;</script>";
                                                 </h3>
                                             </div>
                                             <div class="row">
-                                                <input type="text" class="form-control serie-i my-1 serie-1" name="serie-i"
-                                                    placeholder="Serie 1" required max='100' min='1' inputmode="numeric" pattern="[0-9]*">
-                                                <input type="text" class="form-control serie-i my-1 serie-1" name="serie-i"
-                                                    placeholder="Serie 2" required max='100' min='1' inputmode="numeric" pattern="[0-9]*">
-                                                <input type="text" class="form-control serie-i my-1 serie-1" name="serie-i"
-                                                    placeholder="Serie 3" required max='100' min='1' inputmode="numeric" pattern="[0-9]*">
-                                                <input type="text" class="form-control serie-i my-1 serie-1" name="serie-i"
-                                                    placeholder="Serie 4" required max='100' min='1' inputmode="numeric" pattern="[0-9]*">
+                                                <input type="text" class="form-control serie-i my-1 serie-1"
+                                                    name="serie-i" placeholder="Serie 1" required max='100' min='1'
+                                                    inputmode="numeric" pattern="[0-9]*">
+                                                <input type="text" class="form-control serie-i my-1 serie-1"
+                                                    name="serie-i" placeholder="Serie 2" required max='100' min='1'
+                                                    inputmode="numeric" pattern="[0-9]*">
+                                                <input type="text" class="form-control serie-i my-1 serie-1"
+                                                    name="serie-i" placeholder="Serie 3" required max='100' min='1'
+                                                    inputmode="numeric" pattern="[0-9]*">
+                                                <input type="text" class="form-control serie-i my-1 serie-1"
+                                                    name="serie-i" placeholder="Serie 4" required max='100' min='1'
+                                                    inputmode="numeric" pattern="[0-9]*">
                                                 <button type="button" class="btn btn-success mt-1"
                                                     onclick="adicionarInput(this)">Nova Serie</button>
                                             </div>
@@ -153,14 +167,18 @@ echo "<script>var users = $users_json;</script>";
                                                 </h3>
                                             </div>
                                             <div class="row">
-                                                <input type="text" class="form-control serie-i my-1 serie-1" name="serie-i"
-                                                    placeholder="Serie 1" required max='100' min='1' inputmode="numeric" pattern="[0-9]*">
-                                                <input type="text" class="form-control serie-i my-1 serie-1" name="serie-i"
-                                                    placeholder="Serie 2" required max='100' min='1' inputmode="numeric" pattern="[0-9]*">
-                                                <input type="text" class="form-control serie-i my-1 serie-1" name="serie-i"
-                                                    placeholder="Serie 3" required max='100' min='1' inputmode="numeric" pattern="[0-9]*">
-                                                <input type="text" class="form-control serie-i my-1 serie-1" name="serie-i"
-                                                    placeholder="Serie 4" required max='100' min='1' inputmode="numeric" pattern="[0-9]*">
+                                                <input type="text" class="form-control serie-i my-1 serie-1"
+                                                    name="serie-i" placeholder="Serie 1" required max='100' min='1'
+                                                    inputmode="numeric" pattern="[0-9]*">
+                                                <input type="text" class="form-control serie-i my-1 serie-1"
+                                                    name="serie-i" placeholder="Serie 2" required max='100' min='1'
+                                                    inputmode="numeric" pattern="[0-9]*">
+                                                <input type="text" class="form-control serie-i my-1 serie-1"
+                                                    name="serie-i" placeholder="Serie 3" required max='100' min='1'
+                                                    inputmode="numeric" pattern="[0-9]*">
+                                                <input type="text" class="form-control serie-i my-1 serie-1"
+                                                    name="serie-i" placeholder="Serie 4" required max='100' min='1'
+                                                    inputmode="numeric" pattern="[0-9]*">
                                                 <button type="button" class="btn btn-success mt-1"
                                                     onclick="adicionarInput(this)">Nova Serie</button>
                                             </div>
@@ -172,14 +190,18 @@ echo "<script>var users = $users_json;</script>";
                                                 </h3>
                                             </div>
                                             <div class="row">
-                                                <input type="text" class="form-control serie-i my-1 serie-1" name="serie-i"
-                                                    placeholder="Serie 1" required max='100' min='1' inputmode="numeric" pattern="[0-9]*">
-                                                <input type="text" class="form-control serie-i my-1 serie-1" name="serie-i"
-                                                    placeholder="Serie 2" required max='100' min='1' inputmode="numeric" pattern="[0-9]*">
-                                                <input type="text" class="form-control serie-i my-1 serie-1" name="serie-i"
-                                                    placeholder="Serie 3" required max='100' min='1' inputmode="numeric" pattern="[0-9]*">
-                                                <input type="text" class="form-control serie-i my-1 serie-1" name="serie-i"
-                                                    placeholder="Serie 4" required max='100' min='1' inputmode="numeric" pattern="[0-9]*">
+                                                <input type="text" class="form-control serie-i my-1 serie-1"
+                                                    name="serie-i" placeholder="Serie 1" required max='100' min='1'
+                                                    inputmode="numeric" pattern="[0-9]*">
+                                                <input type="text" class="form-control serie-i my-1 serie-1"
+                                                    name="serie-i" placeholder="Serie 2" required max='100' min='1'
+                                                    inputmode="numeric" pattern="[0-9]*">
+                                                <input type="text" class="form-control serie-i my-1 serie-1"
+                                                    name="serie-i" placeholder="Serie 3" required max='100' min='1'
+                                                    inputmode="numeric" pattern="[0-9]*">
+                                                <input type="text" class="form-control serie-i my-1 serie-1"
+                                                    name="serie-i" placeholder="Serie 4" required max='100' min='1'
+                                                    inputmode="numeric" pattern="[0-9]*">
                                                 <button type="button" class="btn btn-success mt-1"
                                                     onclick="adicionarInput(this)">Nova Serie</button>
                                             </div>
@@ -209,14 +231,18 @@ echo "<script>var users = $users_json;</script>";
                                                 </h3>
                                             </div>
                                             <div class="row">
-                                                <input type="text" class="form-control serie-i my-1 serie-1" name="serie-i"
-                                                    placeholder="Serie 1" required max='100' min='1' inputmode="numeric" pattern="[0-9]*">
-                                                <input type="text" class="form-control serie-i my-1 serie-1" name="serie-i"
-                                                    placeholder="Serie 2" required max='100' min='1' inputmode="numeric" pattern="[0-9]*">
-                                                <input type="text" class="form-control serie-i my-1 serie-1" name="serie-i"
-                                                    placeholder="Serie 3" required max='100' min='1' inputmode="numeric" pattern="[0-9]*">
-                                                <input type="text" class="form-control serie-i my-1 serie-1" name="serie-i"
-                                                    placeholder="Serie 4" required max='100' min='1' inputmode="numeric" pattern="[0-9]*">
+                                                <input type="text" class="form-control serie-i my-1 serie-1"
+                                                    name="serie-i" placeholder="Serie 1" required max='100' min='1'
+                                                    inputmode="numeric" pattern="[0-9]*">
+                                                <input type="text" class="form-control serie-i my-1 serie-1"
+                                                    name="serie-i" placeholder="Serie 2" required max='100' min='1'
+                                                    inputmode="numeric" pattern="[0-9]*">
+                                                <input type="text" class="form-control serie-i my-1 serie-1"
+                                                    name="serie-i" placeholder="Serie 3" required max='100' min='1'
+                                                    inputmode="numeric" pattern="[0-9]*">
+                                                <input type="text" class="form-control serie-i my-1 serie-1"
+                                                    name="serie-i" placeholder="Serie 4" required max='100' min='1'
+                                                    inputmode="numeric" pattern="[0-9]*">
                                                 <button type="button" class="btn btn-success mt-1"
                                                     onclick="adicionarInput(this)">Nova Serie</button>
                                             </div>
@@ -228,14 +254,18 @@ echo "<script>var users = $users_json;</script>";
                                                 </h3>
                                             </div>
                                             <div class="row">
-                                                <input type="text" class="form-control serie-i my-1 serie-1" name="serie-i"
-                                                    placeholder="Serie 1" required max='100' min='1' inputmode="numeric" pattern="[0-9]*">
-                                                <input type="text" class="form-control serie-i my-1 serie-1" name="serie-i"
-                                                    placeholder="Serie 2" required max='100' min='1' inputmode="numeric" pattern="[0-9]*">
-                                                <input type="text" class="form-control serie-i my-1 serie-1" name="serie-i"
-                                                    placeholder="Serie 3" required max='100' min='1' inputmode="numeric" pattern="[0-9]*">
-                                                <input type="text" class="form-control serie-i my-1 serie-1" name="serie-i"
-                                                    placeholder="Serie 4" required max='100' min='1' inputmode="numeric" pattern="[0-9]*">
+                                                <input type="text" class="form-control serie-i my-1 serie-1"
+                                                    name="serie-i" placeholder="Serie 1" required max='100' min='1'
+                                                    inputmode="numeric" pattern="[0-9]*">
+                                                <input type="text" class="form-control serie-i my-1 serie-1"
+                                                    name="serie-i" placeholder="Serie 2" required max='100' min='1'
+                                                    inputmode="numeric" pattern="[0-9]*">
+                                                <input type="text" class="form-control serie-i my-1 serie-1"
+                                                    name="serie-i" placeholder="Serie 3" required max='100' min='1'
+                                                    inputmode="numeric" pattern="[0-9]*">
+                                                <input type="text" class="form-control serie-i my-1 serie-1"
+                                                    name="serie-i" placeholder="Serie 4" required max='100' min='1'
+                                                    inputmode="numeric" pattern="[0-9]*">
                                                 <button type="button" class="btn btn-success mt-1"
                                                     onclick="adicionarInput(this)">Nova Serie</button>
                                             </div>
@@ -247,14 +277,18 @@ echo "<script>var users = $users_json;</script>";
                                                 </h3>
                                             </div>
                                             <div class="row">
-                                                <input type="text" class="form-control serie-i my-1 serie-1" name="serie-i"
-                                                    placeholder="Serie 1" required max='100' min='1' inputmode="numeric" pattern="[0-9]*">
-                                                <input type="text" class="form-control serie-i my-1 serie-1" name="serie-i"
-                                                    placeholder="Serie 2" required max='100' min='1' inputmode="numeric" pattern="[0-9]*">
-                                                <input type="text" class="form-control serie-i my-1 serie-1" name="serie-i"
-                                                    placeholder="Serie 3" required max='100' min='1' inputmode="numeric" pattern="[0-9]*">
-                                                <input type="text" class="form-control serie-i my-1 serie-1" name="serie-i"
-                                                    placeholder="Serie 4" required max='100' min='1' inputmode="numeric" pattern="[0-9]*">
+                                                <input type="text" class="form-control serie-i my-1 serie-1"
+                                                    name="serie-i" placeholder="Serie 1" required max='100' min='1'
+                                                    inputmode="numeric" pattern="[0-9]*">
+                                                <input type="text" class="form-control serie-i my-1 serie-1"
+                                                    name="serie-i" placeholder="Serie 2" required max='100' min='1'
+                                                    inputmode="numeric" pattern="[0-9]*">
+                                                <input type="text" class="form-control serie-i my-1 serie-1"
+                                                    name="serie-i" placeholder="Serie 3" required max='100' min='1'
+                                                    inputmode="numeric" pattern="[0-9]*">
+                                                <input type="text" class="form-control serie-i my-1 serie-1"
+                                                    name="serie-i" placeholder="Serie 4" required max='100' min='1'
+                                                    inputmode="numeric" pattern="[0-9]*">
                                                 <button type="button" class="btn btn-success mt-1"
                                                     onclick="adicionarInput(this)">Nova Serie</button>
                                             </div>
@@ -297,7 +331,8 @@ echo "<script>var users = $users_json;</script>";
                             </div>
                         </div>
                         <div class="col-2 text-end">
-                            <button type="button" class="btn btn-roxo text-white my-2" onclick="criarTreinamento();">Criar treino</button>
+                            <button type="button" id="criar-treinamento" class="btn btn-roxo text-white my-2"
+                                onclick="criarTreinamento();">Criar treino</button>
                         </div>
                     </div>
                 </div>
@@ -334,14 +369,18 @@ echo "<script>var users = $users_json;</script>";
                             </div>
                             <div class="col-4">
                                 <h5>Nossas redes sociais</h5>
-                                <a class="footer-a fs-4 mx-1" href="https://instagram.com/olympia_workout?igshid=MzRIODBiNWFlZA"><i class="bi bi-instagram"></i></a>
-                                <a href="https://w.app/OlympiaWorkout" class="footer-a fs-4 mx-1"><i class="bi bi-whatsapp"></i></a>
+                                <a class="footer-a fs-4 mx-1"
+                                    href="https://instagram.com/olympia_workout?igshid=MzRIODBiNWFlZA"><i
+                                        class="bi bi-instagram"></i></a>
+                                <a href="https://w.app/OlympiaWorkout" class="footer-a fs-4 mx-1"><i
+                                        class="bi bi-whatsapp"></i></a>
                                 <a href="#" class="footer-a fs-4 mx-1"><i class="bi bi-facebook"></i></a>
                             </div>
                         </div>
                         <div class="row mt-4">
                             <div class="col-12">
-                                <p>&copy; <span id="data">{data}</span> OlympiaWorkout. Todos os direitos reservados.</p>
+                                <p>&copy; <span id="data">{data}</span> OlympiaWorkout. Todos os direitos reservados.
+                                </p>
                             </div>
                         </div>
                     </div>

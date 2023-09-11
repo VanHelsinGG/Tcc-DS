@@ -50,3 +50,5 @@
 [10/09/2023 01:08:04am] - [login] Conta logada com o nome : Root
 [10/09/2023 01:50:58pm] - [login] Conta logada com o nome : Root
 [10/09/2023 07:42:50pm] - [login] Conta logada com o nome : Root
+[11/09/2023 07:43:31am] - [login] Conta logada com o nome : Olympia Workout
+[11/09/2023 10:09:21am] - [login] Conta logada com o nome : Olympia Workout

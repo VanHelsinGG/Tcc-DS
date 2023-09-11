@@ -16,6 +16,14 @@ if (mysqli_connect_errno()) {
 }
 
 $query = "
+  CREATE TABLE IF NOT EXISTS `exercicios` (
+    `idexercicio` int(11) NOT NULL AUTO_INCREMENT,
+    `nomeExercicio` varchar(90) NOT NULL,
+    `grupoMuscular` varchar(45) NOT NULL,
+    `exercicio` longblob NOT NULL,
+    PRIMARY KEY (`idexercicio`)
+  ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
   CREATE TABLE IF NOT EXISTS `configs` (
     `idconfigs` int(11) NOT NULL AUTO_INCREMENT,
     `prox_att_semanal` date NOT NULL,
