@@ -22,6 +22,7 @@ if (isset($_SESSION["id"])) {
         echo "<title>OlympiaWorkout: Promovendo Saúde e Bem-Estar</title>";
     }
     ?>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="../main/lib/js/main.js" defer></script>
     <script src="./lib/js/mainUser.js" defer></script>
     <link rel="stylesheet" href="../main/lib/css/universal.css">
@@ -80,7 +81,7 @@ if (isset($_SESSION["id"])) {
                                     if ($user->getUserAccess_byName($_SESSION['nome']) > 0) {
                                         // Exibe o link para o painel do professor
                                         echo '<li class="nav-item">
-                                                <a class="painel btn btn-outline-light me-2" href="../professor/dashboard/index.php">Professor</a>
+                                                <a class="painel btn btn-outline-light me-2" href="../professor/dashboard/dashboard.php">Professor</a>
                                             </li>';
                                     }
                                     // Exibe o menu dropdown com o nome do usuário logado
@@ -521,29 +522,24 @@ if (isset($_SESSION["id"])) {
     <footer class="bg-dark text-white text-center">
         <div class="container pt-5">
             <div class="row">
-                <div class="col-3 d-flex flex-column">
-                    <span>Logo</span>
-                    <span>Telefone</span>
-                    <span>Email</span>
+                 <div class="col-4 d-flex flex-column" style="border-right:1px solid #979090;">
+                    <h5>Contato</h5>
+                    <span>Telefone: +55 (17) 99657-5631</span>
+                    <span>Email: olympiaworkout@gmail.com</span>
                 </div>
-                <div class="col-3 d-flex">
+                <div class="col-4">
                     <ul>
-                        <li>Atalho 1</li>
-                        <li>Atalho 2</li>
-                        <li>Atalho 3</li>
-                        <li>Atalho 4</li>
+                        <li class="footer-li"><a class="footer-a" href="about.html">Sobre Nós</a></li>
+                        <li class="footer-li"><a class="footer-a" href="team.html">Nossa Equipe</a></li>
+                        <li class="footer-li">Atalho 3</li>
+                        <li class="footer-li">Atalho 4</li>
                     </ul>
                 </div>
-                <div class="col-3 d-flex">
-                    <ul>
-                        <li>Atalho 5</li>
-                        <li>Atalho 6</li>
-                        <li>Atalho 7</li>
-                        <li>Atalho 8</li>
-                    </ul>
-                </div>
-                <div class="col-3 d-flex">
-                    Redes sociais
+                <div class="col-4">
+                    <h5>Nossas redes sociais</h5>
+                    <a class="footer-a fs-4 mx-1" href="https://instagram.com/olympia_workout?igshid=MzRIODBiNWFlZA"><i class="bi bi-instagram"></i></a>
+                    <a href="https://w.app/OlympiaWorkout" class="footer-a fs-4 mx-1"><i class="bi bi-whatsapp"></i></a>
+                    <a href="#" class="footer-a fs-4 mx-1"><i class="bi bi-facebook"></i></a>
                 </div>
             </div>
             <div class="row mt-4">

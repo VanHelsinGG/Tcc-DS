@@ -1,12 +1,9 @@
-direitosAutorais();
-verificarPreferenciaCookies();
-
 // Muda automaticamente a data do copyright
-function direitosAutorais() {
-    const dataElement = document.getElementById("data");
-
-    if (dataElement) {
-        dataElement.textContent = new Date().getFullYear();
+function direitosAutorais(){
+    const dataElement = $("#data");
+    
+    if(dataElement){
+        dataElement.text(new Date().getFullYear());
     }
 }
 // Volta uma página antes
@@ -23,24 +20,59 @@ function verificarPreferenciaCookies() {
 
     if (preferencia === 'true') {
         // Aceitou
-        document.getElementById('aviso-cookies').style.display = 'none'; // Deixa a caixa invisivel
+        $('#aviso-cookies').hide(); // Deixa a caixa invisível
     } else {
         // Não aceitou
-        document.getElementById('aviso-cookies').style.display = 'block'; // Deixa a caixa visível
+        $('#aviso-cookies').show(); // Deixa a caixa visível
     }
 }
-
 // Salva os cookies aceitos
 function aceitarCookies() {
     salvarPreferenciaCookies(true);
-    document.getElementById('aviso-cookies').style.display = 'none';
+    $('#aviso-cookies').hide();
 }
 
 function mudarVisibilidadeSenha(element) {
-    var senhaInput = document.getElementById(element);
-    if (senhaInput.type === "password") {
-        senhaInput.type = "text";
+    var senhaInput = $(`#${element}`);
+    
+    if (senhaInput.attr("type") === "password") {
+        senhaInput.attr("type", "text");
     } else {
-        senhaInput.type = "password";
+        senhaInput.attr("type", "password");
     }
 }
+
+
+function padTo2Digits(num) {
+    return num.toString().padStart(2, '0');
+}
+
+function formatDate(date) {
+    return (
+        [
+            date.getFullYear(),
+            padTo2Digits(date.getMonth() + 1),
+            padTo2Digits(date.getDate()),
+        ].join('-') +
+        ' ' +
+        [
+            padTo2Digits(date.getHours()),
+            padTo2Digits(date.getMinutes()),
+            padTo2Digits(date.getSeconds()),
+        ].join(':')
+    );
+}
+
+function getIPAddress(callback) {
+    $.get('https://api.ipify.org?format=json', (response) =>{
+        const ipAddress = response.ip;
+        callback(ipAddress);
+    });
+}
+
+function data(){
+    return formatDate(new Date());
+}
+
+direitosAutorais();
+verificarPreferenciaCookies();

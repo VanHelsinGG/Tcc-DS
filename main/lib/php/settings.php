@@ -6,7 +6,6 @@
      * Versão 08/07/23
      */
 
-
     // Informações do projeto
     const PROJECT_NAME                       = "OlympiaWorkout";
     const PROJECT_VERSION                    = "1.0";

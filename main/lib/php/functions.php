@@ -4,7 +4,6 @@ include("connector.php");
 
 class Functions
 {
-
     private $db;
 
     public function __construct($db)
@@ -262,7 +261,7 @@ class Functions
             $resultadoAuth = self::verificarAutenticado();
 
             if (!$resultadoAuth['resultado']) {
-                header("Location: actions/deslogar.php?redirect=../login.php");
+                header("Location: /tcc/user/actions/deslogar.php?redirect=../login.php");
                 die();
             }
             

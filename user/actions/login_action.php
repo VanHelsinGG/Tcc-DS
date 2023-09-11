@@ -52,4 +52,4 @@ if (isset($_POST['senha']) && isset($_POST['email'])) {
     }
 }
 
-$func->redirect_withParams("usererror", 1, "../login.php");
+header("Location: ../login.php?usererror=1");

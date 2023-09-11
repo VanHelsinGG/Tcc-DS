@@ -35,3 +35,18 @@
 [03/09/2023 10:35:19pm] - [login] Conta logada com o nome : Root
 [04/09/2023 09:45:36am] - [login] Conta logada com o nome : Olympia Workout
 [04/09/2023 09:47:47am] - [login] Conta logada com o nome : Olympia Workout
+[06/09/2023 10:12:04pm] - [login] Conta logada com o nome : Root
+[08/09/2023 07:51:22pm] - [login] Conta logada com o nome : Root
+[09/09/2023 04:46:14pm] - [login] Conta logada com o nome : Root
+[09/09/2023 04:46:29pm] - [login] Conta logada com o nome : Root
+[09/09/2023 04:47:31pm] - [login] Conta logada com o nome : Root
+[09/09/2023 04:48:02pm] - [login] Conta logada com o nome : Root
+[09/09/2023 04:52:32pm] - [login] Conta logada com o nome : Root
+[09/09/2023 04:53:00pm] - [login] Conta logada com o nome : Root
+[09/09/2023 04:55:26pm] - [login] Conta logada com o nome : Root
+[10/09/2023 12:42:52am] - [registro] Conta criada com o nome : Rafael
+[10/09/2023 12:42:59am] - [login] Conta logada com o nome : Rafael
+[10/09/2023 12:43:28am] - [login] Conta logada com o nome : Root
+[10/09/2023 01:08:04am] - [login] Conta logada com o nome : Root
+[10/09/2023 01:50:58pm] - [login] Conta logada com o nome : Root
+[10/09/2023 07:42:50pm] - [login] Conta logada com o nome : Root

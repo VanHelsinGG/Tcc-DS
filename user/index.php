@@ -54,6 +54,7 @@ if ($func->verificarLogado()) {
     <title>OlympiaWorkout: Promovendo Saúde e Bem-Estar</title>
     <!-- <script src="./javascript/scroll.js" defer></script> -->
     <!-- <script src="./lib/js/switcher.js" defer></script> -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="../main/lib/js/main.js" defer></script>
     <script src="./lib/js/index.js" defer></script>
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400&display=swap" rel="stylesheet">
@@ -68,71 +69,12 @@ if ($func->verificarLogado()) {
 
 <body>
     <!-- Header / NavBar -->
-    <!-- <header class="header container my-3 rounded shadow fixed-top" id="header">
-        <div class="row h-100 d-flex">
-            <div class="col-6 bg-white d-flex justify-content-center h-100 align-items-center">
-                <div class="col-6">
-                    <h1 class="fs-4 text-center" id="title">Olympia<span style="color:#005cb2;">Workout</span></h1>
-                </div>
-                <div class="col-6 text-end" style="margin-right: -1.5rem;">
-                    <img src="../main/lib/images/Tcc Header laranja.jpg" alt="" id="diagonal-bars-header" class="img-fluid">
-                </div>
-            </div>
-            <div class="col-6">
-                <nav class="navbar navbar-expand-md navbar-light ms-auto" id="navbar">
-                    <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon text-white" style="filter: invert(1);"></span>
-                    </button>
-                    <div class="collapse navbar-collapse" id="navbarNav">
-                        <ul class="navbar-nav ms-auto">
-                            <li class="nav-item">
-                                <a href="./index.html" id="home" class="nav-link text-white fw-bolder active">Inicio</a>
-                            </li>
-                            <li class="nav-item d-md-none d-block">
-                                <a href="#contact" id="contact" class="nav-link text-white">Conta</a>
-                            </li>
-                        </ul>
-                        <?php
-                        if (isset($GLOBALS["userNome"])) {
-                            echo '<ul class="navbar-nav d-md-block d-none ms-3">
-                    <li class="nav-item dropdown">
-                        <a href="#" id="profile" class="nav-link text-white d-flex align-items-center nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                            <i class="bi bi-person-circle fs-2 me-2"></i>
-                            ' . $GLOBALS["userNome"] . '
-                        </a>
-                        <div class="dropdown-menu p-0" id="dropdown-menu" style="width:200px;background-color:var(--azul-complementar);">
-                            <a class="dropdown-item dropdown-item-hover text-light py-2" href="#"><i class="bi bi-person-circle me-2"></i>Perfil</a>
-                            <a class="dropdown-item dropdown-item-hover text-light py-2" href="#"><i class="bi bi-gear-fill me-2"></i>Configurações</a>
-                            <a class="dropdown-item text-white dropdown-item-deslogar py-2" href="./actions/deslogar.php" style="margin-bottom: 0;"><i class="bi bi-power me-2"></i>Deslogar-se</a>
-                        </div>
-                    </li>
-                </ul>';
-                        } else {
-                            echo '<ul class="navbar-nav d-md-block d-none ms-3">
-                    <li class="nav-item">
-                        <a href="register.php" id="profile" class="nav-link text-white d-flex align-items-center nav-link">
-                            <i class="bi bi-person-circle fs-2 me-2"></i>
-                            Conectar-se
-                        </a>
-                    </li>
-                </ul>';
-                        }
-                        ?>
-                    </div>
-                </nav>
-            </div>
-        </div>
-    </header> -->
-
     <header class="header container-fluid bg-laranja shadow fixed-top" id="header">
         <div class="row">
             <div class="col-4 pt-1 d-flex justify-content-center align-items-center">
                 <div class="col-6">
                     <h1 class="fs-4" id="title">OlympiaWorkout</h1>
                 </div>
-                <!-- <div class="col-6 text-end">
-                    <img src="../main/lib/images/Tcc Header laranja.jpg" alt="" id="diagonal-bars-header" class="img-fluid" style="height:5rem; margin-right:-1rem;">
-                </div> -->
             </div>
             <div class="col-8 p-2">
                 <nav class="navbar navbar-expand-md navbar-light ms-auto">
@@ -141,11 +83,14 @@ if ($func->verificarLogado()) {
                     </button>
                     <div class="collapse navbar-collapse">
                         <ul class="navbar-nav ms-auto">
-                            <li class="nav-item mx-3">
-                                <a href="#contact" id="contact" class="nav-link text-white">Sobre Nós</a>
+                            <li class="nav-item mx-3 active">
+                                <a href="index.php" class="nav-link text-white">Inicio</a>
                             </li>
                             <li class="nav-item mx-3">
-                                <a href="#contact" id="contact" class="nav-link text-white">Nossos Profissionais</a>
+                                <a href="about.html" id="contact" class="nav-link text-white">Sobre Nós</a>
+                            </li>
+                            <li class="nav-item mx-3">
+                                <a href="team.html" id="contact" class="nav-link text-white">Nossa Equipe</a>
                             </li>
                             <li class="nav-item mx-3">
                                 <a href="./register.php" id="registrar" class="nav-link text-white btn btn-azul px-3">Começar Agora</a>
@@ -229,21 +174,49 @@ if ($func->verificarLogado()) {
             <div class="row py-4">
                 <div class="col-md-4 col-sm-12">
                     <h3 class="px-3 fs-3 my-4">
-                        Temos <span class="numeros">{x}</span> exercícios em nosso banco de dados
-                    </h3>
-                </div>
-                <div class="col-md-4 col-sm-12">
-                    <h3 class="px-3 fs-3 my-4">
-                        Tenha contato com <span class="numeros">{x}</span> informações confiáveis
+                        Temos <span class="numeros fs-2">{x}</span> exercícios em nosso banco de dados
                     </h3>
                 </div>
                 <div class="col-md-4 col-sm-12">
                     <h3 class="px-3 fs-3 my-4">
                         <?php
-                        $query = "SELECT * FROM users";
-                        $resultados = mysqli_query($db, $query);
+                            $query = "SELECT * FROM users WHERE estado = 1";
+                            $resultado = mysqli_query($db,$query);
+                            $resultado = mysqli_num_rows($resultado);
 
-                        echo "Tenha contato com outros <span class='numeros'>" . mysqli_num_rows($resultados) . "</span> usuarios";
+                            if($resultado <= 10){
+                                $index = "10+";
+                            }else if($resutlado <= 20){
+                                $index = "15+";
+                            }else if($resultado <= 35){
+                                $index = "50+";
+                            }
+                            
+                            
+                            echo 'Temos <span class="numeros fs-2" style="color:#ff9f1a !important;">'.$index.'</span> personais trainers para seu suporte';
+                        ?>
+                    </h3>
+                </div>
+                <div class="col-md-4 col-sm-12">
+                    <h3 class="px-3 fs-3 my-4">
+                        <?php
+                            $query = "SELECT * FROM users";
+                            $resultado = mysqli_query($db, $query);
+                            $resultado = mysqli_num_rows($resultado);
+
+                            if($resultado <= 10){
+                                $index = "50+";
+                            }else if($resultado <= 50){
+                                $index = "150+";
+                            }else if($resultado > 50 && $resultado <= 300){
+                                $index = "400+";
+                            }else if($resultado > 300 && $resultado <= 500){
+                                $index = "800+";
+                            }else{
+                                $index = "$resultado+";
+                            }
+
+                            echo "Tenha contato com outros <span class='numeros fs-2' style='color:#ff9f1a !important;'>" . $index . "</span> usuarios";
                         ?>
                     </h3>
                 </div>
@@ -317,29 +290,24 @@ if ($func->verificarLogado()) {
     <footer class="bg-dark text-white text-center">
         <div class="container pt-5">
             <div class="row">
-                <div class="col-3 d-flex flex-column">
-                    <span>Logo</span>
-                    <span>Telefone</span>
-                    <span>Email</span>
+                 <div class="col-4 d-flex flex-column" style="border-right:1px solid #979090;">
+                    <h5>Contato</h5>
+                    <span>Telefone: +55 (17) 99657-5631</span>
+                    <span>Email: olympiaworkout@gmail.com</span>
                 </div>
-                <div class="col-3 d-flex">
+                <div class="col-4">
                     <ul>
-                        <li>Atalho 1</li>
-                        <li>Atalho 2</li>
-                        <li>Atalho 3</li>
-                        <li>Atalho 4</li>
+                        <li class="footer-li"><a class="footer-a" href="about.html">Sobre Nós</a></li>
+                        <li class="footer-li"><a class="footer-a" href="team.html">Nossa Equipe</a></li>
+                        <li class="footer-li">Atalho 3</li>
+                        <li class="footer-li">Atalho 4</li>
                     </ul>
                 </div>
-                <div class="col-3 d-flex">
-                    <ul>
-                        <li>Atalho 5</li>
-                        <li>Atalho 6</li>
-                        <li>Atalho 7</li>
-                        <li>Atalho 8</li>
-                    </ul>
-                </div>
-                <div class="col-3 d-flex">
-                    Redes sociais
+                <div class="col-4">
+                    <h5>Nossas redes sociais</h5>
+                    <a class="footer-a fs-4 mx-1" href="https://instagram.com/olympia_workout?igshid=MzRIODBiNWFlZA"><i class="bi bi-instagram"></i></a>
+                    <a href="https://w.app/OlympiaWorkout" class="footer-a fs-4 mx-1"><i class="bi bi-whatsapp"></i></a>
+                    <a href="#" class="footer-a fs-4 mx-1"><i class="bi bi-facebook"></i></a>
                 </div>
             </div>
             <div class="row mt-4">

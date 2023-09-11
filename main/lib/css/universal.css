@@ -22,6 +22,8 @@
     --texto-terciario: 'Montserrat', sans-serif;
 }
 
+/* -------------------------- CONFIGS GERAIS -------------------------- */
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -37,7 +39,6 @@ body {
 p,
 span {
     font-family: var(--texto-principal) !important;
-    color: white;
 }
 
 h1 {
@@ -46,10 +47,6 @@ h1 {
 
 a{
   font-family: var(--texto-terciario) !important;
-}
-
-.btn{
-    font-family: var(--texto-terciario) !important;
 }
 
 h4 {
@@ -61,6 +58,38 @@ img {
     -webkit-user-drag: none;
 }
 
+span, p, .btn-azul, .btn-laranja, .btn-laranja:hover, .bg-escuro-secundario, .bg-escuro-terciario, .btn-roxo, .bg-escuro-principal{
+    color: white;
+}
+
+
+.painel:hover{ 
+    font-weight: bold;
+    background-color: white !important;
+    color: var(--laranja-principal) !important;
+}
+
+.footer-li{
+    list-style-type: none;
+}
+
+.footer-a{
+    text-decoration: none;
+    color: white;
+}
+
+
+/*-------------------------- BOTÕES --------------------------*/
+
+.btn{
+    font-family: var(--texto-terciario) !important;
+}
+
+.btn-roxo {
+    background-color: var(--roxo) !important;
+    border-color: var(--roxo) !important;
+}
+
 .btn-azul {
     background-color: var(--azul-complementar) !important;
     border-color: var(--azul-complementar) !important;
@@ -69,7 +98,6 @@ img {
 .btn-laranja {
     background-color: var(--laranja-principal) !important;
     border-color: var(--laranja-principal) !important;
-    color: white !important;
 }
 
 .btn-laranja:hover{
@@ -77,25 +105,7 @@ img {
     border-color: var(--laranja-principal-escurecido) !important;
 }
 
-.bg-escuro-secundario {
-    background-color: var(--escuro-secundario) !important;
-}
-
-.bg-escuro-terciario {
-    background-color: var(--escuro-terciario) !important;
-}
-
-.btn-roxo {
-    background-color: var(--roxo) !important;
-    border-color: var(--roxo) !important;
-}
-
-.painel:hover{
-    font-weight: bold;
-    background-color: white !important;
-    color: var(--laranja-principal) !important;
-}
-
+/* -------------------------- BACKGROUNDS -------------------------- */
 
 .escuro {
     background-color: #131211;
@@ -117,30 +127,10 @@ img {
     background-color: var(--laranja-principal);
 }
 
-/*.header {
-    background-color: var(--laranja-principal);
-    color: rgb(255, 254, 254);
+.bg-escuro-secundario {
+    background-color: var(--escuro-secundario) !important;
 }
 
-#diagonal-bars-header {
-    max-width: 100%;
-    height: 90px;
-    overflow: hidden;
-} */
-
-.carousel-indicators li {
-    width: 10px;
-    height: 10px;
-    color: rgba(0, 0, 0, 0);
-    border-radius: 50%;
-    margin: 0 10px;
-    background-color: rgba(255, 255, 255, 0.5);
-    border: none;
-    transition: all 0.25s ease-in-out;
-}
-
-.carousel-indicators li.active {
-    background-color: #fff;
-    width: 12px;
-    height: 12px;
+.bg-escuro-terciario {
+    background-color: var(--escuro-terciario) !important;
 }

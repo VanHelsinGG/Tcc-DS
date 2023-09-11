@@ -1,6 +1,25 @@
-<?php include("../../main/lib/php/include.php")
+<?php include("../../main/lib/php/include.php");
 
-    ?>
+$func->preload();
+
+$userNome = $_SESSION['nome'];
+$userID = $_SESSION['id'];
+
+session_abort();
+
+$query = "SELECT nome FROM users";
+$resultado = mysqli_query($db, $query);
+
+$users = [];
+
+while ($row = mysqli_fetch_assoc($resultado)) {
+    $users[] = strtolower($row['nome']);
+}
+
+$users_json = json_encode($users);
+
+echo "<script>var users = $users_json;</script>";
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -9,6 +28,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Painel do Professor • OlympiaWorkout</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-scrollTo/2.1.3/jquery.scrollTo.min.js"></script>
+    <script src="../../main/lib/js/main.js" defer></script>
     <script src="../lib/js/dashboard.js" defer></script>
     <link rel="stylesheet" href="../../main/lib/css/universal.css">
     <link rel="stylesheet" href="../../main/lib/images/bootstrap-icons-1.10.4/font/bootstrap-icons.css">
@@ -23,7 +45,7 @@
             <nav class="escuro col-md-2 m-0 col-lg-2 d-md-block text-white p-0 vh-100 sidebar fixed-top" id="navbar">
                 <h1 class="text-center fs-3 bg-laranja py-4">OlympiaWorkout</h1>
                 <ul class="list-unstyled list-group h-100">
-                    <li class="my-1 option ps-2"><a href="index.php" class="text-white btn my-2 w-100 text-start"><i
+                    <li class="my-1 option ps-2"><a href="dashboard.php" class="text-white btn my-2 w-100 text-start"><i
                                 class="bi bi-house-fill me-3"></i>Inicio</a></li>
                     <li class="active my-1 option ps-2"><a href="createtraining.php"
                             class="text-white btn my-2 w-100  text-start"><i class="bi bi-fire me-3"></i>Criar
@@ -33,14 +55,14 @@
                     <li class="my-1 option ps-2"><a href="#" class="text-white btn my-2 w-100  text-start"><i
                                 class="bi bi-clipboard2-data-fill me-3"></i>Relatorios</a></li>
                     <li class="my-1 option ps-2" style="border-top: 1px solid #363330;" id="user-icon"><a href=""
-                            class="text-white btn my-2"><i class="bi bi-person-circle me-3"></i>Olympia Workout</a></li>
+                            class="text-white btn my-2"><i class="bi bi-person-circle me-3"></i><?php echo $userNome;?></a></li>
                 </ul>
             </nav>
-            <main class="col-10 ms-auto col-lg-10 vh-100">
+            <main class="col-10 ms-auto col-lg-10 vh-100 p-0" style="overflow-x:hidden;">
                 <header class="container-fluid text-center my-4 pb-4 pt-4">
                     <h1>Criar Treino - Painel do Professor</h1>
                 </header>
-                <form action="" method="get" class="py-4">
+                <form action="" method="post" class="p-4">
                     <div class="container rounded shadow-lg">
                         <div class="row bg-azul rounded text-white p-3">
                             <h2>Informações Gerais</h2>
@@ -48,8 +70,10 @@
                         <div class="row my-3 p-3">
                             <div class="col-6">
                                 <div class="form-floating mb-3">
-                                    <input type="text" class="form-control" disabled readonly id="Professor"
-                                        placeholder="Professor">
+                                    <?php
+                                        echo '<input type="text" class="form-control" disabled readonly id="Professor"
+                                        placeholder="Professor" value="'.$userNome.'">';
+                                    ?>
                                     <label for="Professor">Professor</label>
 
                                 </div>
@@ -58,6 +82,8 @@
                                 <div class="form-floating mb-3">
                                     <input type="text" class="form-control" id="user" placeholder="Aluno">
                                     <label for="user">Aluno</label>
+                                </div>
+                                <div class="sugestoes shadow-lg rounded" style="margin-top: -1rem;">
 
                                 </div>
                             </div>
@@ -79,7 +105,7 @@
                             </div>
                             <div class="col-6">
                                 <div class="form-floating mb-3">
-                                    <input type="number" class="form-control" id="duracao" placeholder="Duração">
+                                    <input type="text" class="form-control" id="duracao" placeholder="Duração" inputmode="numeric" min="1" max="100">
                                     <label for="duracao">Duração (treinos)</label>
                                 </div>
                             </div>
@@ -92,68 +118,68 @@
                                 <div class="treinoContainer container rounded shadow-lg mt-5" id="treinosContainer"
                                     style="margin: 0 !important; padding: 0 !important;">
                                     <!-- Treino template -->
-                                    <div class="treinoContainer row container d-none treino-template" id="treino-1"
-                                        style="margin-top: 2rem;margin-bottom:2rem;margin: 0 !important; padding: 0 !important;">
-                                        <div class="row m-0 bg-laranja rounded text-white p-3">
+                                    <div class="treinoContainer mt-5 row container d-none treino-template" id="treino-1"
+                                        style="margin: 0 !important;margin-top: 2rem !important; padding: 0 !important;">
+                                        <div class="row m-0 bg-azul rounded text-white p-3">
                                             <div class="col-2">
                                                 <h2 id="titulo">Treino 1 - </h2>
                                             </div>
                                             <div class="col-10"><input type="text" class="form-control my-1 treino-i"
                                                     placeholder="Nome Treino"></div>
                                         </div>
-                                        <div class="col-4 px-4 my-2 bg-" id="exercicio-1-1" class="exercicio">
+                                        <div class="col-4 px-4 my-2 exercicio-c" id="exercicio-1-1">
                                             <div class="row">
                                                 <h3 class="bg-escuro-terciario rounded p-2 px-3"><input type="text"
                                                         class="form-control my-1 exercicio-i" placeholder="Exercício 1">
                                                 </h3>
                                             </div>
                                             <div class="row">
-                                                <input type="text" class="form-control input-i my-1" name="input-i"
-                                                    placeholder="Serie 1">
-                                                <input type="text" class="form-control input-i my-1" name="input-i"
-                                                    placeholder="Serie 2">
-                                                <input type="text" class="form-control input-i my-1" name="input-i"
-                                                    placeholder="Serie 3">
-                                                <input type="text" class="form-control input-i my-1" name="input-i"
-                                                    placeholder="Serie 3">
+                                                <input type="text" class="form-control serie-i my-1 serie-1" name="serie-i"
+                                                    placeholder="Serie 1" required max='100' min='1' inputmode="numeric" pattern="[0-9]*">
+                                                <input type="text" class="form-control serie-i my-1 serie-1" name="serie-i"
+                                                    placeholder="Serie 2" required max='100' min='1' inputmode="numeric" pattern="[0-9]*">
+                                                <input type="text" class="form-control serie-i my-1 serie-1" name="serie-i"
+                                                    placeholder="Serie 3" required max='100' min='1' inputmode="numeric" pattern="[0-9]*">
+                                                <input type="text" class="form-control serie-i my-1 serie-1" name="serie-i"
+                                                    placeholder="Serie 4" required max='100' min='1' inputmode="numeric" pattern="[0-9]*">
                                                 <button type="button" class="btn btn-success mt-1"
                                                     onclick="adicionarInput(this)">Nova Serie</button>
                                             </div>
                                         </div>
-                                        <div class="col-4 px-4 my-2" id="exercicio-1-2" class="exercicio">
+                                        <div class="col-4 px-4 my-2 exercicio-c" id="exercicio-1-2">
                                             <div class="row">
                                                 <h3 class="bg-escuro-terciario rounded p-2 px-3"><input type="text"
                                                         class="form-control my-1 exercicio-i" placeholder="Exercício 2">
                                                 </h3>
                                             </div>
                                             <div class="row">
-                                                <input type="text" class="form-control input-i my-1" name="input-i"
-                                                    placeholder="Serie 1">
-                                                <input type="text" class="form-control input-i my-1" name="input-i"
-                                                    placeholder="Serie 2">
-                                                <input type="text" class="form-control input-i my-1" name="input-i"
-                                                    placeholder="Serie 3">
-                                                <input type="text" class="form-control input-i my-1" name="input-i"
-                                                    placeholder="Serie 3">
+                                                <input type="text" class="form-control serie-i my-1 serie-1" name="serie-i"
+                                                    placeholder="Serie 1" required max='100' min='1' inputmode="numeric" pattern="[0-9]*">
+                                                <input type="text" class="form-control serie-i my-1 serie-1" name="serie-i"
+                                                    placeholder="Serie 2" required max='100' min='1' inputmode="numeric" pattern="[0-9]*">
+                                                <input type="text" class="form-control serie-i my-1 serie-1" name="serie-i"
+                                                    placeholder="Serie 3" required max='100' min='1' inputmode="numeric" pattern="[0-9]*">
+                                                <input type="text" class="form-control serie-i my-1 serie-1" name="serie-i"
+                                                    placeholder="Serie 4" required max='100' min='1' inputmode="numeric" pattern="[0-9]*">
                                                 <button type="button" class="btn btn-success mt-1"
                                                     onclick="adicionarInput(this)">Nova Serie</button>
                                             </div>
                                         </div>
-                                        <div class="col-4 px-4 my-2 bg-" id="exercicio-1-3" class="exercicio">
+                                        <div class="col-4 px-4 my-2 exercicio-c" id="exercicio-1-3">
                                             <div class="row">
                                                 <h3 class="bg-escuro-terciario rounded p-2 px-3"><input type="text"
                                                         class="form-control my-1 exercicio-i" placeholder="Exercício 3">
                                                 </h3>
                                             </div>
                                             <div class="row">
-                                                <input type="text" class="form-control input-i my-1" name="input-i"
-                                                    placeholder="Serie 1">
-                                                <input type="text" class="form-control input-i my-1" name="input-i"
-                                                    placeholder="Serie 2">
-                                                <input type="text" class="form-control input-i my-1" name="input-i"
-                                                    placeholder="Serie 3">
-                                                <input type="text" class="form-control input-i my-1" name="input-i"
-                                                    placeholder="Serie 3">
+                                                <input type="text" class="form-control serie-i my-1 serie-1" name="serie-i"
+                                                    placeholder="Serie 1" required max='100' min='1' inputmode="numeric" pattern="[0-9]*">
+                                                <input type="text" class="form-control serie-i my-1 serie-1" name="serie-i"
+                                                    placeholder="Serie 2" required max='100' min='1' inputmode="numeric" pattern="[0-9]*">
+                                                <input type="text" class="form-control serie-i my-1 serie-1" name="serie-i"
+                                                    placeholder="Serie 3" required max='100' min='1' inputmode="numeric" pattern="[0-9]*">
+                                                <input type="text" class="form-control serie-i my-1 serie-1" name="serie-i"
+                                                    placeholder="Serie 4" required max='100' min='1' inputmode="numeric" pattern="[0-9]*">
                                                 <button type="button" class="btn btn-success mt-1"
                                                     onclick="adicionarInput(this)">Nova Serie</button>
                                             </div>
@@ -167,68 +193,68 @@
                                         </div>
                                     </div>
                                     <!-- Treino 1 -->
-                                    <div class="treinoContainer row container treino-1" id="treino-1"
-                                        style="margin-top: 2rem;margin-bottom:2rem;margin: 0 !important; padding: 0 !important;">
-                                        <div class="row m-0 bg-laranja rounded text-white p-3">
+                                    <div class="treinoContainer mt-5 row container treino-1" id="treino-1"
+                                        style="margin: 0 !important;margin-top: 2rem !important; padding: 0 !important;">
+                                        <div class="row m-0 bg-azul rounded text-white p-3">
                                             <div class="col-2">
                                                 <h2 id="titulo">Treino 1 - </h2>
                                             </div>
                                             <div class="col-10"><input type="text" class="form-control my-1 treino-i"
                                                     placeholder="Nome Treino"></div>
                                         </div>
-                                        <div class="col-4 px-4 my-2 bg-" id="exercicio-1-1" class="exercicio">
+                                        <div class="col-4 px-4 my-2 exercicio-c" id="exercicio-1-1">
                                             <div class="row">
                                                 <h3 class="bg-escuro-terciario rounded p-2 px-3"><input type="text"
                                                         class="form-control my-1 exercicio-i" placeholder="Exercício 1">
                                                 </h3>
                                             </div>
                                             <div class="row">
-                                                <input type="text" class="form-control input-i my-1" name="input-i"
-                                                    placeholder="Serie 1">
-                                                <input type="text" class="form-control input-i my-1" name="input-i"
-                                                    placeholder="Serie 2">
-                                                <input type="text" class="form-control input-i my-1" name="input-i"
-                                                    placeholder="Serie 3">
-                                                <input type="text" class="form-control input-i my-1" name="input-i"
-                                                    placeholder="Serie 3">
+                                                <input type="text" class="form-control serie-i my-1 serie-1" name="serie-i"
+                                                    placeholder="Serie 1" required max='100' min='1' inputmode="numeric" pattern="[0-9]*">
+                                                <input type="text" class="form-control serie-i my-1 serie-1" name="serie-i"
+                                                    placeholder="Serie 2" required max='100' min='1' inputmode="numeric" pattern="[0-9]*">
+                                                <input type="text" class="form-control serie-i my-1 serie-1" name="serie-i"
+                                                    placeholder="Serie 3" required max='100' min='1' inputmode="numeric" pattern="[0-9]*">
+                                                <input type="text" class="form-control serie-i my-1 serie-1" name="serie-i"
+                                                    placeholder="Serie 4" required max='100' min='1' inputmode="numeric" pattern="[0-9]*">
                                                 <button type="button" class="btn btn-success mt-1"
                                                     onclick="adicionarInput(this)">Nova Serie</button>
                                             </div>
                                         </div>
-                                        <div class="col-4 px-4 my-2" id="exercicio-1-2" class="exercicio">
+                                        <div class="col-4 px-4 my-2 exercicio-c" id="exercicio-1-2">
                                             <div class="row">
                                                 <h3 class="bg-escuro-terciario rounded p-2 px-3"><input type="text"
                                                         class="form-control my-1 exercicio-i" placeholder="Exercício 2">
                                                 </h3>
                                             </div>
                                             <div class="row">
-                                                <input type="text" class="form-control input-i my-1" name="input-i"
-                                                    placeholder="Serie 1">
-                                                <input type="text" class="form-control input-i my-1" name="input-i"
-                                                    placeholder="Serie 2">
-                                                <input type="text" class="form-control input-i my-1" name="input-i"
-                                                    placeholder="Serie 3">
-                                                <input type="text" class="form-control input-i my-1" name="input-i"
-                                                    placeholder="Serie 3">
+                                                <input type="text" class="form-control serie-i my-1 serie-1" name="serie-i"
+                                                    placeholder="Serie 1" required max='100' min='1' inputmode="numeric" pattern="[0-9]*">
+                                                <input type="text" class="form-control serie-i my-1 serie-1" name="serie-i"
+                                                    placeholder="Serie 2" required max='100' min='1' inputmode="numeric" pattern="[0-9]*">
+                                                <input type="text" class="form-control serie-i my-1 serie-1" name="serie-i"
+                                                    placeholder="Serie 3" required max='100' min='1' inputmode="numeric" pattern="[0-9]*">
+                                                <input type="text" class="form-control serie-i my-1 serie-1" name="serie-i"
+                                                    placeholder="Serie 4" required max='100' min='1' inputmode="numeric" pattern="[0-9]*">
                                                 <button type="button" class="btn btn-success mt-1"
                                                     onclick="adicionarInput(this)">Nova Serie</button>
                                             </div>
                                         </div>
-                                        <div class="col-4 px-4 my-2 bg-" id="exercicio-1-3" class="exercicio">
+                                        <div class="col-4 px-4 my-2 exercicio-c" id="exercicio-1-3">
                                             <div class="row">
                                                 <h3 class="bg-escuro-terciario rounded p-2 px-3"><input type="text"
                                                         class="form-control my-1 exercicio-i" placeholder="Exercício 3">
                                                 </h3>
                                             </div>
                                             <div class="row">
-                                                <input type="text" class="form-control input-i my-1 my-1" name="input-i"
-                                                    placeholder="Serie 1">
-                                                <input type="text" class="form-control input-i my-1" name="input-i"
-                                                    placeholder="Serie 2">
-                                                <input type="text" class="form-control input-i my-1" name="input-i"
-                                                    placeholder="Serie 3">
-                                                <input type="text" class="form-control input-i my-1" name="input-i"
-                                                    placeholder="Serie 3">
+                                                <input type="text" class="form-control serie-i my-1 serie-1" name="serie-i"
+                                                    placeholder="Serie 1" required max='100' min='1' inputmode="numeric" pattern="[0-9]*">
+                                                <input type="text" class="form-control serie-i my-1 serie-1" name="serie-i"
+                                                    placeholder="Serie 2" required max='100' min='1' inputmode="numeric" pattern="[0-9]*">
+                                                <input type="text" class="form-control serie-i my-1 serie-1" name="serie-i"
+                                                    placeholder="Serie 3" required max='100' min='1' inputmode="numeric" pattern="[0-9]*">
+                                                <input type="text" class="form-control serie-i my-1 serie-1" name="serie-i"
+                                                    placeholder="Serie 4" required max='100' min='1' inputmode="numeric" pattern="[0-9]*">
                                                 <button type="button" class="btn btn-success mt-1"
                                                     onclick="adicionarInput(this)">Nova Serie</button>
                                             </div>
@@ -254,15 +280,76 @@
                         </div>
                     </div>
                     <div class="row my-5">
-                        <div class="col text-end">
-                            <button type="button" class="btn btn-roxo text-white my-2" onclick="criarTreino();">Criar treino</button>
+                        <div class="col-10">
+                            <div class="py-3" id="aviso-erro" style="display:none;">
+                                <div>
+                                    <div class="alert alert-danger mb-0">
+                                        Houve um erro ao processar o treinamento, contate um administrador!
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="py-3" id="aviso-sucesso" style="display:none;">
+                                <div>
+                                    <div class="alert alert-success mb-0">
+                                        Treino criado com sucesso!
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-2 text-end">
+                            <button type="button" class="btn btn-roxo text-white my-2" onclick="criarTreinamento();">Criar treino</button>
                         </div>
                     </div>
                 </div>
+                <div class="modal" id="loadingModal" tabindex="-1" role="dialog">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-body escuro p-5 rounded">
+                                <div class="text-center">
+                                    <div class="spinner-border text-white" role="status">
+                                    </div>
+                                    <p>Aguarde enquanto processamos sua solicitação...</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Footer -->
+                <footer class="container-fluid bg-dark text-white text-center m-0 p-0">
+                    <div class="pt-5 m-0">
+                        <div class="row">
+                            <div class="col-4 d-flex flex-column" style="border-right:1px solid #979090;">
+                                <h5>Contato</h5>
+                                <span>Telefone: +55 (17) 99657-5631</span>
+                                <span>Email: olympiaworkout@gmail.com</span>
+                            </div>
+                            <div class="col-4">
+                                <ul>
+                                    <li class="footer-li"><a class="footer-a" href="about.html">Sobre Nós</a></li>
+                                    <li class="footer-li"><a class="footer-a" href="team.html">Nossa Equipe</a></li>
+                                    <li class="footer-li">Atalho 3</li>
+                                    <li class="footer-li">Atalho 4</li>
+                                </ul>
+                            </div>
+                            <div class="col-4">
+                                <h5>Nossas redes sociais</h5>
+                                <a class="footer-a fs-4 mx-1" href="https://instagram.com/olympia_workout?igshid=MzRIODBiNWFlZA"><i class="bi bi-instagram"></i></a>
+                                <a href="https://w.app/OlympiaWorkout" class="footer-a fs-4 mx-1"><i class="bi bi-whatsapp"></i></a>
+                                <a href="#" class="footer-a fs-4 mx-1"><i class="bi bi-facebook"></i></a>
+                            </div>
+                        </div>
+                        <div class="row mt-4">
+                            <div class="col-12">
+                                <p>&copy; <span id="data">{data}</span> OlympiaWorkout. Todos os direitos reservados.</p>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+                <!-- Fim footer -->
             </main>
         </div>
     </div>
-
 
     <!-- Aviso de uso de cookies -->
     <div id="aviso-cookies" class="alert alert-info fixed-bottom mb-0 rounded-0 text-dark" style="display: none;">

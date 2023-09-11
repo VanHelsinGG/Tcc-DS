@@ -10,6 +10,7 @@ include("../main/lib/php/include.php");
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OlympiaWorkout: Promovendo Saúde e Bem-Estar</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="../main/lib/js/main.js" defer></script>
     <script src="./lib/js/register.js" defer></script>
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400&display=swap" rel="stylesheet">

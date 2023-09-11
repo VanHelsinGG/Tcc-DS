@@ -4,7 +4,7 @@ li, #user-icon{
     transition: all .3s ease;
 }
 
-li:hover:not(li#user-icon){
+nav ul li:hover:not(nav ul li#user-icon){
     background-color: var(--azul-complementar);
     cursor: pointer;
 }
@@ -15,4 +15,8 @@ li:hover:not(li#user-icon){
 
 .active{
     background-color: var(--escuro-terciario);
+}
+
+body, html {
+    height: 100%;
 }

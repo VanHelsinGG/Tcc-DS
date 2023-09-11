@@ -1,4 +1,13 @@
-<?php include("../../main/lib/php/include.php") ?>
+<?php include('../../main/lib/php/include.php');
+
+$func->preload();
+
+$userNome = $_SESSION['nome'];
+$userID = $_SESSION['id'];
+
+session_abort();
+
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -7,6 +16,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Painel do Professor • OlympiaWorkout</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="../../main/lib/js/main.js" defer></script>
     <script src="../lib/js/dashboard.js" defer></script>
     <link rel="stylesheet" href="../../main/lib/css/universal.css">
     <link rel="stylesheet" href="../../main/lib/images/bootstrap-icons-1.10.4/font/bootstrap-icons.css">
@@ -22,7 +33,7 @@
             <nav class="escuro col-md-2 m-0 col-lg-2 d-md-block text-white p-0 vh-100 sidebar fixed-top" id="navbar">
                 <h1 class="text-center fs-3 bg-laranja py-4">OlympiaWorkout</h1>
                 <ul class="list-unstyled list-group h-100">
-                    <li class="active my-1 option ps-2"><a href="index.php" class="text-white btn my-2 w-100 text-start"><i
+                    <li class="active my-1 option ps-2"><a href="dashboard.php" class="text-white btn my-2 w-100 text-start"><i
                                 class="bi bi-house-fill me-3"></i>Inicio</a></li>
                     <li class="my-1 option ps-2"><a href="createtraining.php"
                             class="text-white btn my-2 w-100 text-start"><i class="bi bi-fire me-3"></i>Criar
@@ -32,10 +43,10 @@
                     <li class="my-1 option ps-2"><a href="#" class="text-white btn my-2 w-100  text-start"><i
                                 class="bi bi-clipboard2-data-fill me-3"></i>Relatorios</a></li>
                     <li class="my-1 option ps-2" style="border-top: 1px solid #363330;" id="user-icon"><a href=""
-                            class="text-white btn my-2"><i class="bi bi-person-circle me-3"></i>Olympia Workout</a></li>
+                            class="text-white btn my-2"><i class="bi bi-person-circle me-3"></i><?php echo $userNome; ?></a></li>
                 </ul>
             </nav>
-            <main class="col-10 ms-auto col-lg-10 vh-100">
+            <main class="col-10 ms-auto col-lg-10 vh-100 p-0" style="overflow-x:hidden;">
                 <header class="container-fluid text-center my-4 pb-4 pt-4">
                     <h1>OlympiaWorkout - Painel do Professor</h1>
                 </header>
@@ -106,9 +117,9 @@
                                     <?php
                                     // Supondo que você já tenha estabelecido a conexão com o banco de dados ($db)
                                     
-                                    $query = "SELECT t.aluno, u.nome, t.nome AS treino, t.duracao, t.vezes_feito FROM treinos AS t
+                                    $query = 'SELECT t.aluno, u.nome, t.nome AS treino, t.duracao, t.vezes_feito FROM treinos AS t
                                             JOIN users AS u ON t.aluno = u.userid
-                                            WHERE t.professor = ?";
+                                            WHERE t.professor = ?';
 
                                     $userToken = $_COOKIE["logado"];
                                     $userId = $user->getUserID_byToken($userToken);
@@ -165,46 +176,42 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- Footer -->
+                <footer class="container-fluid bg-dark text-white text-center m-0 p-0">
+                    <div class="pt-5 m-0">
+                        <div class="row">
+                            <div class="col-4 d-flex flex-column" style="border-right:1px solid #979090;">
+                                <h5>Contato</h5>
+                                <span>Telefone: +55 (17) 99657-5631</span>
+                                <span>Email: olympiaworkout@gmail.com</span>
+                            </div>
+                            <div class="col-4">
+                                <ul>
+                                    <li class="footer-li"><a class="footer-a" href="about.html">Sobre Nós</a></li>
+                                    <li class="footer-li"><a class="footer-a" href="team.html">Nossa Equipe</a></li>
+                                    <li class="footer-li">Atalho 3</li>
+                                    <li class="footer-li">Atalho 4</li>
+                                </ul>
+                            </div>
+                            <div class="col-4">
+                                <h5>Nossas redes sociais</h5>
+                                <a class="footer-a fs-4 mx-1" href="https://instagram.com/olympia_workout?igshid=MzRIODBiNWFlZA"><i class="bi bi-instagram"></i></a>
+                                <a href="https://w.app/OlympiaWorkout" class="footer-a fs-4 mx-1"><i class="bi bi-whatsapp"></i></a>
+                                <a href="#" class="footer-a fs-4 mx-1"><i class="bi bi-facebook"></i></a>
+                            </div>
+                        </div>
+                        <div class="row mt-4">
+                            <div class="col-12">
+                                <p>&copy; <span id="data">{data}</span> OlympiaWorkout. Todos os direitos reservados.</p>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+                <!-- Fim footer -->
             </main>
         </div>
     </div>
-    <!-- Footer -->
-    <footer class="bg-dark text-white text-center">
-        <div class="container pt-5">
-            <div class="row">
-                <div class="col-3 d-flex flex-column">
-                    <span>Logo</span>
-                    <span>Telefone</span>
-                    <span>Email</span>
-                </div>
-                <div class="col-3 d-flex">
-                    <ul>
-                        <li>Atalho 1</li>
-                        <li>Atalho 2</li>
-                        <li>Atalho 3</li>
-                        <li>Atalho 4</li>
-                    </ul>
-                </div>
-                <div class="col-3 d-flex">
-                    <ul>
-                        <li>Atalho 5</li>
-                        <li>Atalho 6</li>
-                        <li>Atalho 7</li>
-                        <li>Atalho 8</li>
-                    </ul>
-                </div>
-                <div class="col-3 d-flex">
-                    Redes sociais
-                </div>
-            </div>
-            <div class="row mt-4">
-                <div class="col-12">
-                    <p>&copy; <span id="data">{data}</span> OlympiaWorkout. Todos os direitos reservados.</p>
-                </div>
-            </div>
-        </div>
-    </footer>
-    <!-- Fim footer -->
 
     <!-- Aviso de uso de cookies -->
     <div id="aviso-cookies" class="alert alert-info fixed-bottom mb-0 rounded-0 text-dark" style="display: none;">

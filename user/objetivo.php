@@ -6,6 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Escolha seu Objetivo • OlympiaWorkout</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="../main/lib/js/main.js" defer></script>
     <script src="./lib/js/objetivo.js" defer></script>
     <link rel="stylesheet" href="../main/lib/css/universal.css">
     <link rel="stylesheet" href="../main/lib/images/bootstrap-icons-1.10.4/font/bootstrap-icons.css">

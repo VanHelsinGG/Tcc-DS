@@ -61,7 +61,7 @@
 .carousel-indicators li {
     width: 10px;
     height: 10px;
-    color: rgba(0, 0, 0, 0);
+    color: #00000000;
     border-radius: 50%;
     margin: 0 10px;
     background-color: rgba(255, 255, 255, 0.5);
@@ -79,10 +79,6 @@
     background-color: var(--azul-complementar);
     color: white;
     font-family: var(--texto-secundario);
-}
-
-.numeros {
-    color: #ff9f1a;
 }
 
 
