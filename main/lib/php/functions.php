@@ -637,6 +637,13 @@ class Treino
         return $trainingData ? $trainingData['series'] : null;
     }
 
+    public function getTrainingStatus($trainingID)
+    {
+        $trainingData = $this->getTrainingData($trainingID);
+        return $trainingData ? $trainingData['status'] : null;
+    }
+
+
     public function getTrainingObservations($trainingID)
     {
         $trainingData = $this->getTrainingData($trainingID);
@@ -646,17 +653,36 @@ class Treino
     public function getNumOfStudent_byToken($token)
     {
         $user = new User($this->db);
-
         $userID = $user->getUserID_byToken($token);
+        $query = "SELECT COUNT(*) as count FROM treinos WHERE professor = ?";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param("s", $userID);
+        $stmt->execute();
+        $resultados = $stmt->get_result();
+        $row = $resultados->fetch_assoc();
+        return $row["count"];
+    }
 
-        $query = "SELECT *  FROM treinos WHERE professor = $userID";
+    public function getNumOfTrainingCreated_byID($id)
+    {
+        $query = "SELECT COUNT(*) as count FROM treinos WHERE professor = ?";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param("s", $id);
+        $stmt->execute();
+        $resultados = $stmt->get_result();
+        $row = $resultados->fetch_assoc();
+        return $row["count"];
+    }
 
-        $query = mysqli_query($this->db, $query);
-
-        $returner = mysqli_num_rows($query);
-
-        return $returner;
-
+    public function getNumOfTrainingExpired_byID($id)
+    {
+        $query = "SELECT COUNT(*) as count FROM treinos WHERE professor = ? AND vezes_feito >= duracao";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param("s", $id);
+        $stmt->execute();
+        $resultados = $stmt->get_result();
+        $row = $resultados->fetch_assoc();
+        return $row["count"];
     }
 }
 

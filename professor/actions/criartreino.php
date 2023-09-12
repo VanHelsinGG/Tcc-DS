@@ -28,7 +28,7 @@ $exercicioString = "";
 $focoString = "";
 
 foreach ($data["treinos"] as $t => $treino) {
-    $treinoNome = $treino["nome"];
+    $treinoNome = ucwords($treino["nome"]);
 
     $focoString .= $treinoNome;
     if ($t < count($data["treinos"])) {

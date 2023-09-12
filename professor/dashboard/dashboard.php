@@ -69,7 +69,7 @@ session_abort();
                                         echo '<span class="display-5">' . $numUsers . '</span>';
                                     }
                                     ?>
-                                    <span>Alunos</span>
+                                    <span>Alunos Ativos</span>
                                 </div>
                             </div>
                         </div>
@@ -78,7 +78,10 @@ session_abort();
                             <div class="card bg-success text-white square-card">
                                 <div class="card-body d-flex flex-column align-items-center">
                                     <i class="bi bi-bookmark display-4"></i>
-                                    <span class="display-5">0</span>
+                                    <span class="display-5"><?php
+                                        $numCreated = $training->getNumOfTrainingCreated_byID($userID);
+                                        echo $numCreated;
+                                    ?></span>
                                     <span>Treinos Criados</span>
                                 </div>
                             </div>
@@ -98,7 +101,10 @@ session_abort();
                             <div class="card bg-danger text-white square-card">
                                 <div class="card-body d-flex flex-column align-items-center">
                                     <i class="bi bi-exclamation display-4"></i>
-                                    <span class="display-5">0</span>
+                                    <span class="display-5"><?php
+                                        $numExpired = $training->getNumOfTrainingExpired_byID($userID);
+                                        echo $numExpired;
+                                    ?></span>
                                     <span>Treinos Vencidos</span>
                                 </div>
                             </div>

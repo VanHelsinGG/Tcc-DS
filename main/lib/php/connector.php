@@ -61,6 +61,7 @@ $query = "
     `observacoes` varchar(255) NOT NULL,
     `vezes_feito` int(11) DEFAULT 0,
     `proximo_treino` int(11) DEFAULT 0,
+    `status` int(11) DEFAULT 0,
     PRIMARY KEY (`idtreino`)
   ) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
