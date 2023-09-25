@@ -331,7 +331,7 @@ echo "<script>var users = $users_json;</script>";
                             </div>
                         </div>
                         <div class="col-2 text-end">
-                            <button type="button" id="criar-treinamento" class="btn btn-roxo text-white my-2"
+                            <button type="button" id="criar-treinamento" class="btn btn-roxo text-white my-2 disabled"
                                 onclick="criarTreinamento();">Criar treino</button>
                         </div>
                     </div>

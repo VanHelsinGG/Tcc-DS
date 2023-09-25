@@ -33,14 +33,10 @@ $('#user').on('input', function() {
         });
     }
 
-    $('.sugestoes').empty();
+    $('.sugestoes').empty(); 
 
     if (suggestions.length === 0) {
-        $('#criar-treinamento').addClass("disabled");
         $('#aviso-sugestao').show();
-    } else {
-        $('#criar-treinamento').removeClass("disabled");
-        $('#aviso-sugestao').hide();
     }
 
     suggestions.forEach(function(suggestion) {
@@ -52,6 +48,8 @@ $(document).on('click', '.sugestoes li', function (){
     var selectedSuggestion = $(this).text();
     $('#user').val(selectedSuggestion);
     $('.sugestoes').empty(); 
+    $('#criar-treinamento').removeClass("disabled");
+    $('#aviso-sugestao').hide();
 });
 
 $('.serie-i').on("keyup", function (){

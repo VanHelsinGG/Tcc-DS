@@ -52,3 +52,25 @@
 [10/09/2023 07:42:50pm] - [login] Conta logada com o nome : Root
 [11/09/2023 07:43:31am] - [login] Conta logada com o nome : Olympia Workout
 [11/09/2023 10:09:21am] - [login] Conta logada com o nome : Olympia Workout
+[25/09/2023 09:38:07am] - [registro] Conta criada com o nome : Olympia Workout
+[25/09/2023 09:38:15am] - [login] Conta logada com o nome : Olympia Workout
+[25/09/2023 09:45:37am] - [registro] Conta criada com o nome : Josafa Kluan De Barros
+[25/09/2023 09:45:59am] - [login] Conta logada com o nome : Josafa Kluan De Barros
+[25/09/2023 09:46:13am] - [registro] Conta criada com o nome : Victor Hugo
+[25/09/2023 09:46:25am] - [login] Conta logada com o nome : Victor Hugo
+[25/09/2023 09:46:43am] - [registro] Conta criada com o nome : Kauê Machado Da Silva
+[25/09/2023 09:46:45am] - [login] Conta logada com o nome : Olympia Workout
+[25/09/2023 09:47:23am] - [login] Conta logada com o nome : Kauê Machado Da Silva
+[25/09/2023 09:50:05am] - [login] Conta logada com o nome : Victor Hugo
+[25/09/2023 10:06:38am] - [login] Conta logada com o nome : Josafa Kluan De Barros
+[25/09/2023 11:02:45am] - [registro] Conta criada com o nome : Dedylon
+[25/09/2023 11:02:56am] - [login] Conta logada com o nome : Olympia Workout
+[25/09/2023 11:16:32am] - [login] Conta logada com o nome : Olympia Workout
+[25/09/2023 11:25:57am] - [login] Conta logada com o nome : Olympia Workout
+[25/09/2023 11:27:08am] - [registro] Conta criada com o nome : Teste
+[25/09/2023 11:27:14am] - [login] Conta logada com o nome : Teste
+[25/09/2023 11:29:09am] - [login] Conta logada com o nome : Kauê Machado Da Silva
+[25/09/2023 11:38:27am] - [registro] Conta criada com o nome : Joãozinho Da Pika De Ferro
+[25/09/2023 11:38:34am] - [login] Conta logada com o nome : Joãozinho Da Pika De Ferro
+[25/09/2023 11:41:46am] - [registro] Conta criada com o nome : Kauã Nascimento Maieiros
+[25/09/2023 11:41:59am] - [login] Conta logada com o nome : Kauã Nascimento Maieiros
