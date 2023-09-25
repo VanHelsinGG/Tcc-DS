@@ -54,7 +54,7 @@ $(document).on('click', '.sugestoes li', function (){
     $('.sugestoes').empty(); 
 });
 
-$('.serie-i').on("focusout", function (){
+$('.serie-i').on("keyup", function (){
     atualizarTreinamento($(this));
 });
 
@@ -78,7 +78,7 @@ function adicionarInput(button) {
         required: true
     });
 
-    $novoInput.on("focusout", function () {
+    $novoInput.on("keyup", function () {
         atualizarTreinamento($(this));
     });
 
@@ -134,6 +134,15 @@ function adicionarExercicio(button) {
     $novoExercicio.attr("id", `exercicio-${divPaiID}-4`);
     const $inputs = $novoExercicio.find('input');
     $inputs.val('');
+
+    $novoExercicio.find(".serie-i").each(function() {
+        $(this).on("input",function() {
+            verificarInput($(this));
+        });
+        $(this).on("keyup", function() {
+            atualizarTreinamento($(this));
+        });
+    });
 
     $novoExercicio.find('.exercicio-i').attr("placeholder","Novo exercício");
 

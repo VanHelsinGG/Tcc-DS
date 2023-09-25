@@ -1,40 +1,6 @@
 <?php
 include("../main/lib/php/include.php");
 
-$GLOBALS['erro'] = 0;
-
-if ($func->verificarLogado()) {
-    $cookieToken = $_COOKIE["logado"];
-
-    if ($id = $user->getUserID_byToken($cookieToken)) {
-        $user_token = $user->getUserToken_byID($id);
-
-        if ($user_token == -1 || strcmp($user_token, $cookieToken) || !$userToken->validToken($user_token)) {
-            $GLOBALS['erro'] = 1;
-        } else {
-            $GLOBALS['treinoID'] = $_GET['treinoid'];
-            $GLOBALS['treino'] = $_GET['treino'];
-
-            $GLOBALS['userNome'] = $user->getUserName_byToken($user_token);
-
-            $func->setarCookie("autenticado", 1, 1);
-
-            // Verifica se já escolheu o objetivo
-            if ($user->getUserObjective_byID($id) === -1) {
-                $redirectUrl = urlencode("objetivo.php");
-                header("Location: $redirectUrl");
-                exit();
-            }
-
-            echo '<script>var userName = "' . $GLOBALS['userNome'] . '"</script>';
-        }
-    } else {
-        $GLOBALS['erro'] = 1;
-    }
-} else {
-
-    $GLOBALS['erro'] = 1;
-}
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -44,13 +10,15 @@ if ($func->verificarLogado()) {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <?php
-    if (isset($GLOBALS['treinoID'])) {
-        echo "<title>Treino • " . $training->getTrainingsTrated($GLOBALS['treinoID'],$GLOBALS['treino']) . " • OlympiaWorkout</title>";
+    if (isset($_GET['treinoid'])) {
+        echo "<title>Treino • " . $training->getTrainingsTrated($_GET['treinoid'],$_GET['treino']) . " • OlympiaWorkout</title>";
     } else {
         echo "<title>OlympiaWorkout: Promovendo Saúde e Bem-Estar</title>";
     }
     ?>
     <script src="../main/lib/js/main.js" defer></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <link rel="stylesheet" href="../main/lib/css/universal.css">
     <link rel="stylesheet" href="./lib/css/treino.css">
     <link rel="stylesheet" href="../main/lib/images/bootstrap-icons-1.10.4/font/bootstrap-icons.css">
@@ -58,34 +26,27 @@ if ($func->verificarLogado()) {
 </head>
 
 <body style="background-color:#1d1c1a;color:white;">
-        <!-- Inicio header/navbar -->
-        <header class="header container-fluid bg-laranja p-3" id="header">
+
+    <div class="container">
         <div class="row">
-            <div class="col-3 pt-1 d-flex ps-5 align-items-center">
-                <div class="col-6">
-                    <h1 class="fs-4 text-white" id="title">OlympiaWorkout</h1>
-                </div>
-            </div>
-            <div class="col">
-                
-            </div>
+            
+        <?php
+            $exercicios = $training->getExercisesTrated($_GET['treinoid'], $_GET['treino']);
+            foreach ($exercicios as $e => $ee) {
+                $series = $training->getSeriesTrated($_GET['treinoid'], $_GET['treino'], $e);
+
+                echo '<div class="col-4 p-2">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">'.$ee.'</h5>';
+                foreach ($series as $s => $se) {
+                    echo "<a class='btn rounded-circle' style='outline: 1px solid black;'></a> Serie " . ($s + 1) . ": " . $se . "<br>";
+                }
+                echo '</div></div></div>';
+            }
+        ?>
         </div>
-    </header>
-    <!-- Fim Header -->
-    <?php
-
-    $exercicios = $training->getExercisesTrated($GLOBALS['treinoID'], $GLOBALS['treino']);
-    foreach ($exercicios as $e => $ee) {
-        echo "Exercicio " . $ee . "<br>";
-
-        $series = $training->getSeriesTrated($GLOBALS['treinoID'], $GLOBALS['treino'], $e);
-
-        foreach ($series as $s => $se) {
-            echo "Serie " . ($s + 1) . ": " . $se . "<br>";
-        }
-    }
-    echo "<br><br>";
-    ?>
+    </div>
 
     <!-- Aviso de uso de cookies -->
     <div id="aviso-cookies" class="alert alert-info fixed-bottom mb-0 rounded-0 text-dark" style="display: none;">
@@ -107,10 +68,3 @@ if ($func->verificarLogado()) {
 </body>
 
 </html>
-
-<?php
-if ($GLOBALS['erro']) {
-    $func->setarCookie("autenticado", 0, 0);
-    $func->showAlert("Sessão expirada!", "Sua sessão foi encerrada. Para acessar sua conta, por favor faça login novamente.", "Continuar", "", "./actions/deslogar.php?redirect=../login.php");
-}
-?>
