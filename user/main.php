@@ -41,7 +41,7 @@ if (isset($_SESSION["id"])) {
                     <h1 class="fs-4 text-white" id="title">OlympiaWorkout</h1>
                 </div>
             </div>
-            <div class="col-3 d-flex align-items-center">
+            <div class="col-3 d-flex align-items-center d-md-block d-none">
                 <form action="#" method="get">
                     <div class="input-group rounded" id="pesquisa-div">
                         <span class="input-group-text" id="pesquisa-icon"><i class="bi bi-search"></i></span>
@@ -134,7 +134,7 @@ if (isset($_SESSION["id"])) {
         </div>
         <div class="row">
             <!-- Próximo treino -->
-            <div class="col-6" style="border-right: 1px solid #363330;">
+            <div class="col-md-6 col-12" style="border-right: 1px solid #363330;">
                 <h3 class="fs-5 pb-2" style="border-bottom: 1px solid #363330;">Próximo Treino</h3>
                 <?php
                 if ($func->verificarLogado()) {
@@ -219,7 +219,7 @@ if (isset($_SESSION["id"])) {
             <!-- Fim próximo treino -->
 
             <!-- Histórico diário -->
-            <div class="col-6">
+            <div class="col-md-6 col-12 mt-md-0 mt-5">
                 <h3 class="fs-5 pb-2" style="border-bottom: 1px solid #363330;">Histórico Diario</h3>
                 <?php
                 if ($func->verificarLogado()) {
@@ -282,7 +282,7 @@ if (isset($_SESSION["id"])) {
         </div>
         <div class="row">
             <!-- Inicio publicações recentes -->
-            <div class="col-9" style="border-right: 1px solid #363330;">
+            <div class="col-md-9 col-12" style="border-right: 1px solid #363330;">
                 <div class="container my-2">
                     <div class="row mb-4" style="border-bottom: 1px solid #363330;">
                         <h3 class="fs-4">Ultimas Postagens</h2>
@@ -320,12 +320,12 @@ if (isset($_SESSION["id"])) {
                             $imagemUsuario = $rows['imagem'];
                             $userNome = $user->getUserName_byID($rows['user']);
 
-                            $mensagemCensurada = $func->verificarPalavrao($rows['content']);
+                           // $mensagemCensurada = $func->verificarPalavrao($rows['content']);
 
                             echo '<div class="row mt-4 p-4 rounded bg-escuro-secundario" style="outline:1px solid #363330;">
                                 <div class="col">
                                     <div class="row">
-                                        <div class="col-1">
+                                        <div class="col-1 d-md-block d-none">
                                             <img src="data:image/jpeg;base64,' . base64_encode($imagemUsuario) . '" style="height:65px; width:65px;border-radius:50%;">
                                         </div>
                                         <div class="col-11">
@@ -341,7 +341,7 @@ if (isset($_SESSION["id"])) {
                                         </div>
                                     </div>
                                     <div class="row mt-3">
-                                        <p>' . $mensagemCensurada . '</p>
+                                        <p>' . $rows['content'] . '</p>
                                     </div>
                                 </div>
                             </div>';
@@ -369,7 +369,7 @@ if (isset($_SESSION["id"])) {
             <!-- Fim publicações recentes -->
 
             <!-- Inicio Tops -->
-            <div class="col-3">
+            <div class="col-md-3 col-12">
                 <div class="container my-2">
                     <div class="row mb-4" style="border-bottom: 1px solid #363330;">
                         <h3 class="fs-4">Tops</h2>
@@ -522,12 +522,13 @@ if (isset($_SESSION["id"])) {
     <footer class="bg-dark text-white text-center">
         <div class="container pt-5">
             <div class="row">
-                 <div class="col-4 d-flex flex-column" style="border-right:1px solid #979090;">
+                 <div class="col-md-4 col-12 d-flex flex-column" style="border-right:1px solid #979090;">
                     <h5>Contato</h5>
                     <span>Telefone: +55 (17) 99657-5631</span>
                     <span>Email: olympiaworkout@gmail.com</span>
                 </div>
-                <div class="col-4">
+                <div class="col-md-4 col-12 mt-md-0 mt-4">
+                    <h5 class="d-md-none d-block text-center">Links uteis</h5>
                     <ul>
                         <li class="footer-li"><a class="footer-a" href="about.html">Sobre Nós</a></li>
                         <li class="footer-li"><a class="footer-a" href="team.html">Nossa Equipe</a></li>
@@ -535,7 +536,7 @@ if (isset($_SESSION["id"])) {
                         <li class="footer-li">Atalho 4</li>
                     </ul>
                 </div>
-                <div class="col-4">
+                <div class="col-md-4 col-12">
                     <h5>Nossas redes sociais</h5>
                     <a class="footer-a fs-4 mx-1" href="https://instagram.com/olympia_workout?igshid=MzRIODBiNWFlZA"><i class="bi bi-instagram"></i></a>
                     <a href="https://w.app/OlympiaWorkout" class="footer-a fs-4 mx-1"><i class="bi bi-whatsapp"></i></a>

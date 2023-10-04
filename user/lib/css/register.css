@@ -39,25 +39,12 @@ input:focus {
     transform: translateY(-50%);
 }
 
+#registro-mobile{
+    text-decoration: none;
+}
+
 @media (max-width: 700px) {
-    #continuar {
-        position: absolute;
-        bottom: 0%;
-        width: 50vw;
-        right: 0;
-        font-size: 20px;
-    }
-
-    #voltar {
-        position: absolute;
-        left: 0;
-        bottom: 0;
-        width: 50vw;
-        font-size: 20px;
-        background-color: #dc3545 !important;
-    }
-
-    .titulo {
-        display: block;
+    #formulario{
+        margin-top: .5rem;
     }
 }

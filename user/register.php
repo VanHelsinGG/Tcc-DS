@@ -17,37 +17,50 @@ include("../main/lib/php/include.php");
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans|Roboto|Montserrat&display=swap" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
     <link rel="stylesheet" href="../main/lib/css/universal.css">
     <link rel="stylesheet" href="./lib/css/register.css">
     <link rel="stylesheet" href="../main/lib/images/bootstrap-icons-1.10.4/font/bootstrap-icons.css">
 </head>
 
 <body style="background-color: #131211;">
+    <header class="container-fluid d-md-none d-block bg-laranja p-2">
+        <div class="row">
+            <div class="col-12 p-2 text-center">
+                <h1 class="text-white">OlympiaWorkout</h1>
+            </div>
+        </div>
+    </header>
     <!-- Corpo do site -->
-    <div class="container-fluid fs-5 h-100">
+    <div class="container-fluid fs-md-5 h-100" id="formulario">
         <!-- Parte laranja decorativa -->
         <div class="row h-100">
-            <div class="col-12 col-md-6 d-flex text-center align-items-center justify-content-center title text-white position-relative titulo a" style="background: #ff9f1a url('data:image/svg+xml,%3Csvg width=&quot;6&quot; height=&quot;6&quot; viewBox=&quot;0 0 6 6&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;%3E%3Cg fill=&quot;%23ca7f16&quot; fill-opacity=&quot;1&quot; fill-rule=&quot;evenodd&quot;%3E%3Cpath d=&quot;M5 0h1L0 6V5zM6 5v1H5z&quot;/&gt;%3C/g%3E%3C/svg%3E');">
-                <a href="index.php" class="btn text-white"><i class="bi bi-x display-4" style="position:absolute; left:0; top:0;"></i></a>
+            <div class="col-12 col-md-6 d-md-flex d-none text-center align-items-center justify-content-center title text-white position-relative titulo a"
+                style="background: #ff9f1a url('data:image/svg+xml,%3Csvg width=&quot;6&quot; height=&quot;6&quot; viewBox=&quot;0 0 6 6&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;%3E%3Cg fill=&quot;%23ca7f16&quot; fill-opacity=&quot;1&quot; fill-rule=&quot;evenodd&quot;%3E%3Cpath d=&quot;M5 0h1L0 6V5zM6 5v1H5z&quot;/&gt;%3C/g%3E%3C/svg%3E');">
+                <a href="index.php" class="btn text-white"><i class="bi bi-x display-4"
+                        style="position:absolute; left:0; top:0;"></i></a>
                 <div class="col-7">
                     <h2 class="font-weight-bold fs-1">Já possui uma conta?</h2>
                     <p class="text-white text-opacity-75">Faça login e aproveite todos os recursos exclusivos!</p>
-                    <a href="login.php" class="btn btn-outline-light w-100 btn-lg" style="border-radius:20px;">Conectar-se</a>
+                    <a href="login.php" class="btn btn-outline-light w-100 btn-lg"
+                        style="border-radius:20px;">Conectar-se</a>
                 </div>
                 <!-- Setinha redonda -->
-                <div class="col-6 d-lg-flex d-none justify-content-end position-absolute top-50 end-0 p-2 rounded-circle d-flex align-items-center justify-content-center" id="circulo">
+                <div class="col-6 d-lg-flex d-none justify-content-end position-absolute top-50 end-0 p-2 rounded-circle d-flex align-items-center justify-content-center"
+                    id="circulo">
                     <a href="login.php" class="btn">
                         <span class="bi bi-caret-right-fill"></span>
                     </a>
                 </div>
             </div>
             <!-- Formulario -->
-            <div class="col-md-6 col-12 d-flex align-items-center justify-content-center text-white">
-                <form action="./actions/register_action.php" method="post">
+            <div class="col-md-6 col-12 d-flex align-items-md-center align-items-start justify-content-center text-white">
+                <form action="./actions/register_action.php" method="post" class="p-md-0 p-4">
                     <div class="row">
                         <div class="col-12">
                             <h1 class="display-4 text-center">Inscreva-se</h1>
+                            <p class="d-md-none d-block text-center">Já possuí uma conta? <a id="registro-mobile" href="login.php">Logar-se</a></p>
                         </div>
                     </div>
                     <!-- Aparece o box de erro caso já existir conta no mesmo email - ERRO DE RETORNO -->
@@ -67,7 +80,8 @@ include("../main/lib/php/include.php");
                         <div class="col-12 ">
                             <div class="form-group">
                                 <label for="nome" class="form-label">NOME</label>
-                                <input type="text" class="form-control" id="nome" name="nome" autocomplete="off" placeholder="Digite seu nome" required maxlength="50">
+                                <input type="text" class="form-control" id="nome" name="nome" autocomplete="off"
+                                    placeholder="Digite seu nome" required maxlength="50">
                             </div>
                         </div>
                     </div>
@@ -75,12 +89,14 @@ include("../main/lib/php/include.php");
                         <div class="col-8">
                             <div class="form-group">
                                 <label for="email" class="form-label">EMAIL</label>
-                                <input type="text" class="form-control" id="email" name="email" autocomplete="off" placeholder="Digite seu email" required maxlength="50">
+                                <input type="text" class="form-control" id="email" name="email" autocomplete="off"
+                                    placeholder="Digite seu email" required maxlength="50">
                             </div>
                         </div>
                         <div class="col-4">
                             <p class="form-label">SEXO</p>
-                            <select id="sexo" name="sexo" tabindex="-1" class="form-control" style="box-shadow:none;background-color: #131211;border-radius: 0;border: 1px solid rgba(255, 255, 255, 0.4);outline: none;color: white;">
+                            <select id="sexo" name="sexo" tabindex="-1" class="form-control"
+                                style="box-shadow:none;background-color: #131211;border-radius: 0;border: 1px solid rgba(255, 255, 255, 0.4);outline: none;color: white;">
                                 <option value="Masculino">Masculino</option>
                                 <option value="Feminino">Feminino</option>
                                 <option value="Outro">Outro</option>
@@ -92,19 +108,27 @@ include("../main/lib/php/include.php");
                             <div class="form-group">
                                 <label for="senha" class="form-label">SENHA</label>
                                 <div class="input-group">
-                                    <input type="password" class="form-control" id="senha" name="senha" autocomplete="off" placeholder="Digite sua senha" required maxlength="12" minlength="4" oninput="checkCampos()">
-                                    <button class="btn toggleSenha" tabindex="-1" style="border:none; border-radius:0; border-bottom: 1px solid rgba(255, 255, 255, 0.4); margin-left:0.01rem; color:rgba(255, 255, 255, 0.5);" type="button" id="toggleSenha" onclick="mudarVisibilidadeSenha('senha');">
+                                    <input type="password" class="form-control" id="senha" name="senha"
+                                        autocomplete="off" placeholder="Digite sua senha" required maxlength="12"
+                                        minlength="4" oninput="checkCampos()">
+                                    <button class="btn toggleSenha" tabindex="-1"
+                                        style="border:none; border-radius:0; border-bottom: 1px solid rgba(255, 255, 255, 0.4); margin-left:0.01rem; color:rgba(255, 255, 255, 0.5);"
+                                        type="button" id="toggleSenha" onclick="mudarVisibilidadeSenha('senha');">
                                         <i class="bi bi-eye"></i>
                                     </button>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-6 col-12 mt-sm-4 mt-md-0">
+                        <div class="col-lg-6 col-12 mt-sm-4 mt-md-0 mt-md-0 mt-3">
                             <div class="form-group">
                                 <label for="senha2" class="form-label">CONFIRME SUA SENHA</label>
                                 <div class="input-group">
-                                    <input type="password" class="form-control" id="senha2" name="senha2" autocomplete="off" placeholder="Repita sua senha" required maxlength="12" minlength="4" oninput="checkCampos()">
-                                    <button class="btn toggleSenha" tabindex="-1" style="border:none; border-radius:0; border-bottom: 1px solid rgba(255, 255, 255, 0.4); margin-left:0.01rem; color:rgba(255, 255, 255, 0.5);" type="button" id="toggleSenha2" onclick="mudarVisibilidadeSenha('senha2');">
+                                    <input type="password" class="form-control" id="senha2" name="senha2"
+                                        autocomplete="off" placeholder="Repita sua senha" required maxlength="12"
+                                        minlength="4" oninput="checkCampos()">
+                                    <button class="btn toggleSenha" tabindex="-1"
+                                        style="border:none; border-radius:0; border-bottom: 1px solid rgba(255, 255, 255, 0.4); margin-left:0.01rem; color:rgba(255, 255, 255, 0.5);"
+                                        type="button" id="toggleSenha2" onclick="mudarVisibilidadeSenha('senha2');">
                                         <i class="bi bi-eye"></i>
                                     </button>
                                 </div>
@@ -128,7 +152,8 @@ include("../main/lib/php/include.php");
                     </div>
                     <div class="row">
                         <div class="col-12">
-                            <p class="text-white text-opacity-75" style="font-size:17px;"><span class="text-danger">**</span>Ao se registrar, você concorda com nossos termos de
+                            <p class="text-white text-opacity-75" style="font-size:17px;"><span
+                                    class="text-danger">**</span>Ao se registrar, você concorda com nossos termos de
                                 uso.
                             <p>
                         </div>
@@ -171,7 +196,8 @@ include("../main/lib/php/include.php");
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-md-8">
-                    <p class="text-dark">Este site utiliza cookies para melhorar a sua experiência de navegação. Ao continuar
+                    <p class="text-dark">Este site utiliza cookies para melhorar a sua experiência de navegação. Ao
+                        continuar
                         navegando, você concorda com o uso de cookies.</p>
                 </div>
                 <div class="col-md-4 text-end">
@@ -180,7 +206,9 @@ include("../main/lib/php/include.php");
             </div>
         </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+        crossorigin="anonymous"></script>
 </body>
 
 </html>
