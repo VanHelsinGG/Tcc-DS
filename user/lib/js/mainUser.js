@@ -1,4 +1,4 @@
-$(document).ready(() =>{
+$(document).ready(() => {
     // Atribui a data atual e o criador da postagem
     $("#postagem").on("input", () => {
         $("#data").val(data());
@@ -11,4 +11,6 @@ $(document).ready(() =>{
             event.preventDefault();
         }
     });
+
+
 });

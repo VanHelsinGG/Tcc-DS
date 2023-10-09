@@ -74,3 +74,5 @@
 [25/09/2023 11:38:34am] - [login] Conta logada com o nome : Joãozinho Da Pika De Ferro
 [25/09/2023 11:41:46am] - [registro] Conta criada com o nome : Kauã Nascimento Maieiros
 [25/09/2023 11:41:59am] - [login] Conta logada com o nome : Kauã Nascimento Maieiros
+[09/10/2023 10:14:28am] - [registro] Conta criada com o nome : Root
+[09/10/2023 10:14:34am] - [login] Conta logada com o nome : Root

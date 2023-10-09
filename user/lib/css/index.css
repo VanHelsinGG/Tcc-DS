@@ -103,76 +103,8 @@
     margin-top: -0.18rem !important;
 }
 
-
-
 @media (max-width: 700px) {
-
-    .container-fluid,
-    .carousel {
-        height: 300px;
+    body, html{
+        overflow-x: hidden;
     }
-
-    .container-fluid {
-        overflow: hidden;
-    }
-
-    #image-title {
-        font-size: 20px;
-        white-space: normal;
-        word-wrap: break-word;
-    }
-
-    .navbar-collapse .navbar-nav a:hover {
-        background-color: var(--laranja-secundario);
-    }
-
-    .title-div {
-        background-color: var(--laranja-principal);
-        /* text-shadow:
-            -0.25px -0.25px 0 #000,
-            0.25px -0.25px 0 #000,
-            -0.25px 0.25px 0 #000,
-            0.25px 0.25px 0 #000; */
-        width: 100%;
-        justify-content: center;
-        text-align: center;
-    }
-
-    #title {
-        color: white;
-    }
-
-    #diagonal-bars-header {
-        display: none;
-    }
-
-    .navbar-collapse {
-        z-index: 1;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
-    }
-
-    .nav-link {
-        margin: 0.5rem;
-    }
-
-    .carousel-indicators {
-        transform: scale(0.6);
-    }
-
-    .botao {
-        display: none !important;
-    }
-
-    .carousel-inner {
-        height: 100% !important;
-    }
-
-    .img-section {
-        display: none;
-    }
-
-
 }
