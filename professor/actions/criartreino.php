@@ -61,6 +61,18 @@ foreach ($data["treinos"] as $t => $treino) {
     }
 }
 
+$query = "SELECT * FROM treinos WHERE aluno = ?";
+$stmt = mysqli_prepare($db, $query);
+mysqli_stmt_bind_param($stmt, "s", $aluno);
+mysqli_stmt_execute($stmt);
+
+if(mysqli_num_rows($stmt) > 0){
+    $query = "UPDATE treinos SET status = 0 WHERE aluno = ? AND status = 1";
+    $stmt = mysqli_prepare($db, $query);
+    mysqli_stmt_bind_param($stmt, "s", $aluno);
+    mysqli_stmt_execute($stmt);
+}
+
 $trainingData = [
     'nome' => $nomeTreinamento,
     'foco' => $focoString,

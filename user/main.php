@@ -59,7 +59,7 @@ if (isset($_SESSION["id"])) {
                     <div class="collapse navbar-collapse">
                         <ul class="navbar-nav">
                             <li class="nav-item nav-item-hover mx-2 rounded">
-                                <a href="#" class="nav-link text-white active bolder">Inicio</a>
+                                <a href="main.php" class="nav-link text-white active bolder">Inicio</a>
                             </li>
                             <li class="nav-item nav-item-hover mx-2 rounded">
                                 <a href="#contact" id="contact" class="nav-link text-white">Exercícios</a>
@@ -68,7 +68,7 @@ if (isset($_SESSION["id"])) {
                                 <a href="#contact" id="contact" class="nav-link text-white">Dieta</a>
                             </li>
                             <li class="nav-item nav-item-hover mx-2 rounded">
-                                <a href="#" class="nav-link text-white">Relatórios</a>
+                                <a href="posts.php" class="nav-link text-white">Postagens</a>
                             </li>
                             <li class="nav-item mx-2 not-hover" style="border-left: 1px solid white;">
                                 <?php
@@ -146,9 +146,9 @@ if (isset($_SESSION["id"])) {
                     $userID = $user->getUserID_byToken($userToken);
 
                     $query = "SELECT t.*, u.nome AS professor_nome 
-                              FROM treinos t 
-                              INNER JOIN users u ON t.professor = u.userid 
-                              WHERE t.aluno = ?";
+                    FROM treinos t 
+                    INNER JOIN users u ON t.professor = u.userid 
+                    WHERE t.aluno = ? AND t.status = 1";
 
                     $stmt = mysqli_prepare($db, $query);
                     mysqli_stmt_bind_param($stmt, "s", $userID);
@@ -163,8 +163,8 @@ if (isset($_SESSION["id"])) {
                             echo '<div id="aviso-requisicao-treino" class="alert alert-primary text-dark mb-0 pb-0">
                                     <div class="container ">
                                         <div class="row align-items-center">
-                                            <div class="col w-100 text-center">
-                                                <p class="text-dark">Já existe uma requisição de treino criada para você!</p>
+                                            <div class="col-12 text-center">
+                                                <p class="text-dark">Já existe uma requisição de treino criada para você!<a id="cancelar-requisicao-treino" class="ms-3 btn btn-outline-danger">Cancelar Requisição</a></p>
                                             </div>
                                         </div>
                                     </div>
@@ -409,7 +409,7 @@ if (isset($_SESSION["id"])) {
                         echo '<div class="row mt-4 p-4 rounded">
                             <div class="col">
                                 <div class="row">
-                                    <a href="#" class="btn btn-azul text-white">Veja mais publicações</a>
+                                    <a href="posts.php" class="btn btn-azul text-white">Veja mais publicações</a>
                                 </div>
                             </div>
                         </div>';

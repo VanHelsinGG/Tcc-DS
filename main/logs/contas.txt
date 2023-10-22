@@ -87,3 +87,11 @@
 [21/10/2023 03:12:39pm] - [login] Conta logada com o nome : Root
 [21/10/2023 11:25:22pm] - [login] Conta logada com o nome : Root
 [21/10/2023 11:26:06pm] - [login] Conta logada com o nome : Victor
+[22/10/2023 02:26:58pm] - [login] Conta logada com o nome : Victor
+[22/10/2023 03:23:19pm] - [login] Conta logada com o nome : Victor
+[22/10/2023 03:41:06pm] - [login] Conta logada com o nome : Root
+[22/10/2023 03:43:26pm] - [registro] Conta criada com o nome : Postasd
+[22/10/2023 03:43:50pm] - [login] Conta logada com o nome : Teste
+[22/10/2023 03:44:17pm] - [login] Conta logada com o nome : Root
+[22/10/2023 03:45:25pm] - [login] Conta logada com o nome : Root
+[22/10/2023 03:45:48pm] - [login] Conta logada com o nome : Victor

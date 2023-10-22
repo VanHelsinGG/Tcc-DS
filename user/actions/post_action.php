@@ -12,4 +12,10 @@ if($conteudo != ""){
     mysqli_stmt_execute($stmt);
 }
 
-header("Location: ../main.php");
+if(isset($_GET['return'])){
+    header("Location: ../" . $_GET['return']);
+    die("tasd");
+}else{
+    header("Location: ../main.php");
+    die("tasd");
+}

@@ -7,6 +7,18 @@ $userID = $_SESSION['id'];
 
 session_abort();
 
+if($user->getUserAccess_byID($userID) < 1){
+    echo '<div class="container-fluid text-center">
+           <div class="row">
+                <div class="col w-100 text-center">
+                    <h1>Opss... Vejo que você não possui permissão para acessar essa página!</h1>
+                    <a class="btn btn-primary" href="../../user/main.php">Voltar</a>
+                </div>
+           </div>
+    </div>';
+    die();
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -42,8 +54,6 @@ session_abort();
                             class="text-white btn my-2 w-100 text-start"><i class="bi bi-archive-fill me-3"></i>Requisições de Treino</a></li>    
                     <li class="my-1 option ps-2"><a href="students.php" class="text-white btn my-2 w-100  text-start"><i
                                 class="bi bi-person-fill me-3"></i>Seus Alunos</a></li>
-                    <li class="my-1 option ps-2"><a href="#" class="text-white btn my-2 w-100  text-start"><i
-                                class="bi bi-clipboard2-data-fill me-3"></i>Relatorios</a></li>
                     <li class="my-1 option ps-2" style="border-top: 1px solid #363330;" id="user-icon"><a href="../../user/main.php"
                             class="text-white btn my-2"><i class="bi bi-person-circle me-3"></i><?php echo $userNome; ?></a></li>
                 </ul>

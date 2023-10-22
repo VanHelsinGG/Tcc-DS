@@ -20,6 +20,7 @@ $('#requisitar-treino').click((event) => {
         var mysqlDateTime = currentDate.toISOString().slice(0, 19).replace('T', ' ');
 
         $.post('/tcc/user/actions/requisitar_treino_action.php', {
+            action: 'CREATE',
             user: userid,
             professor: professor,
             data: mysqlDateTime
@@ -35,3 +36,18 @@ $('#requisitar-treino').click((event) => {
         });
     }
 });
+
+$('#cancelar-requisicao-treino').click(() => {
+    $.post('/tcc/user/actions/requisitar_treino_action.php', {
+        action: 'DELETE',
+        user: userid,
+    }, function (data) {
+        if (data == 1) {
+            location.reload();
+        } else {
+           alert("Houve um erro no processamento de sua requisição!");
+        }
+    }).fail(function () {
+        alert("Houve um erro no processamento de sua requisição!");
+    });
+})
