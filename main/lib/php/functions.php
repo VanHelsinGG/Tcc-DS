@@ -425,6 +425,11 @@ class User
         return $this->getUserInfo("estado", "nome", $name);
     }
 
+    public function getUserEmail_byID($id)
+    {
+        return $this->getUserInfo("email","userid",$id);
+    }
+
 
     public function userAuthenticated()
     {
@@ -458,6 +463,17 @@ class User
         $numUsers = mysqli_num_rows($query);
 
         return $numUsers;
+    }
+    
+    public function existsUserTrainingRequest_byID($id) {
+        $query = "SELECT * FROM requisicoestreino WHERE user = ?";
+        
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param("s", $id); 
+        $stmt->execute();
+        $resultados = $stmt->get_result(); 
+    
+        return ($resultados->num_rows > 0) ? true : false; 
     }
 }
 
@@ -516,7 +532,7 @@ class Treino
 
     public function createTraining($trainingData)
     {
-        $stmt = $this->db->prepare("INSERT INTO treinos (aluno, professor,nome, foco, duracao, exercicios, series, observacoes) VALUES (?,?,?, ?, ?, ?, ?, ?)");
+        $stmt = $this->db->prepare("INSERT INTO treinos (aluno, professor,nome, foco, duracao, exercicios, series, observacoes, status) VALUES (?,?,?, ?, ?, ?, ?, ?, '1')");
         $stmt->bind_param("ssssssss", $trainingData['aluno'], $trainingData['professor'], $trainingData['nome'], $trainingData['foco'], $trainingData['duracao'], $trainingData['exercicios'], $trainingData['series'], $trainingData['observacoes']);
         return ($stmt->execute()) ? 1 : 0;
     }

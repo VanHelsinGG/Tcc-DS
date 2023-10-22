@@ -38,11 +38,13 @@ session_abort();
                     <li class="my-1 option ps-2"><a href="createtraining.php"
                             class="text-white btn my-2 w-100 text-start"><i class="bi bi-fire me-3"></i>Criar
                             Treino</a></li>
-                    <li class="my-1 option ps-2"><a href="#" class="text-white btn my-2 w-100  text-start"><i
-                                class="bi bi-person-fill me-3"></i>Alunos</a></li>
+                    <li class="my-1 option ps-2"><a href="requests.php"
+                            class="text-white btn my-2 w-100 text-start"><i class="bi bi-archive-fill me-3"></i>Requisições de Treino</a></li>    
+                    <li class="my-1 option ps-2"><a href="students.php" class="text-white btn my-2 w-100  text-start"><i
+                                class="bi bi-person-fill me-3"></i>Seus Alunos</a></li>
                     <li class="my-1 option ps-2"><a href="#" class="text-white btn my-2 w-100  text-start"><i
                                 class="bi bi-clipboard2-data-fill me-3"></i>Relatorios</a></li>
-                    <li class="my-1 option ps-2" style="border-top: 1px solid #363330;" id="user-icon"><a href=""
+                    <li class="my-1 option ps-2" style="border-top: 1px solid #363330;" id="user-icon"><a href="../../user/main.php"
                             class="text-white btn my-2"><i class="bi bi-person-circle me-3"></i><?php echo $userNome; ?></a></li>
                 </ul>
             </nav>
@@ -125,7 +127,7 @@ session_abort();
                                     
                                     $query = 'SELECT t.aluno, u.nome, t.nome AS treino, t.duracao, t.vezes_feito FROM treinos AS t
                                             JOIN users AS u ON t.aluno = u.userid
-                                            WHERE t.professor = ?';
+                                            WHERE t.professor = ? LIMIT 3';
 
                                     $userToken = $_COOKIE["logado"];
                                     $userId = $user->getUserID_byToken($userToken);
@@ -153,7 +155,7 @@ session_abort();
                                             </tr>";
                                         }
 
-                                        echo "</table>";
+                                        echo "<tr><td colspan='3'><a class='btn btn-primary w-100 ' href='requests.php'>Acessar Todos alunos</a></td></tr>";
                                     }
 
 
@@ -163,20 +165,52 @@ session_abort();
                         </div>
                         <div class="col-6 ms-auto">
                             <div class="row mb-2">
-                                <h2><i class="bi bi-arrow-right-circle me-3"></i>Solicitações Pendentes</h2>
+                                <h2><i class="bi bi-arrow-right-circle me-3"></i>Requisições Pendentes</h2>
                             </div>
                             <div class="row text-center">
-                                <table class="table-dark table-striped table text-center">
-                                    <tr>
-                                        <th>Data</th>
-                                        <th>Aluno</th>
-                                        <th></th>
-                                    </tr>
-                                    <tr>
-                                        <td>00/00/0000</td>
-                                        <td>Victor</td>
-                                        <td><a href="" class="btn btn-primary w-100 h-100">Criar Treino</a></td>
-                                    </tr>
+                            <table class="table-dark table-striped table text-center">
+                                    <?php
+                                    
+                                    $query = 'SELECT * FROM requisicoestreino WHERE professor = ? OR professor = -1 ORDER BY (professor = ?) DESC LIMIT 3';
+
+                                    $userToken = $_COOKIE["logado"];
+                                    $userId = $user->getUserID_byToken($userToken);
+
+                                    $stmt = mysqli_prepare($db, $query);
+                                    mysqli_stmt_bind_param($stmt, "ss", $userId,$userId);
+                                    mysqli_stmt_execute($stmt);
+
+                                    $resultados = mysqli_stmt_get_result($stmt);
+
+                                    if (!mysqli_num_rows($resultados)) {
+                                        echo "Não há requisições pendentes!";
+                                    } else {
+                                        echo "<tr>
+                                                <th>Data</th>
+                                                <th>ID</th>
+                                                <th>Aluno</th>
+                                                <th>Preferencia</th>
+                                                <th></th>
+                                            </tr>";
+
+                                        while ($row = mysqli_fetch_assoc($resultados)) {
+                                            $alunoNome = $user->getUserName_byID($row['user']);
+                                            $preferencia = ($row['professor'] == $userId) ? '<span class="text-success">Sim</span>' : '<span class="text-danger">Não</span>';
+
+                                            echo "<tr>
+                                                <td>" . $row['data_requisicao'] . "</td>
+                                                <td>" . $row['user'] . "</td>
+                                                <td>" . $alunoNome . "</td>
+                                                <td>".$preferencia."</td>
+                                                <td><a class='btn btn-outline-primary w-100' href='createtraining.php?userid=".$row['user']."'>Criar Treino</a></td>
+                                            </tr>";
+                                        }
+
+                                        echo "<tr><td colspan='5'><a class='btn btn-primary w-100 ' href='requests.php'>Acessar Todas Requisições</a></td></tr>";
+                                    }
+
+
+                                    ?>
                                 </table>
                             </div>
                         </div>

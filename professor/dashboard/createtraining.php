@@ -48,16 +48,16 @@ echo "<script>var users = $users_json;</script>";
                     <li class="my-1 option ps-2"><a href="dashboard.php" class="text-white btn my-2 w-100 text-start"><i
                                 class="bi bi-house-fill me-3"></i>Inicio</a></li>
                     <li class="active my-1 option ps-2"><a href="createtraining.php"
-                            class="text-white btn my-2 w-100  text-start"><i class="bi bi-fire me-3"></i>Criar
+                            class="text-white btn my-2 w-100 text-start"><i class="bi bi-fire me-3"></i>Criar
                             Treino</a></li>
-                    <li class="my-1 option ps-2"><a href="#" class="text-white btn my-2 w-100  text-start"><i
-                                class="bi bi-person-fill me-3"></i>Alunos</a></li>
+                    <li class="my-1 option ps-2"><a href="requests.php"
+                            class="text-white btn my-2 w-100 text-start"><i class="bi bi-archive-fill me-3"></i>Requisições de Treino</a></li>    
+                    <li class="my-1 option ps-2"><a href="students.php" class="text-white btn my-2 w-100  text-start"><i
+                                class="bi bi-person-fill me-3"></i>Seus Alunos</a></li>
                     <li class="my-1 option ps-2"><a href="#" class="text-white btn my-2 w-100  text-start"><i
                                 class="bi bi-clipboard2-data-fill me-3"></i>Relatorios</a></li>
-                    <li class="my-1 option ps-2" style="border-top: 1px solid #363330;" id="user-icon"><a href=""
-                            class="text-white btn my-2"><i class="bi bi-person-circle me-3"></i>
-                            <?php echo $userNome; ?>
-                        </a></li>
+                    <li class="my-1 option ps-2" style="border-top: 1px solid #363330;" id="user-icon"><a href="../../user/main.php"
+                            class="text-white btn my-2"><i class="bi bi-person-circle me-3"></i><?php echo $userNome; ?></a></li>
                 </ul>
             </nav>
             <main class="col-10 ms-auto col-lg-10 vh-100 p-0" style="overflow-x:hidden;">
@@ -82,7 +82,14 @@ echo "<script>var users = $users_json;</script>";
                             </div>
                             <div class="col-6">
                                 <div class="form-floating mb-3">
-                                    <input type="text" class="form-control" id="user" placeholder="Aluno">
+                                    <?php
+                                        if(isset($_GET['userid'])){
+                                            $alunoNome = $user->getUserName_byID($_GET['userid']);
+                                            echo '<input type="text" class="form-control" id="user" placeholder="Aluno" value="'.$alunoNome.'">';
+                                        }else{
+                                            echo '<input type="text" class="form-control" id="user" placeholder="Aluno">';
+                                        }
+                                    ?>
                                     <label for="user">Aluno</label>
                                 </div>
                                 <div class="sugestoes shadow-lg rounded" style="margin-top: -1rem;">

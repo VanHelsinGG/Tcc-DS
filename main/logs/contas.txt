@@ -76,3 +76,14 @@
 [25/09/2023 11:41:59am] - [login] Conta logada com o nome : Kauã Nascimento Maieiros
 [09/10/2023 10:14:28am] - [registro] Conta criada com o nome : Root
 [09/10/2023 10:14:34am] - [login] Conta logada com o nome : Root
+[20/10/2023 01:15:08pm] - [registro] Conta criada com o nome : Root
+[20/10/2023 01:15:16pm] - [login] Conta logada com o nome : Root
+[20/10/2023 05:15:29pm] - [login] Conta logada com o nome : Root
+[21/10/2023 01:44:34pm] - [registro] Conta criada com o nome : Victor
+[21/10/2023 01:44:43pm] - [login] Conta logada com o nome : Victor
+[21/10/2023 02:19:50pm] - [login] Conta logada com o nome : Root
+[21/10/2023 03:11:59pm] - [registro] Conta criada com o nome : Teste
+[21/10/2023 03:12:25pm] - [login] Conta logada com o nome : Teste
+[21/10/2023 03:12:39pm] - [login] Conta logada com o nome : Root
+[21/10/2023 11:25:22pm] - [login] Conta logada com o nome : Root
+[21/10/2023 11:26:06pm] - [login] Conta logada com o nome : Victor

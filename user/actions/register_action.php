@@ -59,5 +59,8 @@ if (mysqli_num_rows($resultados) > 0) {
     $func->Log("contas",$txt);
 
     header("Location: ../login.php?register=1");
+    session_start();
+    
+    $_SESSION['userEmail'] = $email;
     exit(); // Termina a execução do código após o redirecionamento
 }

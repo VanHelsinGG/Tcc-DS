@@ -72,9 +72,15 @@ $trainingData = [
     'observacoes' => "",
 ];
 $trainingID = $training->createTraining($trainingData);
+
+
+$query = "DELETE FROM requisicoestreino WHERE user = ? ";
+$stmt = mysqli_prepare($db, $query);
+mysqli_stmt_bind_param($stmt, "s", $aluno);
+mysqli_stmt_execute($stmt);
+
 if ($trainingID) {
     echo "1";
-    die();
 } else {
     echo "0";
 }

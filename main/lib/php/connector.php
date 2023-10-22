@@ -28,7 +28,7 @@ $query = "
     `idconfigs` int(11) NOT NULL AUTO_INCREMENT,
     `prox_att_semanal` date NOT NULL,
     PRIMARY KEY (`idconfigs`)
-  ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
   CREATE TABLE IF NOT EXISTS `exercicios_diarios` (
     `idexercicios_diarios` int(11) NOT NULL AUTO_INCREMENT,
@@ -39,7 +39,7 @@ $query = "
     `tempo_decorrido` time NOT NULL,
     `exclusao` date DEFAULT NULL,
     PRIMARY KEY (`idexercicios_diarios`)
-  ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
   CREATE TABLE IF NOT EXISTS `posts` (
     `postid` int(11) NOT NULL AUTO_INCREMENT,
@@ -47,7 +47,7 @@ $query = "
     `content` varchar(120) NOT NULL,
     `data` datetime NOT NULL,
     PRIMARY KEY (`postid`)
-  ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
   CREATE TABLE IF NOT EXISTS `treinos` (
     `idtreino` int(11) NOT NULL AUTO_INCREMENT,
@@ -63,7 +63,7 @@ $query = "
     `proximo_treino` int(11) DEFAULT 0,
     `status` int(11) DEFAULT 0,
     PRIMARY KEY (`idtreino`)
-  ) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
   CREATE TABLE IF NOT EXISTS `users` (
     `userid` int(11) NOT NULL AUTO_INCREMENT,
@@ -83,8 +83,17 @@ $query = "
     `tempo_semanal` time DEFAULT '00:00:00',
     `tempo_mensal` time DEFAULT '00:00:00',
     PRIMARY KEY (`userid`)
-  ) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-";
+  ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  
+  CREATE TABLE IF NOT EXISTS `requisicoesTreino` (
+    `requisicaoid` int(11) NOT NULL AUTO_INCREMENT,
+    `user` int(11) NOT NULL,
+    `professor` int(11) DEFAULT '-1',
+    `data_requisicao` datetime NOT NULL,
+    PRIMARY KEY (`requisicaoid`)
+  ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+  ";
 
 // Executa todas as consultas em um único bloco
 if (mysqli_multi_query($db, $query)) {

@@ -58,8 +58,19 @@ include("../main/lib/php/include.php");
                         <div class="col-12">
                             <div class="form-group">
                                 <label for="email" class="form-label">EMAIL</label>
-                                <input type="text" class="form-control" id="email" name="email" autocomplete="off"
-                                    placeholder="Digite seu email" required maxlength="50">
+                                <?php
+                                    if(isset($_GET['register'])){
+                                        session_start();
+
+                                        echo '<input type="text" class="form-control" id="email" name="email" autocomplete="off"
+                                        placeholder="Digite seu email" required maxlength="50" value="'.$_SESSION['userEmail'].'">';
+                                        
+                                        session_abort();
+                                    }else{
+                                        echo '<input type="text" class="form-control" id="email" name="email" autocomplete="off"
+                                        placeholder="Digite seu email" required maxlength="50">';
+                                    }
+                                ?>
                             </div>
                         </div>
                     </div>

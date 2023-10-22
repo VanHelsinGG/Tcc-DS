@@ -22,15 +22,13 @@ if (isset($_SESSION["id"])) {
         echo "<title>OlympiaWorkout: Promovendo Saúde e Bem-Estar</title>";
     }
     ?>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="../main/lib/js/main.js" defer></script>
-    <script src="./lib/js/mainUser.js" defer></script>
     <link rel="stylesheet" href="../main/lib/css/universal.css">
     <link rel="stylesheet" href="../main/lib/images/bootstrap-icons-1.10.4/font/bootstrap-icons.css">
     <link rel="stylesheet" href="./lib/css/main.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
-    <script src="https://www.youtube.com/iframe_api"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="../main/lib/js/main.js" defer></script>
+    <script src="lib/js/mainUser.js" defer></script>
 </head>
 
 <body style="background-color:#1d1c1a;">
@@ -160,6 +158,56 @@ if (isset($_SESSION["id"])) {
 
                     if (mysqli_num_rows($resultado) == 0) {
                         echo "<p>Não há treinos cadastrados para você!</p>";
+
+                        if($user->existsUserTrainingRequest_byID($userID)){
+                            echo '<div id="aviso-requisicao-treino" class="alert alert-primary text-dark mb-0 pb-0">
+                                    <div class="container ">
+                                        <div class="row align-items-center">
+                                            <div class="col w-100 text-center">
+                                                <p class="text-dark">Já existe uma requisição de treino criada para você!</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>';
+                        }else{
+                            $query = "SELECT nome, userid FROM users WHERE estado >= 1";
+                            $stmt = mysqli_prepare($db, $query);
+
+                            if (mysqli_stmt_execute($stmt)) {
+                                mysqli_stmt_bind_result($stmt, $nome, $userid);
+
+                                // Se houver registros no resultado, exiba as opções no select
+                                echo '<a class="btn btn-outline-warning w-100" id="requisitar-treino">Requisitar Treino - 
+                                    <select id="professor" name="professor" tabindex="-1" class="text-center"
+                                    style="cursor: pointer; outline: 0; background-color: transparent; color: white; border: 0; border-bottom: 1px solid white; border-radius: 0;"><option value="-1" selected class="text-black">Qualquer Professor</option>';
+                                
+                                while (mysqli_stmt_fetch($stmt)) {
+                                    echo '<option value="' . $userid . '" class="text-black">' . $nome . '</option>';
+                                }
+
+                                echo '</select></a>';
+
+                                echo '<div id="aviso-requisicao-treino-sucesso" class="alert alert-success text-dark my-3 pb-0" style="display:none;">
+                                        <div class="container ">
+                                            <div class="row align-items-center">
+                                                <div class="col w-100 text-center">
+                                                    <p class="text-dark">Sua requisição foi criada com sucesso!</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>';
+
+                                echo '<div id="aviso-requisicao-treino-fracasso" class="alert alert-danger text-dark my-3 pb-0" style="display:none;">
+                                        <div class="container ">
+                                            <div class="row align-items-center">
+                                                <div class="col w-100 text-center">
+                                                    <p class="text-dark">Houve um erro ao criar sua requisição!</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>';
+                            }
+                        }
                     } else {
                         $row = mysqli_fetch_assoc($resultado);
                         $proxTreino = $training->deStrcatFocus($row['foco'], $row['proximo_treino']);
