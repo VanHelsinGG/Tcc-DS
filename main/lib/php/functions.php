@@ -466,7 +466,7 @@ class User
     }
     
     public function existsUserTrainingRequest_byID($id) {
-        $query = "SELECT * FROM requisicoestreino WHERE user = ?";
+        $query = "SELECT * FROM requisicoes_treino WHERE user = ?";
         
         $stmt = $this->db->prepare($query);
         $stmt->bind_param("s", $id); 

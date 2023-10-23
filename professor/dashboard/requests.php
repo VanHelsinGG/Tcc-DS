@@ -65,7 +65,7 @@ if($user->getUserAccess_byID($userID) < 1){
                     <table class="table-dark table-striped table text-center">
                         <?php
                                     
-                            $query = 'SELECT * FROM requisicoestreino';
+                            $query = 'SELECT * FROM requisicoes_treino';
 
                             $stmt = mysqli_prepare($db, $query);
                             mysqli_stmt_execute($stmt);

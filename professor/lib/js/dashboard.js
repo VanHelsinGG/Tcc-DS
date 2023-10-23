@@ -265,7 +265,6 @@ function criarTreinamento() {
 
     $.post("../actions/criartreino.php", json)
         .done(function (data) {
-            console.log(data);
             if (data === "1") {
                 $("#aviso-sucesso").show();
     

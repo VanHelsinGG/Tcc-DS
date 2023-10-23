@@ -95,3 +95,12 @@
 [22/10/2023 03:44:17pm] - [login] Conta logada com o nome : Root
 [22/10/2023 03:45:25pm] - [login] Conta logada com o nome : Root
 [22/10/2023 03:45:48pm] - [login] Conta logada com o nome : Victor
+[23/10/2023 10:52:25am] - [login] Conta logada com o nome : Olympia Workout
+[23/10/2023 10:58:13am] - [login] Conta logada com o nome : Josafa Kluan De Barros
+[23/10/2023 10:58:37am] - [registro] Conta criada com o nome : VapoLipein
+[23/10/2023 10:58:42am] - [login] Conta logada com o nome : VapoLipein
+[23/10/2023 10:59:59am] - [login] Conta logada com o nome : Josafa Kluan De Barros
+[23/10/2023 11:02:30am] - [registro] Conta criada com o nome : Felipe Carvalho Gratão
+[23/10/2023 11:02:35am] - [login] Conta logada com o nome : Felipe Carvalho Gratão
+[23/10/2023 11:30:18am] - [login] Conta logada com o nome : Josafa Kluan De Barros
+[23/10/2023 11:46:56am] - [login] Conta logada com o nome : Olympia Workout

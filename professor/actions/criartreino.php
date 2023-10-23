@@ -65,8 +65,9 @@ $query = "SELECT * FROM treinos WHERE aluno = ?";
 $stmt = mysqli_prepare($db, $query);
 mysqli_stmt_bind_param($stmt, "s", $aluno);
 mysqli_stmt_execute($stmt);
+$resultado = mysqli_stmt_get_result($stmt);
 
-if(mysqli_num_rows($stmt) > 0){
+if(mysqli_num_rows($resultado) > 0){
     $query = "UPDATE treinos SET status = 0 WHERE aluno = ? AND status = 1";
     $stmt = mysqli_prepare($db, $query);
     mysqli_stmt_bind_param($stmt, "s", $aluno);
@@ -86,7 +87,7 @@ $trainingData = [
 $trainingID = $training->createTraining($trainingData);
 
 
-$query = "DELETE FROM requisicoestreino WHERE user = ? ";
+$query = "DELETE FROM requisicoes_treino WHERE user = ? ";
 $stmt = mysqli_prepare($db, $query);
 mysqli_stmt_bind_param($stmt, "s", $aluno);
 mysqli_stmt_execute($stmt);

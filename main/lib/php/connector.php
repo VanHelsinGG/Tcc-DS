@@ -85,7 +85,9 @@ $query = "
     PRIMARY KEY (`userid`)
   ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
   
-  CREATE TABLE IF NOT EXISTS `requisicoesTreino` (
+  DROP TABLE IF EXISTS `requisicoesTreino`;
+
+  CREATE TABLE IF NOT EXISTS `requisicoes_treino` (
     `requisicaoid` int(11) NOT NULL AUTO_INCREMENT,
     `user` int(11) NOT NULL,
     `professor` int(11) DEFAULT '-1',

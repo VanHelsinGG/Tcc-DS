@@ -65,7 +65,14 @@ if (isset($_SESSION["id"])) {
                                 <a href="#contact" id="contact" class="nav-link text-white">Exercícios</a>
                             </li>
                             <li class="nav-item nav-item-hover mx-2 rounded">
-                                <a href="#contact" id="contact" class="nav-link text-white">Dieta</a>
+                                <ul class="navbar-nav d-flex align-items center justify-content-center">
+                                    <li class="nav-item dropdown">
+                                        <a href="#" class="nav-link text-white d-flex align-items-center nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="bi bi-boxes me-2"></i>Utilitários</a>
+                                        <div class="dropdown-menu p-0" id="dropdown-menu" style="width:200px;background-color:var(--laranja-secundario);">
+                                            <a href="./calculadoraIMC/index.html" class="dropdown-item dropdown-item-hover text-white py-2"><i class="bi bi-calculator-fill me-2"></i>Calculadora IMC</a>
+                                        </div>
+                                    </li>
+                                </ul>
                             </li>
                             <li class="nav-item nav-item-hover mx-2 rounded">
                                 <a href="posts.php" class="nav-link text-white">Postagens</a>

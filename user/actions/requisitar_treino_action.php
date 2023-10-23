@@ -3,7 +3,7 @@ include('../../main/lib/php/include.php');
 
 if($_POST['action'] === "CREATE"){
     if (isset($_POST['user'], $_POST['professor'], $_POST['data'])) {
-        $query = 'INSERT INTO requisicoestreino (user, professor, data_requisicao) VALUES (?, ?, ?)';
+        $query = 'INSERT INTO requisicoes_treino (user, professor, data_requisicao) VALUES (?, ?, ?)';
         $stmt = $db->prepare($query);
         $stmt->bind_param("sss", $_POST['user'], $_POST['professor'], $_POST['data']);
     
@@ -17,7 +17,7 @@ if($_POST['action'] === "CREATE"){
     }
 }else if($_POST['action'] === "DELETE"){
     if (isset($_POST['user'])) {
-        $query = 'DELETE FROM requisicoestreino WHERE user = ?';
+        $query = 'DELETE FROM requisicoes_treino WHERE user = ?';
         $stmt = $db->prepare($query);
         $stmt->bind_param("s", $_POST['user']);
     

@@ -181,7 +181,7 @@ if($user->getUserAccess_byID($userID) < 1){
                             <table class="table-dark table-striped table text-center">
                                     <?php
                                     
-                                    $query = 'SELECT * FROM requisicoestreino WHERE professor = ? OR professor = -1 ORDER BY (professor = ?) DESC LIMIT 3';
+                                    $query = 'SELECT * FROM requisicoes_treino WHERE professor = ? OR professor = -1 ORDER BY (professor = ?) DESC LIMIT 3';
 
                                     $userToken = $_COOKIE["logado"];
                                     $userId = $user->getUserID_byToken($userToken);
