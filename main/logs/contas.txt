@@ -104,3 +104,4 @@
 [23/10/2023 11:02:35am] - [login] Conta logada com o nome : Felipe Carvalho Gratão
 [23/10/2023 11:30:18am] - [login] Conta logada com o nome : Josafa Kluan De Barros
 [23/10/2023 11:46:56am] - [login] Conta logada com o nome : Olympia Workout
+[23/10/2023 07:59:40pm] - [login] Conta logada com o nome : Root

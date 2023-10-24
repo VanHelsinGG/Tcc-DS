@@ -48,7 +48,6 @@ $(document).on('click', '.sugestoes li', function (){
     var selectedSuggestion = $(this).text();
     $('#user').val(selectedSuggestion);
     $('.sugestoes').empty(); 
-    $('#criar-treinamento').removeClass("disabled");
     $('#aviso-sugestao').hide();
 });
 
@@ -94,7 +93,7 @@ function criarNovoTreino() {
 
         numTraining++;
 
-        // Incrementa o objeto completo 'treinamento'
+        // Incrementa o objeto complexo 'treinamento'
         if (numTraining > Object.keys(treinamento.treinos).length) {
             var novoTreinoID = numTraining;
             var novoTreino = { nome: "", exercicios: [] };
@@ -243,6 +242,20 @@ function criarTreinamento() {
     
     if (!peloMenosUmTreinoComExercicios) {
         alert("Pelo menos um treino deve ter exercícios.");
+        return 0;
+    }
+
+    var usuarioValido = false;
+
+    for (var i = 0; i < users.length; i++) {
+        if (users[i].trim() === aluno.trim()) {
+            usuarioValido = true;
+            break;
+        }
+    }    
+    
+    if (!usuarioValido) {
+        alert("O usuário não consta em nosso banco de dados!");
         return 0;
     }
 

@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -12,6 +13,11 @@
 </head>
 <body>
     <main id="container">
+        <?php
+            if(isset($_GET['return'])){
+                echo "<a id='returner' onclick='window.history.back();'><i class='fa-solid fa-arrow-left' style='margin-right:1rem;'></i>Voltar</a>";
+            }
+        ?>
         <section id="img">
             <img src="assets/imgs/illustration.svg">
         </section>
@@ -72,6 +78,10 @@
                 </div>
             </div>   
         </section>
+
+        <div id="copyright">
+            <p><a href="../index.php" style="color:var(--azul-complementar);">OlympiaWorkout</a> - Todos os direitos reservados</p>
+        </div>
     </main>
     <script src="assets/js/script.js"></script>
 </body>

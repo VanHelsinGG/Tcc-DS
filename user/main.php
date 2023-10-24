@@ -58,24 +58,24 @@ if (isset($_SESSION["id"])) {
                     </button>
                     <div class="collapse navbar-collapse">
                         <ul class="navbar-nav">
-                            <li class="nav-item nav-item-hover mx-2 rounded">
+                            <li class="active nav-item nav-item-hover mx-2 rounded">
                                 <a href="main.php" class="nav-link text-white active bolder">Inicio</a>
                             </li>
                             <li class="nav-item nav-item-hover mx-2 rounded">
                                 <a href="#contact" id="contact" class="nav-link text-white">Exercícios</a>
                             </li>
                             <li class="nav-item nav-item-hover mx-2 rounded">
+                                <a href="posts.php" class="nav-link text-white">Postagens</a>
+                            </li>
+                            <li class="nav-item nav-item-hover mx-2 rounded">
                                 <ul class="navbar-nav d-flex align-items center justify-content-center">
                                     <li class="nav-item dropdown">
                                         <a href="#" class="nav-link text-white d-flex align-items-center nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="bi bi-boxes me-2"></i>Utilitários</a>
                                         <div class="dropdown-menu p-0" id="dropdown-menu" style="width:200px;background-color:var(--laranja-secundario);">
-                                            <a href="./calculadoraIMC/index.html" class="dropdown-item dropdown-item-hover text-white py-2"><i class="bi bi-calculator-fill me-2"></i>Calculadora IMC</a>
+                                            <a href="./imc/index.php?return=1" class="dropdown-item dropdown-item-hover text-white py-2"><i class="bi bi-calculator-fill me-2"></i>Calculadora IMC</a>
                                         </div>
                                     </li>
                                 </ul>
-                            </li>
-                            <li class="nav-item nav-item-hover mx-2 rounded">
-                                <a href="posts.php" class="nav-link text-white">Postagens</a>
                             </li>
                             <li class="nav-item mx-2 not-hover" style="border-left: 1px solid white;">
                                 <?php
