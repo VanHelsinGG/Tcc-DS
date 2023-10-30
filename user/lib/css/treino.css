@@ -1,1 +1,21 @@
 @import url("../../../main/lib/css/universal.css");
+
+.exercise-active{
+    background-color: whitesmoke !important;
+    color: black;
+    z-index: 999;
+}
+
+.card:not(.exercise-active){
+    color: white;
+}
+
+.card{
+    transition: all .3s ease-in-out;
+}
+
+
+.card-title{
+    text-transform: capitalize;
+    font-weight: bold;
+}

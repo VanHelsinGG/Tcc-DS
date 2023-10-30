@@ -105,3 +105,36 @@
 [23/10/2023 11:30:18am] - [login] Conta logada com o nome : Josafa Kluan De Barros
 [23/10/2023 11:46:56am] - [login] Conta logada com o nome : Olympia Workout
 [23/10/2023 07:59:40pm] - [login] Conta logada com o nome : Root
+[24/10/2023 07:29:11am] - [login] Conta logada com o nome : Olympia Workout
+[24/10/2023 11:56:03am] - [login] Conta logada com o nome : Olympia Workout
+[24/10/2023 01:27:54pm] - [login] Conta logada com o nome : Josafa Kluan De Barros
+[24/10/2023 01:28:56pm] - [registro] Conta criada com o nome : Kauã Nascimento Maieiros
+[24/10/2023 01:29:00pm] - [login] Conta logada com o nome : Kauã Nascimento Maieiros
+[24/10/2023 01:29:37pm] - [login] Conta logada com o nome : Olympia Workout
+[24/10/2023 01:30:22pm] - [login] Conta logada com o nome : Olympia Workout
+[24/10/2023 01:32:30pm] - [login] Conta logada com o nome : Olympia Workout
+[24/10/2023 01:33:56pm] - [login] Conta logada com o nome : Olympia Workout
+[24/10/2023 02:04:49pm] - [login] Conta logada com o nome : Olympia Workout
+[24/10/2023 02:23:13pm] - [login] Conta logada com o nome : Olympia Workout
+[24/10/2023 02:40:46pm] - [login] Conta logada com o nome : Olympia Workout
+[24/10/2023 02:43:42pm] - [login] Conta logada com o nome : Olympia Workout
+[26/10/2023 10:56:38am] - [login] Conta logada com o nome : Felipe Carvalho Gratão
+[26/10/2023 10:58:52am] - [login] Conta logada com o nome : Kauã Nascimento Maieiros
+[26/10/2023 11:00:55am] - [login] Conta logada com o nome : Josafa Kluan De Barros
+[26/10/2023 11:04:45am] - [login] Conta logada com o nome : Kauã Nascimento Maieiros
+[26/10/2023 11:05:41am] - [login] Conta logada com o nome : Olympia Workout
+[26/10/2023 11:12:11am] - [login] Conta logada com o nome : Josafa Kluan De Barros
+[26/10/2023 11:28:25am] - [login] Conta logada com o nome : Olympia Workout
+[26/10/2023 11:41:33am] - [login] Conta logada com o nome : Felipe Carvalho Gratão
+[26/10/2023 11:41:36am] - [login] Conta logada com o nome : Josafa Kluan De Barros
+[26/10/2023 11:42:13am] - [login] Conta logada com o nome : Kauã Nascimento Maieiros
+[30/10/2023 09:44:22am] - [login] Conta logada com o nome : Olympia Workout
+[30/10/2023 10:11:49am] - [login] Conta logada com o nome : Felipe Carvalho Gratão
+[30/10/2023 10:12:34am] - [login] Conta logada com o nome : Kauã Nascimento Maieiros
+[30/10/2023 10:13:23am] - [login] Conta logada com o nome : Felipe Carvalho Gratão
+[30/10/2023 10:13:44am] - [login] Conta logada com o nome : Josafa Kluan De Barros
+[30/10/2023 10:16:28am] - [login] Conta logada com o nome : Kauã Nascimento Maieiros
+[30/10/2023 10:17:37am] - [login] Conta logada com o nome : Kauã Nascimento Maieiros
+[30/10/2023 11:17:34am] - [login] Conta logada com o nome : Olympia Workout
+[30/10/2023 11:23:07am] - [login] Conta logada com o nome : Olympia Workout
+[30/10/2023 11:46:58am] - [login] Conta logada com o nome : Josafa Kluan De Barros

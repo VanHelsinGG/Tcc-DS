@@ -29,7 +29,7 @@ include("../main/lib/php/include.php");
 
 <body>
     <!-- Header / NavBar -->
-    <header class="header container-fluid bg-laranja shadow d-none d-md-block" id="header">
+    <header class="header container-fluid bg-laranja shadow d-none d-md-block fixed-top" id="header">
         <div class="row">
             <div class="col-4 pt-1 d-flex justify-content-center align-items-center">
                 <div class="col-6">
@@ -125,7 +125,7 @@ include("../main/lib/php/include.php");
                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
             </button> -->
         </div>
-        <div style="position: absolute; left:3rem;">
+        <div style="position: absolute; left:5rem; top:25rem;">
             <h2 id="image-title" class="display-3">Atividades físicas<br> para prevenir doenças!</h2>
         </div>
     </div>
