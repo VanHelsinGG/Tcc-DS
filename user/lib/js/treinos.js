@@ -10,6 +10,30 @@ $('.card').on('click', function () {
 
     // Remove a classe 'd-none' da tabela dentro do card clicado
     $(this).find('table').removeClass('d-none');
+
+    $('.pular-exercicio').addClass('d-none');
+    $(this).find('.pular-exercicio').removeClass('d-none');
+
+    $('.completar-exercicio').addClass('d-none');
+    $(this).find('.completar-exercicio').removeClass('d-none');
+});
+
+$('.completar-exercicio').on('click', function () {
+    const $card = $(this).closest('.card');
+
+    $card.addClass('bg-success text-white');
+    $card.find('td').addClass('text-white');
+    $card.find('th').addClass('text-white');
+
+    
+});
+
+$('.pular-exercicio').on('click', function () {
+    const $card = $(this).closest('.card');
+
+    $card.addClass('bg-warning text-white');
+    $card.find('td').addClass('text-white');
+    $card.find('th').addClass('text-white');
 });
 
 $(document).on('click', '.finalizar-serie', function () {
@@ -38,6 +62,7 @@ function undoCompletion($tr, $button) {
     $button.removeClass('btn-success maked')
         .addClass('btn-outline-primary')
         .text('Finalizar');
+    
 }
 
 function incrementProgressBar(element, intervalId, $tr, $button) {

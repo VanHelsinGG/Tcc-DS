@@ -138,3 +138,6 @@
 [30/10/2023 11:17:34am] - [login] Conta logada com o nome : Olympia Workout
 [30/10/2023 11:23:07am] - [login] Conta logada com o nome : Olympia Workout
 [30/10/2023 11:46:58am] - [login] Conta logada com o nome : Josafa Kluan De Barros
+[30/10/2023 01:30:00pm] - [login] Conta logada com o nome : Olympia Workout
+[30/10/2023 01:44:37pm] - [registro] Conta criada com o nome : Srnaja
+[30/10/2023 01:44:41pm] - [login] Conta logada com o nome : Srnaja

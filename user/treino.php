@@ -152,6 +152,10 @@ include("../main/lib/php/include.php");
                 }
                 echo '</tbody>
         </table>
+        <div class="d-flex justify-content-between">
+            <a class="btn btn-outline-warning pular-exercicio d-none w-100">Pular Exercício</a>
+            <a class="btn btn-outline-success completar-exercicio d-none w-100 ms-1">Completar Exercício</a>
+        </div>    
     </div></div></div>';
             }
             ?>
