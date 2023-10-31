@@ -122,7 +122,7 @@ include("../main/lib/php/include.php");
         </div>
     </header>
     <!-- Fim header/navbar -->
-    <div class="container p-md-0 p-4 rounded shadow bg-escuro-secundario container-treino">
+    <div class="container p-4 rounded mt-4 shadow bg-escuro-secundario container-treino">
         <div class="row">
 
             <?php
@@ -131,9 +131,11 @@ include("../main/lib/php/include.php");
                 $series = $training->getSeriesTrated($_GET['treinoid'], $_GET['treino'], $e);
 
                 echo '<div class="col-md-4 col-12 p-2">
-            <div class="card bg-escuro-terciario">
+            <div class="card bg-escuro-terciario shadow">
                 <div class="card-body">
-                    <h5 class="card-title">' . $ee . '</h5>
+                    <div class="d-flex align-items-center">
+                    <i class="bi bi-caret-down fs-3"></i><h5 class="mt-2 ms-2 card-title">' . $ee .'</h5>                   
+                    </div>
                     <table class="table table-striped d-none text-center">
                         <thead>
                             <tr class="w-100">
@@ -153,8 +155,8 @@ include("../main/lib/php/include.php");
                 echo '</tbody>
         </table>
         <div class="d-flex justify-content-between">
-            <a class="btn btn-outline-warning pular-exercicio d-none w-100">Pular Exercício</a>
-            <a class="btn btn-outline-success completar-exercicio d-none w-100 ms-1">Completar Exercício</a>
+            <a class="btn btn-outline-warning pular-exercicio d-none w-100 d-flex align-items-center justify-content-center">Pular Exercício</a>
+            <a class="btn btn-outline-success completar-exercicio d-none w-100 ms-1 text-center d-flex align-items-center justify-content-center">Completar Exercício</a>
         </div>    
     </div></div></div>';
             }
@@ -163,6 +165,31 @@ include("../main/lib/php/include.php");
         </div>
     </div>
 
+    <!-- Barra Footer -->
+    <div class="container-fluid fixed-bottom p-4 bg-escuro-secundario">
+        <div class="row">
+            <div class="col-4 d-flex align-items-center ps-4">
+                <span class="me-2 d-none d-md-block">Tempo decorrido</span>
+                <div class="bg-white p-2 rounded" id="tempo-decorrido">
+                    <span class="text-black" id="hour">00 :</span>
+                    <span class="text-black" id="minute">00 :</span>
+                    <span class="text-black" id="secound">00</span>
+                </div>
+            </div>
+            <div class="col-4 d-flex align-items-center justify-content-center pe-4">
+                <?php
+                    $trainingName = $training->getTrainingName($_GET['treinoid']);
+                    $trainingFocus = $training->getTrainingFocus($_GET['treinoid']);
+                    $trainingFocus = $training->deStrcatFocus($trainingFocus,$_GET['treino']);
+
+                    echo '<span>'.$trainingName.' - '. $trainingFocus .'</span>';
+                ?>
+            </div>
+            <div class="col-4 d-flex justify-content-end pe-4">
+                <a href="" class="btn btn-success">Encerrar Treino</a>
+            </div>
+        </div>
+    </div>
     <!-- Aviso de uso de cookies -->
     <div id="aviso-cookies" class="alert alert-info fixed-bottom mb-0 rounded-0 text-dark" style="display: none;">
         <div class="container">
