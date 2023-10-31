@@ -37,7 +37,7 @@ include("../main/lib/php/include.php");
     </header>
 
     <!-- Inicio header/navbar -->
-    <header class="header container-fluid bg-laranja" id="header">
+    <header class="header container-fluid bg-laranja d-none d-md-block" id="header">
         <div class="row">
             <div class="col-3 pt-1 d-flex ps-5 align-items-center">
                 <div class="col-6">
@@ -166,9 +166,9 @@ include("../main/lib/php/include.php");
     </div>
 
     <!-- Barra Footer -->
-    <div class="container-fluid fixed-bottom p-4 bg-escuro-secundario">
+    <div id="barra-footer" class="container-fluid fixed-bottom p-4 bg-escuro-secundario">
         <div class="row">
-            <div class="col-4 d-flex align-items-center ps-4">
+            <div class="col-6 col-md-4 d-flex align-items-center ps-4">
                 <span class="me-2 d-none d-md-block">Tempo decorrido</span>
                 <div class="bg-white p-2 rounded" id="tempo-decorrido">
                     <span class="text-black" id="hour">00 :</span>
@@ -176,7 +176,7 @@ include("../main/lib/php/include.php");
                     <span class="text-black" id="secound">00</span>
                 </div>
             </div>
-            <div class="col-4 d-flex align-items-center justify-content-center pe-4">
+            <div class="col-4 d-md-flex d-none align-items-center justify-content-center pe-4">
                 <?php
                     $trainingName = $training->getTrainingName($_GET['treinoid']);
                     $trainingFocus = $training->getTrainingFocus($_GET['treinoid']);
@@ -185,7 +185,7 @@ include("../main/lib/php/include.php");
                     echo '<span>'.$trainingName.' - '. $trainingFocus .'</span>';
                 ?>
             </div>
-            <div class="col-4 d-flex justify-content-end pe-4">
+            <div class="col-6 col-md-4 d-flex justify-content-end pe-4">
                 <a href="" class="btn btn-success">Encerrar Treino</a>
             </div>
         </div>

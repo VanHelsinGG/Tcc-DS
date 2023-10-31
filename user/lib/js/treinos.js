@@ -27,7 +27,15 @@ function refreshTimePassed() {
 }
 
 $('.card').on('click', function () {
-    activeCard($(this));
+    if ($(this).hasClass('exercise-active')) {
+        $(this).removeClass('exercise-active');
+        $(this).find('table').addClass('d-none');
+        $(this).find('.pular-exercicio').addClass('d-none');
+        $(this).find('.completar-exercicio').addClass('d-none');
+        $(this).find('.bi-caret-down').show();
+    } else {
+        activeCard($(this));
+    }
 });
 
 function activeCard($card) {
