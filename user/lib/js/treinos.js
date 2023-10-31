@@ -21,25 +21,74 @@ $('.card').on('click', function () {
 $('.completar-exercicio').on('click', function () {
     const $card = $(this).closest('.card');
 
-    $card.addClass('bg-success text-white');
-    $card.find('td').addClass('text-white');
-    $card.find('th').addClass('text-white');
+    if($card.hasClass('skipped')){
+        $card.removeClass('skipped');
+        toggleSkip($card);
+    }
 
-    
+    $card.toggleClass('completed');
+
+    toggleCompleted($card);
 });
+
+function toggleCompleted($card){
+    if($card.hasClass('completed')){
+        $card.addClass('bg-success');
+        $card.find('td, th, .card-title').addClass('text-white');
+        $card.find('.pular-exercicio').hide();
+        $card.find('.completar-exercicio').removeClass('btn-outline-success')
+        .addClass('btn-success')
+        .text('Desfazer Exercício');
+        $card.find('.finalizar-serie').removeClass('btn-outline-primary btn-success')
+        .addClass('btn-primary disabled')
+        .text('Realizado');
+        $card.find('tr').removeClass('bg-success bg-opacity-50');
+    }else{
+        $card.removeClass('bg-success');
+        $card.find('td, th, .card-title').removeClass('text-white');
+        $card.find('.pular-exercicio').show();
+        $card.find('.completar-exercicio').addClass('btn-outline-success')
+        .removeClass('btn-success')
+        .text('Completar Exercício');
+        $card.find('.finalizar-serie').addClass('btn-outline-primary')
+        .removeClass('btn-primary btn-success disabled')
+        .text('Finalizar');
+        $card.find('tr').removeClass('bg-success bg-opacity-50');
+    }
+}
 
 $('.pular-exercicio').on('click', function () {
     const $card = $(this).closest('.card');
 
-    $card.addClass('bg-warning text-white');
-    $card.find('td').addClass('text-white');
-    $card.find('th').addClass('text-white');
+    $card.toggleClass('skipped');
+
+    toggleSkip($card);
 });
 
-$(document).on('click', '.finalizar-serie', function () {
+function toggleSkip($card){
+    if($card.hasClass('skipped')){
+        $card.addClass('bg-warning');
+        $card.find('td, th, .card-title').addClass('text-white');
+        $card.find('.pular-exercicio').hide();
+        $card.find('.completar-exercicio').removeClass('btn-outline-success')
+        .addClass('btn-success');
+        $card.find('.finalizar-serie').removeClass('btn-outline-primary btn-success completed')
+        .addClass('btn-primary');
+    }else{
+        $card.removeClass('bg-warning');
+        $card.find('td, th, .card-title').removeClass('text-white');
+        $card.find('.pular-exercicio').show();
+        $card.find('.completar-exercicio').addClass('btn-outline-success')
+        .removeClass('btn-success');
+        $card.find('.finalizar-serie').addClass('btn-outline-primary')
+        .removeClass('btn-primary');
+    }
+}
+
+$('.finalizar-serie').on('click', function () {
     var $tr = $(this).closest('tr');
 
-    if ($(this).hasClass('maked')) {
+    if ($(this).hasClass('completed')) {
         undoCompletion($tr, $(this));
     } else {
         startCompletion($tr, $(this));
@@ -59,7 +108,7 @@ function startCompletion($tr, $button) {
 function undoCompletion($tr, $button) {
     $tr.removeClass('bg-success bg-opacity-primary text-white');
     $tr.find('td').removeClass('text-white');
-    $button.removeClass('btn-success maked')
+    $button.removeClass('btn-success completed')
         .addClass('btn-outline-primary')
         .text('Finalizar');
     
@@ -74,19 +123,25 @@ function incrementProgressBar(element, intervalId, $tr, $button) {
         $(element).find('.progress-bar').css('width', (progressValue / 3) * 100 + "%");
     } else {
         clearInterval(intervalId);
+
         $tr.find('td').show().addClass('text-white');
         $tr.find('.progress').remove();
         $tr.find('td[colspan="3"]').remove();
+
         $tr.addClass('bg-success bg-opacity-50 completed');
 
-        // Atualiza o botão e as classes do botão
-        $button.removeClass('btn-outline-primary text-white')
-            .addClass('btn-success maked')
-            .text('Realizado');
+        $button.addClass('btn-success')
+        .removeClass('btn-outline-primary')
+        .text('Realizado');
 
         if ($tr.siblings('.completed').length === $tr.siblings('tr').length) {
-            $tr.closest('.card').addClass('bg-success text-white');
-            $tr.closest('.card').find('th').addClass('text-white');
+            if($tr.closest('.card').hasClass('skipped')){
+                $tr.closest('.card').removeClass('skipped');
+                toggleSkip($tr.closest('.card'));
+            }
+
+            $tr.closest('.card').addClass('completed');
+            toggleCompleted($tr.closest('.card'));
         }
     }
 }
