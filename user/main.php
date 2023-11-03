@@ -148,133 +148,159 @@ if (isset($_SESSION["id"])) {
             <div class="col-lg-6 col-12" style="border-right: 1px solid #363330;">
                 <h3 class="fs-5 pb-2" style="border-bottom: 1px solid #363330;">Próximo Treino</h3>
                 <?php
-                if ($func->verificarLogado()) {
-                    $userToken = $_COOKIE['logado'];
-                    $userID = $user->getUserID_byToken($userToken);
+if ($func->verificarLogado()) {
+    $userToken = $_COOKIE['logado'];
+    $userID = $user->getUserID_byToken($userToken);
 
-                    $query = "SELECT t.*, u.nome AS professor_nome 
-                    FROM treinos t 
-                    INNER JOIN users u ON t.professor = u.userid 
-                    WHERE t.aluno = ? AND t.status = 1";
+    $query = "SELECT t.*, u.nome AS professor_nome 
+              FROM treinos t 
+              INNER JOIN users u ON t.professor = u.userid 
+              WHERE t.aluno = ? AND t.status = 1";
 
-                    $stmt = mysqli_prepare($db, $query);
-                    mysqli_stmt_bind_param($stmt, "s", $userID);
-                    mysqli_stmt_execute($stmt);
+    $stmt = mysqli_prepare($db, $query);
+    mysqli_stmt_bind_param($stmt, "s", $userID);
+    mysqli_stmt_execute($stmt);
 
-                    $resultado = mysqli_stmt_get_result($stmt);
+    $resultado = mysqli_stmt_get_result($stmt);
 
-                    if (mysqli_num_rows($resultado) == 0) {
-                        echo "<p>Não há treinos cadastrados para você!</p>";
+    if (mysqli_num_rows($resultado) == 0) {
+        echo "<p>Não há treinos cadastrados para você!</p>";
 
-                        if($user->existsUserTrainingRequest_byID($userID)){
-                            echo '<div id="aviso-requisicao-treino" class="alert alert-primary text-dark mb-0 pb-0">
-                                    <div class="container ">
-                                        <div class="row align-items-center">
-                                            <div class="col-12 text-center">
-                                                <p class="text-dark">Já existe uma requisição de treino criada para você!<a id="cancelar-requisicao-treino" class="ms-3 btn btn-outline-danger">Cancelar Requisição</a></p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>';
-                        }else{
-                            $query = "SELECT nome, userid FROM users WHERE estado >= 1";
-                            $stmt = mysqli_prepare($db, $query);
-
-                            if (mysqli_stmt_execute($stmt)) {
-                                mysqli_stmt_bind_result($stmt, $nome, $userid);
-
-                                // Se houver registros no resultado, exiba as opções no select
-                                echo '<a class="btn btn-outline-warning w-100" id="requisitar-treino">Requisitar Treino - 
-                                    <select id="professor" name="professor" tabindex="-1" class="text-center"
-                                    style="cursor: pointer; outline: 0; background-color: transparent; color: white; border: 0; border-bottom: 1px solid white; border-radius: 0;"><option value="-1" selected class="text-black">Qualquer Professor</option>';
-                                
-                                while (mysqli_stmt_fetch($stmt)) {
-                                    echo '<option value="' . $userid . '" class="text-black">' . $nome . '</option>';
-                                }
-
-                                echo '</select></a>';
-
-                                echo '<div id="aviso-requisicao-treino-sucesso" class="alert alert-success text-dark my-3 pb-0" style="display:none;">
-                                        <div class="container ">
-                                            <div class="row align-items-center">
-                                                <div class="col w-100 text-center">
-                                                    <p class="text-dark">Sua requisição foi criada com sucesso!</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>';
-
-                                echo '<div id="aviso-requisicao-treino-fracasso" class="alert alert-danger text-dark my-3 pb-0" style="display:none;">
-                                        <div class="container ">
-                                            <div class="row align-items-center">
-                                                <div class="col w-100 text-center">
-                                                    <p class="text-dark">Houve um erro ao criar sua requisição!</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>';
-                            }
-                        }
-                    } else {
-                        $row = mysqli_fetch_assoc($resultado);
-                        $proxTreino = $training->deStrcatFocus($row['foco'], $row['proximo_treino']);
-                        $treinos = $training->deStrcatFocus_all($row['foco']);
-                        $treinoid = $row['idtreino'];
-                        ?>
-                        <form method="get" action="treino.php"
-                            class="btn btn-azul text-white d-flex align-items-center justify-content-center" id="form-treino"
-                            style="cursor: default;">
-                            <?php echo "<input name='treinoid' type='hidden' value='$treinoid'?>"; ?>
-                            <div class="col-3">
-                                <div class="row">
-                                    <span>
-                                        <?php echo $row['nome']; ?>
-                                    </span>
-                                </div>
-                                <div class="row">
-                                    <span>
-                                        <?php echo $row['professor_nome']; ?>
-                                    </span>
-                                </div>
+        if ($user->existsUserTrainingRequest_byID($userID)) {
+            echo '
+                <div id="aviso-requisicao-treino" class="alert alert-primary text-dark mb-0 pb-0">
+                    <div class="container ">
+                        <div class="row align-items-center">
+                            <div class="col-12 text-center">
+                                <p class="text-dark">Já existe uma requisição de treino criada para você!
+                                    <a id="cancelar-requisicao-treino" class="ms-3 btn btn-outline-danger">Cancelar Requisição</a>
+                                </p>
                             </div>
-                            <div class="col-1 align-items-center justify-content-center pt-1 fs-3">
-                                <i class="bi bi-plus-lg text-center"></i>
-                            </div>
-                            <div class="col-7">
-                                <div class="row justify-content-center">
-                                    <div class="input-group">
-                                        <select id="treino" name="treino" tabindex="-1" class="form-control text-center"
-                                            style="cursor:pointer;outline: 0; background-color: transparent; color: white; border: 0; border-bottom: 1px solid white; border-radius: 0;">
-                                            <?php foreach ($treinos as $t => $tc) {
-                                                if (!strcmp($tc, $proxTreino)) {
-                                                    echo "<option value='$t' selected class='text-black'>Treino " . ($t + 1) . " - $tc</option>";
-                                                } else {
-                                                    echo "<option value='$t' class='text-black'>Treino " . ($t + 1) . " - $tc</option>";
-                                                }
-                                            } ?>
-                                        </select>
-                                        <div class="input-group-append" style="border-bottom: 1px solid white;">
-                                            <span class="input-group-text bg-transparent border-0 text-white">
-                                                <i class="bi bi-caret-down-fill"></i>
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row mt-1 justify-content-center">
-                                    <span>
-                                        <?php echo $row["vezes_feito"] . '/' . $row['duracao']; ?>
-                                    </span>
-                                </div>
-                            </div>
-                            <div class="col-2">
-                                <button type="submit" class="btn"><i class="bi bi-play text-white fs-2"></i></button>
-                            </div>
-                        </form>
-                        <?php
-                    }
+                        </div>
+                    </div>
+                </div>';
+        } else {
+            $query = "SELECT nome, userid FROM users WHERE estado >= 1";
+            $stmt = mysqli_prepare($db, $query);
+
+            if (mysqli_stmt_execute($stmt)) {
+                mysqli_stmt_bind_result($stmt, $nome, $userid);
+                $options = '<option value="-1" selected class="text-black">Qualquer Professor</option>';
+
+                while (mysqli_stmt_fetch($stmt)) {
+                    $options .= '<option value="' . $userid . '" class="text-black">' . $nome . '</option>';
                 }
-                ?>
 
+                echo '<a class="btn btn-outline-warning w-100" id="requisitar-treino">Requisitar Treino - 
+                        <select id="professor" name="professor" tabindex="-1" class="text-center"
+                            style="cursor: pointer; outline: 0; background-color: transparent; color: white; border: 0; border-bottom: 1px solid white; border-radius: 0;">
+                            ' . $options . '
+                        </select></a>';
+
+                echo '
+                    <div id="aviso-requisicao-treino-sucesso" class="alert alert-success text-dark my-3 pb-0" style="display:none;">
+                        <div class="container ">
+                            <div class="row align-items-center">
+                                <div class="col w-100 text-center">
+                                    <p class="text-dark">Sua requisição foi criada com sucesso!</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>';
+
+                echo '
+                    <div id="aviso-requisicao-treino-fracasso" class="alert alert-danger text-dark my-3 pb-0" style="display:none;">
+                        <div class="container ">
+                            <div a classe="row align-items-center">
+                                <div class="col w-100 text-center">
+                                    <p class="text-dark">Houve um erro ao criar sua requisição!</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>';
+            }
+        }
+    } else {
+        $row = mysqli_fetch_assoc($resultado);
+        $proxTreino = $training->deStrcatFocus($row['foco'], $row['proximo_treino']);
+        $treinos = $training->deStrcatFocus_all($row['foco']);
+        $treinoid = $row['idtreino'];
+
+        $query = "SELECT * FROM treinos_andamento WHERE idtreino = ?";
+        $stmt = mysqli_prepare($db, $query);
+        mysqli_stmt_bind_param($stmt, 's', $treinoid);
+        mysqli_stmt_execute($stmt);
+        $results = mysqli_stmt_get_result($stmt);
+        $row2 = mysqli_fetch_assoc($results);
+
+        @$focoString = $training->deStrcatFocus($row['foco'], $row2['foco']);
+
+        if ($row2) {
+            echo '
+                <form method="get" action="treino.php"
+                    class="btn btn-outline-success text-white d-flex align-items-center justify-content-center" id="form-treino"
+                    style="cursor: default;">
+                    <input name="treinoid" type="hidden" value="' . $treinoid . '">
+                    <input name="treino" type="hidden" value="' . $row2['foco'] . '">
+                    <div class="col-10">
+                        <span>Treino em andamento - ' . $row['nome'] . ' ' . $focoString . ' - Decorridos ' . $row2['tempoDecorrido'] . '</span>
+                    </div>
+                    <div class="col-2">
+                        <button type="submit" class="btn"><i class="bi bi-play text-white fs-2"></i></button>
+                    </div>
+                </form>';
+        } else {
+            echo '
+                <form method="get" action="treino.php"
+                    class="btn btn-azul text-white d-flex align-items-center justify-content-center" id="form-treino"
+                    style="cursor: default;">
+                    <input name="treinoid" type="hidden" value="' . $treinoid . '">
+                    <div class="col-3">
+                        <div class="row">
+                            <span>' . $row['nome'] . '</span>
+                        </div>
+                        <div class="row">
+                            <span>' . $row['professor_nome'] . '</span>
+                        </div>
+                    </div>
+                    <div class="col-1 align-items-center justify-content-center pt-1 fs-3">
+                        <i class="bi bi-plus-lg text-center"></i>
+                    </div>
+                    <div class="col-7">
+                        <div class="row justify-content-center">
+                            <div class="input-group">
+                                <select id="treino" name="treino" tabindex="-1" class="form-control text-center"
+                                    style="cursor:pointer;outline: 0; background-color: transparent; color: white; border: 0; border-bottom: 1px solid white; border-radius: 0;">';
+
+            foreach ($treinos as $t => $tc) {
+                if (!strcmp($tc, $proxTreino)) {
+                    echo "<option value='$t' selected class='text-black'>Treino " . ($t + 1) . " - $tc</option>";
+                } else {
+                    echo "<option value='$t' class='text-black'>Treino " . ($t + 1) . " - $tc</option>";
+                }
+            }
+
+            echo '
+                                </select>
+                                <div class="input-group-append" style="border-bottom: 1px solid white;">
+                                    <span class="input-group-text bg-transparent border-0 text-white">
+                                        <i class="bi bi-caret-down-fill"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-1 justify-content-center">
+                            <span>' . $row["vezes_feito"] . '/' . $row['duracao'] . '</span>
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <button type="submit" class="btn"><i class="bi bi-play text-white fs-2"></i></button>
+                    </div>
+                </form>';
+        }
+    }
+}
+?>
 
             </div>
             <!-- Fim próximo treino -->
@@ -283,50 +309,50 @@ if (isset($_SESSION["id"])) {
             <div class="col-lg-6 col-12 mt-md-0 mt-5">
                 <h3 class="fs-5 pb-2" style="border-bottom: 1px solid #363330;">Histórico Diario</h3>
                 <?php
-                if ($func->verificarLogado()) {
-                    $userToken = $_COOKIE['logado'];
+                // if ($func->verificarLogado()) {
+                //     $userToken = $_COOKIE['logado'];
 
-                    $query = "SELECT exercicios_diarios.nome_treino, exercicios_diarios.foco, exercicios_diarios.tempo_decorrido, users.nome AS professor
-                              FROM exercicios_diarios
-                              INNER JOIN users ON exercicios_diarios.professor = users.userid
-                              WHERE exercicios_diarios.aluno = ?";
+                //     $query = "SELECT exercicios_diarios.nome_treino, exercicios_diarios.foco, exercicios_diarios.tempo_decorrido, users.nome AS professor
+                //               FROM exercicios_diarios
+                //               INNER JOIN users ON exercicios_diarios.professor = users.userid
+                //               WHERE exercicios_diarios.aluno = ?";
 
-                    $userID = $user->getUserID_byToken($userToken);
+                //     $userID = $user->getUserID_byToken($userToken);
 
-                    $stmt = mysqli_prepare($db, $query);
-                    mysqli_stmt_bind_param($stmt, "s", $userID);
-                    mysqli_stmt_execute($stmt);
+                //     $stmt = mysqli_prepare($db, $query);
+                //     mysqli_stmt_bind_param($stmt, "s", $userID);
+                //     mysqli_stmt_execute($stmt);
 
-                    $resultados = mysqli_stmt_get_result($stmt);
+                //     $resultados = mysqli_stmt_get_result($stmt);
 
-                    if (mysqli_num_rows($resultados) > 0) {
-                        while ($row = mysqli_fetch_assoc($resultados)) {
-                            echo '<a href="" class="btn btn-outline-success text-white d-flex my-2">
-                                <div class="col-3 align-items-center justify-content-center">
-                                    <div class="row">
-                                        <span>' . $row["nome_treino"] . '</span>
-                                    </div>
-                                    <div class="row">
-                                        <span>' . $row["professor"] . '</span>
-                                    </div>
-                                </div>
-                                <div class="col-1 align-items-center justify-content-center pt-1 fs-3">
-                                    <i class="bi bi-caret-right text-center"></i>
-                                </div>
-                                <div class="col-8 align-items-center justify-content-center">
-                                    <div class="row">
-                                        <span>' . $row["foco"] . '</span>
-                                    </div>
-                                    <div class="row">
-                                        <span>' . $row["tempo_decorrido"] . '</span>
-                                    </div>
-                                </div>
-                            </a>';
-                        }
-                    } else {
-                        echo "<p>Não há treinos registrados hoje!</p>";
-                    }
-                }
+                //     if (mysqli_num_rows($resultados) > 0) {
+                //         while ($row = mysqli_fetch_assoc($resultados)) {
+                //             echo '<a href="" class="btn btn-outline-success text-white d-flex my-2">
+                //                 <div class="col-3 align-items-center justify-content-center">
+                //                     <div class="row">
+                //                         <span>' . $row["nome_treino"] . '</span>
+                //                     </div>
+                //                     <div class="row">
+                //                         <span>' . $row["professor"] . '</span>
+                //                     </div>
+                //                 </div>
+                //                 <div class="col-1 align-items-center justify-content-center pt-1 fs-3">
+                //                     <i class="bi bi-caret-right text-center"></i>
+                //                 </div>
+                //                 <div class="col-8 align-items-center justify-content-center">
+                //                     <div class="row">
+                //                         <span>' . $row["foco"] . '</span>
+                //                     </div>
+                //                     <div class="row">
+                //                         <span>' . $row["tempo_decorrido"] . '</span>
+                //                     </div>
+                //                 </div>
+                //             </a>';
+                //         }
+                //     } else {
+                //         echo "<p>Não há treinos registrados hoje!</p>";
+                //     }
+                // }
 
                 ?>
             </div>

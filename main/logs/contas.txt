@@ -141,3 +141,7 @@
 [30/10/2023 01:30:00pm] - [login] Conta logada com o nome : Olympia Workout
 [30/10/2023 01:44:37pm] - [registro] Conta criada com o nome : Srnaja
 [30/10/2023 01:44:41pm] - [login] Conta logada com o nome : Srnaja
+[31/10/2023 10:39:27pm] - [login] Conta logada com o nome : Root
+[31/10/2023 11:00:11pm] - [login] Conta logada com o nome : Root
+[03/11/2023 06:12:55pm] - [login] Conta logada com o nome : Root
+[03/11/2023 06:31:53pm] - [login] Conta logada com o nome : Root

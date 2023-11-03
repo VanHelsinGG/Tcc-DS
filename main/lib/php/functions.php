@@ -199,28 +199,28 @@ class Functions
             $data_atual = date("Y-m-d"); // Obtém a data atual no formato Y-m-d
     
             // Seleciona todos os registros da tabela "exercicios_diarios"
-            $query = "SELECT * FROM exercicios_diarios";
-            $stmt = mysqli_prepare($this->db, $query); // Prepara a consulta SQL
-            mysqli_stmt_execute($stmt); // Executa a consulta
-            $resultado = mysqli_stmt_get_result($stmt); // Obtém o resultado da consulta
+            // $query = "SELECT * FROM exercicios_diarios";
+            // $stmt = mysqli_prepare($this->db, $query); // Prepara a consulta SQL
+            // mysqli_stmt_execute($stmt); // Executa a consulta
+            // $resultado = mysqli_stmt_get_result($stmt); // Obtém o resultado da consulta
     
-            // Verifica se existem registros retornados
-            if (mysqli_num_rows($resultado) > 0) {
-                // Deleta os registros da tabela "exercicios_diarios" que correspondem à data atual
-                $query = "DELETE FROM exercicios_diarios WHERE exclusao = ?";
-                $stmt = mysqli_prepare($this->db, $query); // Prepara a consulta SQL
-                mysqli_stmt_bind_param($stmt, "s", $data_atual); // Define o valor do parâmetro
-                mysqli_stmt_execute($stmt); // Executa a consulta
+            // // Verifica se existem registros retornados
+            // if (mysqli_num_rows($resultado) > 0) {
+            //     // Deleta os registros da tabela "exercicios_diarios" que correspondem à data atual
+            //     $query = "DELETE FROM exercicios_diarios WHERE exclusao = ?";
+            //     $stmt = mysqli_prepare($this->db, $query); // Prepara a consulta SQL
+            //     mysqli_stmt_bind_param($stmt, "s", $data_atual); // Define o valor do parâmetro
+            //     mysqli_stmt_execute($stmt); // Executa a consulta
     
-                // Obtém a quantidade de registros afetados pela exclusão
-                $qnt = mysqli_affected_rows($this->db);
+            //     // Obtém a quantidade de registros afetados pela exclusão
+            //     $qnt = mysqli_affected_rows($this->db);
     
-                // Verifica se registros foram deletados e registra um log
-                if ($qnt) {
-                    $string = "[exercicios_diarios] Foram deletados $qnt registros.";
-                    self::Log('auto_delete', $string);
-                }
-            }
+            //     // Verifica se registros foram deletados e registra um log
+            //     if ($qnt) {
+            //         $string = "[exercicios_diarios] Foram deletados $qnt registros.";
+            //         self::Log('auto_delete', $string);
+            //     }
+            // }
     
             // Obtém a próxima data de atualização semanal da tabela "configs"
             $query = "SELECT prox_att_semanal AS semanal FROM configs";

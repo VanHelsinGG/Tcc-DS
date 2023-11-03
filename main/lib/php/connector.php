@@ -16,6 +16,24 @@ if (mysqli_connect_errno()) {
 }
 
 $query = "
+  DROP TABLE IF EXISTS `exercicios_diarios`;
+
+  CREATE TABLE IF NOT EXISTS `treinos_concluidos`(
+    `idtreinoconcluido` int(11) NOT NULL AUTO_INCREMENT,
+    `treino` int(11) NOT NULL,
+    `tempoDecorrido` time NOT NULL,
+    `dataConclusao` datetime NOT NULL,
+    PRIMARY KEY (`idtreinoconcluido`)
+  ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+  CREATE TABLE IF NOT EXISTS `treinos_andamento`(
+    `idtreino` int(11) NOT NULL,
+    `dataInicio` date NOT NULL,
+    `foco` int(11) NOT NULL,
+    `tempoDecorrido` time NOT NULL,
+    PRIMARY KEY (`idtreino`)
+  ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
   CREATE TABLE IF NOT EXISTS `exercicios` (
     `idexercicio` int(11) NOT NULL AUTO_INCREMENT,
     `nomeExercicio` varchar(90) NOT NULL,
@@ -28,17 +46,6 @@ $query = "
     `idconfigs` int(11) NOT NULL AUTO_INCREMENT,
     `prox_att_semanal` date NOT NULL,
     PRIMARY KEY (`idconfigs`)
-  ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
-  CREATE TABLE IF NOT EXISTS `exercicios_diarios` (
-    `idexercicios_diarios` int(11) NOT NULL AUTO_INCREMENT,
-    `nome_treino` varchar(45) NOT NULL,
-    `professor` int(11) NOT NULL,
-    `aluno` int(11) NOT NULL,
-    `foco` varchar(45) NOT NULL,
-    `tempo_decorrido` time NOT NULL,
-    `exclusao` date DEFAULT NULL,
-    PRIMARY KEY (`idexercicios_diarios`)
   ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
   CREATE TABLE IF NOT EXISTS `posts` (

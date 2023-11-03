@@ -1,6 +1,60 @@
 <?php
 include("../main/lib/php/include.php");
 
+$withoutPermission = false;
+
+$func->preload();
+
+if (isset($_GET['treinoid'])) {
+    $treinoid = $_GET['treinoid'];
+
+    $query = "SELECT * FROM treinos WHERE idtreino = ?";
+    $stmt = mysqli_prepare($db, $query);
+
+    if($stmt){
+        mysqli_stmt_bind_param($stmt, "s", $treinoid);
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+        $row = mysqli_fetch_assoc($result);
+        
+        if ($row['aluno'] === $_SESSION['id']) {
+            $query = 'SELECT tempoDecorrido FROM treinos_andamento WHERE idtreino = ?';
+            $stmt = mysqli_prepare($db, $query);
+
+            if ($stmt) {
+                mysqli_stmt_bind_param($stmt, "s", $treinoid);
+                mysqli_stmt_execute($stmt);
+                $result = mysqli_stmt_get_result($stmt);
+
+                if ($result && $row = mysqli_fetch_assoc($result)) {
+                    $tempoDecorrido = $row['tempoDecorrido'];
+                    echo '<script>var continueTraining = true;
+                                var treinoID = '.$treinoid.';
+                                var foco = '.$_GET['treino'].';
+                    </script>';
+                } else {
+                    $data = date('y-m-d');
+
+                    $query = 'INSERT INTO treinos_andamento (idtreino, dataInicio, tempoDecorrido) VALUES (?, ?, ?)';
+                    $stmt = mysqli_prepare($db, $query);
+
+                    if ($stmt) {
+                        $defaultTime = '00:00:00';
+                        mysqli_stmt_bind_param($stmt, "sss", $treinoid, $data, $defaultTime);
+                        mysqli_stmt_execute($stmt);
+                        $tempoDecorrido = $defaultTime;
+                    }
+                }
+            }
+        }else{
+            $withoutPermission = true;
+        }
+    }
+
+}
+
+session_abort();
+
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -126,39 +180,45 @@ include("../main/lib/php/include.php");
         <div class="row">
 
             <?php
-            $exercicios = $training->getExercisesTrated($_GET['treinoid'], $_GET['treino']);
-            foreach ($exercicios as $e => $ee) {
-                $series = $training->getSeriesTrated($_GET['treinoid'], $_GET['treino'], $e);
+            if($withoutPermission){
+                $func->showAlert('Sem Permissão!',"Você não possui permissão para acessar esse treino!");
+                echo '<meta http-equiv="refresh" content="3; URL=main.php" />';
+                exit();
+            }else{
+                $exercicios = $training->getExercisesTrated($_GET['treinoid'], $_GET['treino']);
+                foreach ($exercicios as $e => $ee) {
+                    $series = $training->getSeriesTrated($_GET['treinoid'], $_GET['treino'], $e);
 
-                echo '<div class="col-md-4 col-12 p-2">
-            <div class="card bg-escuro-terciario shadow">
-                <div class="card-body">
-                    <div class="d-flex align-items-center">
-                    <i class="bi bi-caret-down fs-3"></i><h5 class="mt-2 ms-2 card-title">' . $ee .'</h5>                   
-                    </div>
-                    <table class="table table-striped d-none text-center">
-                        <thead>
-                            <tr class="w-100">
-                                <th>Série</th>
-                                <th>Repetições</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>';
-                foreach ($series as $s => $se) {
-                    echo '<tr class="w-100">
-                <td>' . ($s + 1) . '</td>
-                <td>' . $se . '</td>
-                <td><a class="btn btn-outline-primary w-100 finalizar-serie">Finalizar</a></td>
-              </tr>';
+                    echo '<div class="col-md-4 col-12 p-2">
+                <div class="card bg-escuro-terciario shadow">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center">
+                        <i class="bi bi-caret-down fs-3"></i><h5 class="mt-2 ms-2 card-title">' . $ee .'</h5>                   
+                        </div>
+                        <table class="table table-striped d-none text-center">
+                            <thead>
+                                <tr class="w-100">
+                                    <th>Série</th>
+                                    <th>Repetições</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>';
+                    foreach ($series as $s => $se) {
+                        echo '<tr class="w-100">
+                    <td>' . ($s + 1) . '</td>
+                    <td>' . $se . '</td>
+                    <td><a class="btn btn-outline-primary w-100 finalizar-serie">Finalizar</a></td>
+                </tr>';
+                    }
+                    echo '</tbody>
+                    </table>
+                    <div class="d-flex justify-content-between">
+                        <a class="btn btn-outline-warning pular-exercicio d-none w-100 d-flex align-items-center justify-content-center">Pular Exercício</a>
+                        <a class="btn btn-outline-success completar-exercicio d-none w-100 ms-1 text-center d-flex align-items-center justify-content-center">Completar Exercício</a>
+                    </div>    
+                </div></div></div>';
                 }
-                echo '</tbody>
-        </table>
-        <div class="d-flex justify-content-between">
-            <a class="btn btn-outline-warning pular-exercicio d-none w-100 d-flex align-items-center justify-content-center">Pular Exercício</a>
-            <a class="btn btn-outline-success completar-exercicio d-none w-100 ms-1 text-center d-flex align-items-center justify-content-center">Completar Exercício</a>
-        </div>    
-    </div></div></div>';
             }
             ?>
 
@@ -171,9 +231,19 @@ include("../main/lib/php/include.php");
             <div class="col-6 col-md-4 d-flex align-items-center ps-4">
                 <span class="me-2 d-none d-md-block">Tempo decorrido</span>
                 <div class="bg-white p-2 rounded" id="tempo-decorrido">
-                    <span class="text-black" id="hour">00 :</span>
-                    <span class="text-black" id="minute">00 :</span>
-                    <span class="text-black" id="secound">00</span>
+                    <?php
+                        if (isset($tempoDecorrido)) {
+                            $tempoFormatado = explode(':', $tempoDecorrido);
+
+                            echo '<span class="text-black" id="hour">'. $tempoFormatado[0] . ':</span>
+                            <span class="text-black" id="minute">'. $tempoFormatado[1] . ':</span>
+                            <span class="text-black" id="secound">'. $tempoFormatado[2] .'</span>';
+                        } else {
+                            echo '<span class="text-black" id="hour">00:</span>
+                            <span class="text-black" id="minute">00:</span>
+                            <span class="text-black" id="secound">00</span>';
+                        }
+                    ?>
                 </div>
             </div>
             <div class="col-4 d-md-flex d-none align-items-center justify-content-center pe-4">
@@ -186,7 +256,7 @@ include("../main/lib/php/include.php");
                 ?>
             </div>
             <div class="col-6 col-md-4 d-flex justify-content-end pe-4">
-                <a href="" class="btn btn-success">Encerrar Treino</a>
+                <button href="" type="button" class="btn btn-success encerrar-treino">Encerrar Treino</button>
             </div>
         </div>
     </div>

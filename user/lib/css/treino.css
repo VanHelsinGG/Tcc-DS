@@ -14,8 +14,15 @@
     transition: all .3s ease-in-out;
 }
 
-
 .card-title{
     text-transform: capitalize;
     font-weight: bold;
+}
+
+#barra-footer{
+    opacity:.6;
+}
+
+#barra-footer:hover{
+    opacity:1;
 }
