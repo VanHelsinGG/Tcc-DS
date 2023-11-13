@@ -7,10 +7,10 @@ var treinamento = {
     professor: "",
     duracao: 0,
     aluno: "",
-    treinos:{
-        1:{
-            nome:"",
-            exercicios:[
+    treinos: {
+        1: {
+            nome: "",
+            exercicios: [
                 //{"nome":"","repeticoes":[]}
             ]
         }
@@ -18,48 +18,96 @@ var treinamento = {
 };
 
 $(".option").hover(
-    function() {
+    function () {
         $(this).toggleClass("active");
     }
 );
 
-$('#user').on('input', function() {
+$('#user').on('input', function () {
     var inputText = $(this).val().trim().toLowerCase();
     var suggestions = [];
 
     if (inputText.length > 0) {
-        suggestions = users.filter(function(nome) {
+        suggestions = users.filter(function (nome) {
             return nome.toLowerCase().includes(inputText);
         });
     }
 
-    $('.sugestoes').empty(); 
+    $('.sugestoes').empty();
 
     if (suggestions.length === 0) {
         $('#aviso-sugestao').show();
     }
 
-    suggestions.forEach(function(suggestion) {
+    suggestions.forEach(function (suggestion) {
         $('.sugestoes').append('<li class="sugestao p-2">' + suggestion + '</li>');
     });
 });
 
-$(document).on('click', '.sugestoes li', function (){
+$('.exercicio-i').on('input', function () {
+    var inputText = $(this).val().trim().toLowerCase();
+    var suggestions = [];
+
+    if (inputText.length > 0) {
+        suggestions = exercises.filter(function (nome) {
+            return nome.toLowerCase().includes(inputText);
+        });
+
+        // Limitar a quantidade de sugestões a 3
+        suggestions = suggestions.slice(0, 3);
+    }
+
+    var $sugestaoExercicio = $(this).closest('.row').find('.sugestoes-exercicios');
+
+    // Limpa as sugestões anteriores
+    $sugestaoExercicio.empty();
+
+    if (suggestions.length > 0) {
+        // Adiciona as novas sugestões apenas se houver alguma
+        var $dropdownMenu = $('<ul class="list-unstyled"></ul>');
+
+        suggestions.forEach(function (suggestion) {
+            $dropdownMenu.append('<li class="sugestao-exercicio p-2 dropdown-item">' + suggestion + '</li>');
+        });
+
+        $sugestaoExercicio.append($dropdownMenu);
+
+        // Adiciona o comportamento de dropdown ao elemento pai do input
+        $sugestaoExercicio.parent().addClass('show').dropdown('toggle');
+    } else {
+        // Esconde o dropdown se não houver sugestões
+        $sugestaoExercicio.removeClass('show');
+    }
+});
+
+
+
+$(document).on('click', '.sugestoes-exercicios li', function () {
+    var selectedSuggestion = $(this).text();
+
+    var inputField = $(this).closest('.row').find('.exercicio-i');
+
+    inputField.val(selectedSuggestion);
+
+    $(this).closest('.row').find('.sugestoes-exercicios').empty();
+});
+
+$(document).on('click', '.sugestoes li', function () {
     var selectedSuggestion = $(this).text();
     $('#user').val(selectedSuggestion);
-    $('.sugestoes').empty(); 
+    $('.sugestoes').empty();
     $('#aviso-sugestao').hide();
 });
 
-$('.serie-i').on("keyup", function (){
+$('.serie-i').on("keyup", function () {
     atualizarTreinamento($(this));
 });
 
-$('.serie-i').on("input",function (){
+$('.serie-i').on("input", function () {
     verificarInput($(this));
 })
 
-$('#duracao').on("input",function (){
+$('#duracao').on("input", function () {
     verificarInput($(this));
 })
 
@@ -79,7 +127,7 @@ function adicionarInput(button) {
         atualizarTreinamento($(this));
     });
 
-    $novoInput.on("input",function (){
+    $novoInput.on("input", function () {
         verificarInput($(this));
     })
 
@@ -103,7 +151,7 @@ function criarNovoTreino() {
         $novoTreino.removeClass(`treino-${numTraining - 1} treino-template d-none`);
         $novoTreino.addClass(`treino-${numTraining}`);
 
-        $novoTreino.find('[id^="exercicio-"]').each(function(index) {
+        $novoTreino.find('[id^="exercicio-"]').each(function (index) {
             const novoNumero = index + 1;
             this.id = `exercicio-${numTraining}-${novoNumero}`;
         });
@@ -132,16 +180,16 @@ function adicionarExercicio(button) {
     const $inputs = $novoExercicio.find('input');
     $inputs.val('');
 
-    $novoExercicio.find(".serie-i").each(function() {
-        $(this).on("input",function() {
+    $novoExercicio.find(".serie-i").each(function () {
+        $(this).on("input", function () {
             verificarInput($(this));
         });
-        $(this).on("keyup", function() {
+        $(this).on("keyup", function () {
             atualizarTreinamento($(this));
         });
     });
 
-    $novoExercicio.find('.exercicio-i').attr("placeholder","Novo exercício");
+    $novoExercicio.find('.exercicio-i').attr("placeholder", "Novo exercício");
 
     var $container = $button.closest(".treinoContainer");
 
@@ -155,23 +203,23 @@ function atualizarTreinamento($input) {
     var $Treino = $input.closest(".container");
     var treinoID = $Treino.attr('class').split('-')[2];
 
-    var series = []; 
+    var series = [];
 
-    $exercicio.find(".serie-i").each(function() {
+    $exercicio.find(".serie-i").each(function () {
         var valorCampo = $(this).val().trim();
-        
+
         if (valorCampo !== "") {
             series.push(valorCampo);
         }
     });
-    
+
     var treinoNome = $Treino.find(".treino-i").val().toLowerCase();
 
     var novoExercicio = { "nome": exercicioNome, "repeticoes": series };
 
     var treino = treinamento.treinos[treinoID];
     treino.nome = treinoNome;
-    
+
     var exercicioExistente = treino.exercicios.find(exercicio => exercicio.nome.toLowerCase() === exercicioNome);
 
     if (!exercicioExistente) {
@@ -199,9 +247,9 @@ function criarTreinamento() {
 
     var sair = false;
 
-    $('.treino-i').each(function(index) {
-        if(index > 0){
-            if($(this).val().trim() === ""){
+    $('.treino-i').each(function (index) {
+        if (index > 0) {
+            if ($(this).val().trim() === "") {
                 $(this).focus().css("border", "1px solid red");
                 alert("O nome do treino não pode estar em branco!");
                 sair = true;
@@ -209,7 +257,7 @@ function criarTreinamento() {
         }
     });
 
-    if(sair){
+    if (sair) {
         return 0;
     }
 
@@ -239,7 +287,7 @@ function criarTreinamento() {
             return 0;
         }
     });
-    
+
     if (!peloMenosUmTreinoComExercicios) {
         alert("Pelo menos um treino deve ter exercícios.");
         return 0;
@@ -252,8 +300,8 @@ function criarTreinamento() {
             usuarioValido = true;
             break;
         }
-    }    
-    
+    }
+
     if (!usuarioValido) {
         alert("O usuário não consta em nosso banco de dados!");
         return 0;
@@ -280,10 +328,10 @@ function criarTreinamento() {
         .done(function (data) {
             if (data === "1") {
                 $("#aviso-sucesso").show();
-    
+
                 $("form").find("input").each(function (index, element) {
                     if ($(element).attr("id") !== "Professor") {
-                        $(element).val(""); 
+                        $(element).val("");
                     }
                 });
             } else {
@@ -302,7 +350,7 @@ function criarTreinamento() {
 
 function verificarInput($input) {
     const entrada = $input.val();
-    const regex = /^[0-9]*$/; 
+    const regex = /^[0-9]*$/;
 
     if (!regex.test(entrada)) {
         $input.val(entrada.replace(/[^0-9]/g, ''));

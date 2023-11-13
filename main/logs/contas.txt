@@ -149,3 +149,14 @@
 [06/11/2023 12:29:04am] - [registro] Conta criada com o nome : Admin
 [06/11/2023 12:29:07am] - [login] Conta logada com o nome : Admin
 [06/11/2023 03:33:59pm] - [login] Conta logada com o nome : Admin
+[13/11/2023 07:58:53am] - [login] Conta logada com o nome : Olympia Workout
+[13/11/2023 07:59:14am] - [login] Conta logada com o nome : Kauã Nascimento Maieiros
+[13/11/2023 08:01:27am] - [login] Conta logada com o nome : Olympia Workout
+[13/11/2023 08:04:40am] - [login] Conta logada com o nome : Olympia Workout
+[13/11/2023 09:00:54am] - [login] Conta logada com o nome : Kauã Nascimento Maieiros
+[13/11/2023 09:23:36am] - [login] Conta logada com o nome : Olympia Workout
+[13/11/2023 10:12:24am] - [login] Conta logada com o nome : Olympia Workout
+[13/11/2023 10:52:20am] - [login] Conta logada com o nome : Olympia Workout
+[13/11/2023 11:54:16am] - [login] Conta logada com o nome : Olympia Workout
+[13/11/2023 12:17:20pm] - [login] Conta logada com o nome : Olympia Workout
+[13/11/2023 12:18:07pm] - [login] Conta logada com o nome : Olympia Workout

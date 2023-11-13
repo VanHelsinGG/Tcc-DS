@@ -191,10 +191,12 @@ session_abort();
                     $series = $training->getSeriesTrated($_GET['treinoid'], $_GET['treino'], $e);
 
                     echo '<div class="col-md-4 col-12 p-2">
-                <div class="card bg-escuro-terciario shadow">
+                <div class="card bg-escuro-terciario shadow" >
                     <div class="card-body">
-                        <div class="d-flex align-items-center">
-                        <i class="bi bi-caret-down fs-3"></i><h5 class="mt-2 ms-2 card-title">' . $ee .'</h5>                   
+                        <div class="d-flex flex-column align-items-center">
+                            <h5 class="mt-2 ms-2 card-title">' . $ee .'</h5>
+                            <div id="gif-container"></div>
+                            <button class="btn btn-outline-info show-gif my-2" style="display:none;">Visualizar Execução</button>
                         </div>
                         <table class="table table-striped d-none text-center">
                             <thead>
@@ -206,7 +208,7 @@ session_abort();
                             </thead>
                             <tbody>';
                     foreach ($series as $s => $se) {
-                        echo '<tr class="w-100">
+                        echo '<tr class="w-100 serie">
                     <td>' . ($s + 1) . '</td>
                     <td>' . $se . '</td>
                     <td><a class="btn btn-outline-primary w-100 finalizar-serie">Finalizar</a></td>
@@ -225,7 +227,56 @@ session_abort();
 
         </div>
     </div>
-
+    <div class="modal rounded-4" id="finish-modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-body escuro p-5 rounded">
+                    <div class="text-center">
+                        <div class="spinner-border text-white" role="status">
+                        </div>
+                        <p class="my-3">Aguarde enquanto processamos sua solicitação...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal rounded-4" id="finish-modal-error" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-body escuro p-5 rounded">
+                    <div class="text-center">
+                        <i class="bi bi-exclamation-triangle fs-1 text-danger"></i>
+                        <p class="my-3">Houve um erro ao finalizar seu treino!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal" id="finish-modal-success" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-body escuro p-5">
+                    <div class="text-center">
+                        <i class="bi bi-check2-circle fs-1 text-success"></i>
+                        <h3 class="my-3">Treino finalizado com sucesso!</h3>
+                    </div>
+                    <div class="d-flex flex-column p-4 mt-5" style="border:2px dashed #ff9f1a;">
+                        <ul>
+                            <li id="success-modal-info-time">Tempo Decorrido: </li>
+                            <li id="success-modal-info-exercises">Exercicios Completados: </li>
+                            <li id="success-modal-info-series">Series Completadas: </li>
+                            <li id="success-modal-info-skipped">Exercicios Pulados: </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="progress" role="progressbar" style="height: 5px;" aria-label="Modal timer progress bar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" style="width: 0%">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+            
     <!-- Barra Footer -->
     <div id="barra-footer" class="container-fluid fixed-bottom p-4 bg-escuro-secundario">
         <div class="row">
@@ -276,8 +327,9 @@ session_abort();
             </div>
         </div>
     </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
 </body>
 
 </html>

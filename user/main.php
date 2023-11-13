@@ -331,7 +331,8 @@ if (isset($_SESSION["id"])) {
                 JOIN treinos t ON t.idtreino = tc.treino
                 JOIN users u ON t.aluno = u.userid
                 WHERE tc.dataConclusao = ?
-                ORDER BY tc.idtreinoconcluido DESC";
+                ORDER BY tc.idtreinoconcluido DESC
+                LIMIT 3";
 
                 $stmt = mysqli_prepare($db, $query);
                 mysqli_stmt_bind_param($stmt,'s',$data);

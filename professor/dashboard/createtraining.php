@@ -31,6 +31,20 @@ while ($row = mysqli_fetch_assoc($resultado)) {
 $users_json = json_encode($users);
 
 echo "<script>var users = $users_json;</script>";
+
+$query = 'SELECT nomeExercicio FROM exercicios';
+$resultado = mysqli_query($db, $query);
+
+$exercicios = [];
+
+while ($row = mysqli_fetch_assoc($resultado)) {
+    $exercicios[] = ucwords($row['nomeExercicio']);
+}
+
+$exercicios_json = json_encode($exercicios);
+
+echo "<script>var exercises = $exercicios_json;</script>";
+
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -155,10 +169,11 @@ echo "<script>var users = $users_json;</script>";
                                                     placeholder="Nome Treino"></div>
                                         </div>
                                         <div class="col-4 px-4 my-2 exercicio-c" id="exercicio-1-1">
-                                            <div class="row">
+                                            <div class="row" style="position:relative;">
                                                 <h3 class="bg-escuro-terciario rounded p-2 px-3"><input type="text"
                                                         class="form-control my-1 exercicio-i" placeholder="Exercício 1">
                                                 </h3>
+                                                <div class="sugestoes-exercicios shadow-lg rounded dropdown dropdown-menu"></div>
                                             </div>
                                             <div class="row">
                                                 <input type="text" class="form-control serie-i my-1 serie-1"
@@ -178,10 +193,11 @@ echo "<script>var users = $users_json;</script>";
                                             </div>
                                         </div>
                                         <div class="col-4 px-4 my-2 exercicio-c" id="exercicio-1-2">
-                                            <div class="row">
+                                            <div class="row" style="position:relative;">
                                                 <h3 class="bg-escuro-terciario rounded p-2 px-3"><input type="text"
                                                         class="form-control my-1 exercicio-i" placeholder="Exercício 2">
                                                 </h3>
+                                                <div class="sugestoes-exercicios shadow-lg rounded dropdown dropdown-menu"></div>
                                             </div>
                                             <div class="row">
                                                 <input type="text" class="form-control serie-i my-1 serie-1"
@@ -201,10 +217,11 @@ echo "<script>var users = $users_json;</script>";
                                             </div>
                                         </div>
                                         <div class="col-4 px-4 my-2 exercicio-c" id="exercicio-1-3">
-                                            <div class="row">
+                                            <div class="row" style="position:relative;">
                                                 <h3 class="bg-escuro-terciario rounded p-2 px-3"><input type="text"
                                                         class="form-control my-1 exercicio-i" placeholder="Exercício 3">
                                                 </h3>
+                                                <div class="sugestoes-exercicios shadow-lg rounded dropdown dropdown-menu"></div>
                                             </div>
                                             <div class="row">
                                                 <input type="text" class="form-control serie-i my-1 serie-1"
@@ -242,10 +259,11 @@ echo "<script>var users = $users_json;</script>";
                                                     placeholder="Nome Treino"></div>
                                         </div>
                                         <div class="col-4 px-4 my-2 exercicio-c" id="exercicio-1-1">
-                                            <div class="row">
+                                            <div class="row" style="position:relative;">
                                                 <h3 class="bg-escuro-terciario rounded p-2 px-3"><input type="text"
                                                         class="form-control my-1 exercicio-i" placeholder="Exercício 1">
                                                 </h3>
+                                                <div class="sugestoes-exercicios shadow-lg rounded dropdown dropdown-menu"></div>
                                             </div>
                                             <div class="row">
                                                 <input type="text" class="form-control serie-i my-1 serie-1"
@@ -265,10 +283,11 @@ echo "<script>var users = $users_json;</script>";
                                             </div>
                                         </div>
                                         <div class="col-4 px-4 my-2 exercicio-c" id="exercicio-1-2">
-                                            <div class="row">
+                                        <div class="row" style="position:relative;">
                                                 <h3 class="bg-escuro-terciario rounded p-2 px-3"><input type="text"
                                                         class="form-control my-1 exercicio-i" placeholder="Exercício 2">
                                                 </h3>
+                                                <div class="sugestoes-exercicios shadow-lg rounded dropdown dropdown-menu"></div>
                                             </div>
                                             <div class="row">
                                                 <input type="text" class="form-control serie-i my-1 serie-1"
@@ -288,10 +307,11 @@ echo "<script>var users = $users_json;</script>";
                                             </div>
                                         </div>
                                         <div class="col-4 px-4 my-2 exercicio-c" id="exercicio-1-3">
-                                            <div class="row">
+                                            <div class="row" style="position:relative;">
                                                 <h3 class="bg-escuro-terciario rounded p-2 px-3"><input type="text"
                                                         class="form-control my-1 exercicio-i" placeholder="Exercício 3">
                                                 </h3>
+                                                <div class="sugestoes-exercicios shadow-lg rounded dropdown dropdown-menu"></div>
                                             </div>
                                             <div class="row">
                                                 <input type="text" class="form-control serie-i my-1 serie-1"

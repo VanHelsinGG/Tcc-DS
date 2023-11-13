@@ -77,7 +77,7 @@ include("../main/lib/php/include.php");
     </header>
 
     <!-- Slide-Show -->
-    <div class="container-fluid image-switcher p-0 d-flex justify-content-center align-items-center d-none d-md-block">
+    <!-- <div class="container-fluid image-switcher p-0 d-flex justify-content-center align-items-center d-none ">
         <div id="image-switcher" class="carousel slide" data-ride="carousel" data-wrap="false" data-interval="5000">
             <ol class="carousel-indicators">
                 <li data-target="#image-switcher" data-slide-to="1" class=""></li>
@@ -118,17 +118,17 @@ include("../main/lib/php/include.php");
                         alt="Fourth slide">
                 </div>
             </div>
-            <!-- <button class="botao carousel-control-prev hidden-sm" href="" role="button" data-slide="prev" onclick="atualizarSwitcher(2);" style="background: linear-gradient(to right, rgb(0, 0, 1), rgba(0,0,0,0));">
+            <button class="botao carousel-control-prev hidden-sm" href="" role="button" data-slide="prev" onclick="atualizarSwitcher(2);" style="background: linear-gradient(to right, rgb(0, 0, 1), rgba(0,0,0,0));">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
             </button>
             <button class="botao carousel-control-next hidden-sm" href="" role="button" data-slide="next" onclick="atualizarSwitcher(1);" style="background: linear-gradient(to left, rgba(0,0,0,1), rgba(0,0,0,0));">
                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            </button> -->
+            </button>
         </div>
         <div style="position: absolute; left:5rem; top:25rem;">
             <h2 id="image-title" class="display-3">Atividades físicas<br> para prevenir doenças!</h2>
         </div>
-    </div>
+    </div> -->
 
     <div class="container-fluid d-block d-md-none background-escuro text-white">
         <div class="row">

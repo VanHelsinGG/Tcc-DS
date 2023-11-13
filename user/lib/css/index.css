@@ -108,3 +108,9 @@
         overflow-x: hidden;
     }
 }
+
+img:not(#imagem-comecar){
+    filter:contrast(1.4)
+    /* animation: texte 2s infinite linear;
+    -webkit-animation: texte 2s infinite linear;  */
+}

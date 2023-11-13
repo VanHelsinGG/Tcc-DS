@@ -36,9 +36,9 @@ foreach ($data["treinos"] as $t => $treino) {
     }
 
     foreach ($treino["exercicios"] as $e => $exercicio) {
-        $exercicioNome = $exercicio["nome"];
+        $nomeExercicio = $exercicio["nome"];
 
-        $exercicioString .= $exercicioNome;
+        $exercicioString .= $nomeExercicio;
 
         if ($e < count($treino["exercicios"]) - 1) {
             $exercicioString .= ",";

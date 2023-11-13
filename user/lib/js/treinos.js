@@ -1,8 +1,30 @@
 let trainingCompleted = false;
 let timeInterval;
+
 $(document).ready(function () {
     timeInterval = setInterval(refreshTimePassed, 1000);
     const previousState = localStorage.getItem('exerciciosEstado');
+
+    const exercisesJson = $('.card-title').map(function () {
+        return $(this).text();
+    }).get();
+
+    $.post('/tcc/user/actions/pegar-gif-exercicios.php', {
+        exercicios: JSON.stringify(exercisesJson)
+    }, function (data) {
+        const resultado = JSON.parse(data);
+
+        $('.card-title').each(function () {
+            const nomeExercicio = $(this).text().trim().toLowerCase();
+            const exercicioEncontrado = resultado.find(item => item.nomeExercicio.trim().toString().toLowerCase() === nomeExercicio);
+
+            if (exercicioEncontrado) {
+                const exercicioDecodificado = 'data:image/gif;base64,' + exercicioEncontrado.exercicio;
+
+                $(this).closest('.card').find('#gif-container').append(`<img class="exercise-gif img-fluid m-2 rounded-4" style="width:300px;height:300px; display:none;" src="${exercicioDecodificado}" alt="Exercício">`);
+            }
+        });
+    });
 
     if (previousState && !continueTraining) {
         $.post('/tcc/user/actions/encerrar_treino_action.php', {
@@ -67,31 +89,9 @@ $(document).ready(function () {
     });
 });
 
+$('.encerrar-treino').click(finishTraining);
 
-$('.encerrar-treino').click(function () {
-    const timePassed = getTrainingTime();
-
-    $.post('/tcc/user/actions/encerrar_treino_action.php', {
-        action: 'FINISH',
-        treinoID: treinoID,
-        tempoDecorrido: timePassed,
-        foco: foco
-    }, function (data) {
-        const resposta = JSON.parse(data);
-
-        if (resposta.status === "success") {
-            localStorage.removeItem('exerciciosEstado');
-            trainingCompleted = true;
-            window.location.href = 'main.php';
-        } else {
-            console.error(resposta.message);
-        }
-    }).fail(function () {
-        console.error("Failed to send the request to the server.");
-    });
-});
-
-$('.card').on('click', function () {
+$('.card').on('click', function (event) {
     if ($(this).hasClass('exercise-active')) {
         // $(this).removeClass('exercise-active');
         // $(this).find('table').addClass('d-none');
@@ -117,8 +117,14 @@ $('.completar-exercicio').on('click', function () {
 
     toggleCompleted($card);
 
+    if ($('.card.completed').length === $('.card').length) {
+        finishTraining();
+    }
 });
 
+$('.show-gif').click(function () {
+    $(this).siblings('#gif-container').find('.exercise-gif').toggle();
+});
 
 $('.pular-exercicio').on('click', function () {
     const $card = $(this).closest('.card');
@@ -137,6 +143,66 @@ $('.finalizar-serie').on('click', function () {
         startCompletion($tr, $(this));
     }
 });
+
+function finishTraining() {
+    const timePassed = getTrainingTime();
+
+    clearInterval(timeInterval);
+
+    $("#finish-modal").modal('show');
+
+    $.post('/tcc/user/actions/encerrar_treino_action.php', {
+        action: 'FINISH',
+        treinoID: treinoID,
+        tempoDecorrido: timePassed,
+        foco: foco
+    }, function (data) {
+        const resposta = JSON.parse(data);
+
+        if (resposta.status === "success") {
+            localStorage.removeItem('exerciciosEstado');
+            trainingCompleted = true;
+
+
+            $("#finish-modal").modal('hide');
+            $("#finish-modal-success").modal('show');
+
+            $("#finish-modal-success").find('#success-modal-info-time').append(getTrainingTime());
+            $("#finish-modal-success").find('#success-modal-info-exercises').append($('.card.completed').length);
+            $("#finish-modal-success").find('#success-modal-info-series').append($('.serie.completed').length);
+            $("#finish-modal-success").find('#success-modal-info-skipped').append($('.card.skipped').length);
+
+            $('a, button').addClass('disabled');
+
+
+            const timerFinish = setInterval(function () {
+                const $progress = $('#finish-modal-success').find('.progress');
+                const $progressBar = $progress.find('.progress-bar');
+                let valueNow = parseInt($progress.attr('aria-valuenow'));
+
+                if (valueNow === 100) {
+                    clearInterval(timerFinish);
+                    window.location.href = "main.php";
+                }
+
+                valueNow += 20;
+
+                $progress.attr('aria-valuenow', valueNow);
+                $progressBar.css('width', valueNow + '%');
+
+            }, 1000);
+        } else {
+            console.error(resposta.message);
+            $("#finish-modal").modal('hide');
+            $("#finish-modal-error").modal('show');
+        }
+    }).fail(function () {
+        console.error("Failed to send the request to the server.");
+        $("#finish-modal").modal('hide');
+        $("#finish-modal-error").modal('show');
+    });
+}
+
 
 function refreshTimePassed() {
     let hour = parseInt($('#hour').text());
@@ -183,6 +249,12 @@ function activeCard($card) {
 
     $('.card').find('.bi-caret-down').show();
     $card.find('.bi-caret-down').hide();
+
+    $('.card').find('.show-gif').hide();
+    $card.find('.show-gif').show();
+
+    $('.card').find('.exercise-gif').not($card.find('.exercise-gif')).hide();
+
 }
 
 function toggleCompleted($card, option = 0) {
@@ -203,7 +275,7 @@ function toggleCompleted($card, option = 0) {
         $cardElement.removeClass('bg-success');
         $cardElement.find('td, th, .card-title').removeClass('text-white');
         $cardElement.find('.pular-exercicio').removeClass('d-none');
-        $cardElement.find('.completar-exercício').addClass('btn-outline-success')
+        $cardElement.find('.completar-exercicio').addClass('btn-outline-success')
             .removeClass('btn-success')
             .text('Completar Exercício');
         $cardElement.find('.finalizar-serie').addClass('btn-outline-primary')
