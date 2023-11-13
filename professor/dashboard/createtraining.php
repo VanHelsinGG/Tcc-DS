@@ -380,7 +380,7 @@ echo "<script>var users = $users_json;</script>";
                                 <ul>
                                     <li class="footer-li"><a class="footer-a" href="about.html">Sobre Nós</a></li>
                                     <li class="footer-li"><a class="footer-a" href="team.html">Nossa Equipe</a></li>
-                                    <li class="footer-li">Atalho 3</li>
+                                    <li class="footer-li"><a class="footer-a" href="./imc/index.php?return=1">Calculadora IMC</a></li>
                                     <li class="footer-li">Atalho 4</li>
                                 </ul>
                             </div>

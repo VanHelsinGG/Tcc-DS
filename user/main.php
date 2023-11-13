@@ -148,160 +148,174 @@ if (isset($_SESSION["id"])) {
             <div class="col-lg-6 col-12" style="border-right: 1px solid #363330;">
                 <h3 class="fs-5 pb-2" style="border-bottom: 1px solid #363330;">Próximo Treino</h3>
                 <?php
-if ($func->verificarLogado()) {
-    $userToken = $_COOKIE['logado'];
-    $userID = $user->getUserID_byToken($userToken);
+            if ($func->verificarLogado()) {
+                $userToken = $_COOKIE['logado'];
+                $userID = $user->getUserID_byToken($userToken);
 
-    $query = "SELECT t.*, u.nome AS professor_nome 
-              FROM treinos t 
-              INNER JOIN users u ON t.professor = u.userid 
-              WHERE t.aluno = ? AND t.status = 1";
+                $query = "SELECT t.*, u.nome AS professor_nome 
+                        FROM treinos t 
+                        INNER JOIN users u ON t.professor = u.userid 
+                        WHERE t.aluno = ? AND t.status = 1";
 
-    $stmt = mysqli_prepare($db, $query);
-    mysqli_stmt_bind_param($stmt, "s", $userID);
-    mysqli_stmt_execute($stmt);
+                $stmt = mysqli_prepare($db, $query);
+                mysqli_stmt_bind_param($stmt, "s", $userID);
+                mysqli_stmt_execute($stmt);
 
-    $resultado = mysqli_stmt_get_result($stmt);
+                $resultado = mysqli_stmt_get_result($stmt);
 
-    if (mysqli_num_rows($resultado) == 0) {
-        echo "<p>Não há treinos cadastrados para você!</p>";
+                if (mysqli_num_rows($resultado) == 0) {
+                    echo "<p>Não há treinos cadastrados para você!</p>";
 
-        if ($user->existsUserTrainingRequest_byID($userID)) {
-            echo '
-                <div id="aviso-requisicao-treino" class="alert alert-primary text-dark mb-0 pb-0">
-                    <div class="container ">
-                        <div class="row align-items-center">
-                            <div class="col-12 text-center">
-                                <p class="text-dark">Já existe uma requisição de treino criada para você!
-                                    <a id="cancelar-requisicao-treino" class="ms-3 btn btn-outline-danger">Cancelar Requisição</a>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>';
-        } else {
-            $query = "SELECT nome, userid FROM users WHERE estado >= 1";
-            $stmt = mysqli_prepare($db, $query);
-
-            if (mysqli_stmt_execute($stmt)) {
-                mysqli_stmt_bind_result($stmt, $nome, $userid);
-                $options = '<option value="-1" selected class="text-black">Qualquer Professor</option>';
-
-                while (mysqli_stmt_fetch($stmt)) {
-                    $options .= '<option value="' . $userid . '" class="text-black">' . $nome . '</option>';
-                }
-
-                echo '<a class="btn btn-outline-warning w-100" id="requisitar-treino">Requisitar Treino - 
-                        <select id="professor" name="professor" tabindex="-1" class="text-center"
-                            style="cursor: pointer; outline: 0; background-color: transparent; color: white; border: 0; border-bottom: 1px solid white; border-radius: 0;">
-                            ' . $options . '
-                        </select></a>';
-
-                echo '
-                    <div id="aviso-requisicao-treino-sucesso" class="alert alert-success text-dark my-3 pb-0" style="display:none;">
-                        <div class="container ">
-                            <div class="row align-items-center">
-                                <div class="col w-100 text-center">
-                                    <p class="text-dark">Sua requisição foi criada com sucesso!</p>
+                    if ($user->existsUserTrainingRequest_byID($userID)) {
+                        echo '
+                            <div id="aviso-requisicao-treino" class="alert alert-primary text-dark mb-0 pb-0">
+                                <div class="container ">
+                                    <div class="row align-items-center">
+                                        <div class="col-12 text-center">
+                                            <p class="text-dark">Já existe uma requisição de treino criada para você!
+                                                <a id="cancelar-requisicao-treino" class="ms-3 btn btn-outline-danger">Cancelar Requisição</a>
+                                            </p>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                    </div>';
+                            </div>';
+                    } else {
+                        $query = "SELECT nome, userid FROM users WHERE estado >= 1";
+                        $stmt = mysqli_prepare($db, $query);
 
-                echo '
-                    <div id="aviso-requisicao-treino-fracasso" class="alert alert-danger text-dark my-3 pb-0" style="display:none;">
-                        <div class="container ">
-                            <div a classe="row align-items-center">
-                                <div class="col w-100 text-center">
-                                    <p class="text-dark">Houve um erro ao criar sua requisição!</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>';
-            }
-        }
-    } else {
-        $row = mysqli_fetch_assoc($resultado);
-        $proxTreino = $training->deStrcatFocus($row['foco'], $row['proximo_treino']);
-        $treinos = $training->deStrcatFocus_all($row['foco']);
-        $treinoid = $row['idtreino'];
+                        if (mysqli_stmt_execute($stmt)) {
+                            mysqli_stmt_bind_result($stmt, $nome, $userid);
+                            $options = '<option value="-1" selected class="text-black">Qualquer Professor</option>';
 
-        $query = "SELECT * FROM treinos_andamento WHERE idtreino = ?";
-        $stmt = mysqli_prepare($db, $query);
-        mysqli_stmt_bind_param($stmt, 's', $treinoid);
-        mysqli_stmt_execute($stmt);
-        $results = mysqli_stmt_get_result($stmt);
-        $row2 = mysqli_fetch_assoc($results);
+                            while (mysqli_stmt_fetch($stmt)) {
+                                $options .= '<option value="' . $userid . '" class="text-black">' . $nome . '</option>';
+                            }
 
-        @$focoString = $training->deStrcatFocus($row['foco'], $row2['foco']);
+                            echo '<a class="btn btn-outline-warning w-100" id="requisitar-treino">Requisitar Treino - 
+                                    <select id="professor" name="professor" tabindex="-1" class="text-center"
+                                        style="cursor: pointer; outline: 0; background-color: transparent; color: white; border: 0; border-bottom: 1px solid white; border-radius: 0;">
+                                        ' . $options . '
+                                    </select></a>';
 
-        if ($row2) {
-            echo '
-                <form method="get" action="treino.php"
-                    class="btn btn-outline-success text-white d-flex align-items-center justify-content-center" id="form-treino"
-                    style="cursor: default;">
-                    <input name="treinoid" type="hidden" value="' . $treinoid . '">
-                    <input name="treino" type="hidden" value="' . $row2['foco'] . '">
-                    <div class="col-10">
-                        <span>Treino em andamento - ' . $row['nome'] . ' ' . $focoString . ' - Decorridos ' . $row2['tempoDecorrido'] . '</span>
-                    </div>
-                    <div class="col-2">
-                        <button type="submit" class="btn"><i class="bi bi-play text-white fs-2"></i></button>
-                    </div>
-                </form>';
-        } else {
-            echo '
-                <form method="get" action="treino.php"
-                    class="btn btn-azul text-white d-flex align-items-center justify-content-center" id="form-treino"
-                    style="cursor: default;">
-                    <input name="treinoid" type="hidden" value="' . $treinoid . '">
-                    <div class="col-3">
-                        <div class="row">
-                            <span>' . $row['nome'] . '</span>
-                        </div>
-                        <div class="row">
-                            <span>' . $row['professor_nome'] . '</span>
-                        </div>
-                    </div>
-                    <div class="col-1 align-items-center justify-content-center pt-1 fs-3">
-                        <i class="bi bi-plus-lg text-center"></i>
-                    </div>
-                    <div class="col-7">
-                        <div class="row justify-content-center">
-                            <div class="input-group">
-                                <select id="treino" name="treino" tabindex="-1" class="form-control text-center"
-                                    style="cursor:pointer;outline: 0; background-color: transparent; color: white; border: 0; border-bottom: 1px solid white; border-radius: 0;">';
+                            echo '
+                                <div id="aviso-requisicao-treino-sucesso" class="alert alert-success text-dark my-3 pb-0" style="display:none;">
+                                    <div class="container ">
+                                        <div class="row align-items-center">
+                                            <div class="col w-100 text-center">
+                                                <p class="text-dark">Sua requisição foi criada com sucesso!</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>';
 
-            foreach ($treinos as $t => $tc) {
-                if (!strcmp($tc, $proxTreino)) {
-                    echo "<option value='$t' selected class='text-black'>Treino " . ($t + 1) . " - $tc</option>";
+                            echo '
+                                <div id="aviso-requisicao-treino-fracasso" class="alert alert-danger text-dark my-3 pb-0" style="display:none;">
+                                    <div class="container ">
+                                        <div a classe="row align-items-center">
+                                            <div class="col w-100 text-center">
+                                                <p class="text-dark">Houve um erro ao criar sua requisição!</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>';
+                        }
+                    }
                 } else {
-                    echo "<option value='$t' class='text-black'>Treino " . ($t + 1) . " - $tc</option>";
-                }
-            }
+                    $row = mysqli_fetch_assoc($resultado);
+                    $proxTreino = $training->deStrcatFocus($row['foco'], $row['proximo_treino']);
+                    $treinos = $training->deStrcatFocus_all($row['foco']);
+                    $treinoid = $row['idtreino'];
 
-            echo '
-                                </select>
-                                <div class="input-group-append" style="border-bottom: 1px solid white;">
-                                    <span class="input-group-text bg-transparent border-0 text-white">
-                                        <i class="bi bi-caret-down-fill"></i>
-                                    </span>
+                    $query = "SELECT * FROM treinos_andamento WHERE idtreino = ?";
+                    $stmt = mysqli_prepare($db, $query);
+                    mysqli_stmt_bind_param($stmt, 's', $treinoid);
+                    mysqli_stmt_execute($stmt);
+                    $results = mysqli_stmt_get_result($stmt);
+                    $row2 = mysqli_fetch_assoc($results);
+
+                    @$focoString = $training->deStrcatFocus($row['foco'], $row2['foco']);
+
+                    if ($row2) {
+                        echo '
+                            <form method="get" action="treino.php"
+                                class="btn btn-primary active text-white d-flex align-items-center justify-content-center" id="form-treino"
+                                style="cursor: default;">
+                                <input name="treinoid" type="hidden" value="' . $treinoid . '">
+                                <input name="treino" type="hidden" value="' . $row2['foco'] . '">
+                                <div class="col-3 align-items-center justify-content-center">
+                                    <div class="row">
+                                        <span>' . $row["nome"] . '</span>
+                                    </div>
+                                    <div class="row">
+                                        <span>' . $focoString . '</span>
+                                    </div>
                                 </div>
+                                <div class="col-1 align-items-center justify-content-center pt-1 fs-3">
+                                    <i class="bi bi-caret-right text-center"></i>
+                                </div>
+                                <div class="col-6 align-items-center justify-content-center">
+                                    <div class="row">
+                                        <span>Treino em andamento:</span>
+                                    </div>
+                                    <div class="row">
+                                        <span>' . $row2["tempoDecorrido"] . '</span>
+                                    </div>
+                                </div>
+                                <div class="col-2">
+                                    <button type="submit" class="btn"><i class="bi bi-play text-white fs-2"></i></button>
+                                </div>
+                            </form>';
+                    } else {
+                        echo '
+                            <form method="get" action="treino.php"
+                                class="btn btn-primary text-white d-flex align-items-center justify-content-center" id="form-treino"
+                                style="cursor: default;">
+                                <input name="treinoid" type="hidden" value="' . $treinoid . '">
+                                <div class="col-3">
+                                    <div class="row">
+                                        <span>' . $row['nome'] . '</span>
+                                    </div>
+                                    <div class="row">
+                                        <span>' . $row['professor_nome'] . '</span>
+                                    </div>
+                                </div>
+                                <div class="col-1 align-items-center justify-content-center pt-1 fs-3">
+                                    <i class="bi bi-plus-lg text-center"></i>
+                                </div>
+                                <div class="col-7">
+                                    <div class="row justify-content-center">
+                                        <div class="input-group">
+                                            <select id="treino" name="treino" tabindex="-1" class="form-control text-center"
+                                                style="cursor:pointer;outline: 0; background-color: transparent; color: white; border: 0; border-bottom: 1px solid white; border-radius: 0;">';
+
+                        foreach ($treinos as $t => $tc) {
+                            if (!strcmp($tc, $proxTreino)) {
+                                echo "<option value='$t' selected class='text-black'>Treino " . ($t + 1) . " - $tc</option>";
+                            } else {
+                                echo "<option value='$t' class='text-black'>Treino " . ($t + 1) . " - $tc</option>";
+                            }
+                        }
+
+                        echo '</select>
+                            <div class="input-group-append" style="border-bottom: 1px solid white;">
+                                <span class="input-group-text bg-transparent border-0 text-white">
+                                    <i class="bi bi-caret-down-fill"></i>
+                                </span>
                             </div>
                         </div>
-                        <div class="row mt-1 justify-content-center">
-                            <span>' . $row["vezes_feito"] . '/' . $row['duracao'] . '</span>
-                        </div>
-                    </div>
-                    <div class="col-2">
-                        <button type="submit" class="btn"><i class="bi bi-play text-white fs-2"></i></button>
-                    </div>
-                </form>';
-        }
-    }
-}
-?>
-
+                                    </div>
+                                    <div class="row mt-1 justify-content-center">
+                                        <span>' . $row["vezes_feito"] . '/' . $row['duracao'] . '</span>
+                                    </div>
+                                </div>
+                                <div class="col-2">
+                                    <button type="submit" class="btn"><i class="bi bi-play text-white fs-2"></i></button>
+                                </div>
+                            </form>';
+                    }
+                }
+            }
+            ?>
             </div>
             <!-- Fim próximo treino -->
 
@@ -309,50 +323,50 @@ if ($func->verificarLogado()) {
             <div class="col-lg-6 col-12 mt-md-0 mt-5">
                 <h3 class="fs-5 pb-2" style="border-bottom: 1px solid #363330;">Histórico Diario</h3>
                 <?php
-                // if ($func->verificarLogado()) {
-                //     $userToken = $_COOKIE['logado'];
 
-                //     $query = "SELECT exercicios_diarios.nome_treino, exercicios_diarios.foco, exercicios_diarios.tempo_decorrido, users.nome AS professor
-                //               FROM exercicios_diarios
-                //               INNER JOIN users ON exercicios_diarios.professor = users.userid
-                //               WHERE exercicios_diarios.aluno = ?";
+                $data = date('y-m-d');
 
-                //     $userID = $user->getUserID_byToken($userToken);
+                $query = "SELECT tc.idtreinoconcluido, tc.treino, tc.tempoDecorrido as tempoDecorrido, tc.dataConclusao, t.idtreino, t.aluno, t.nome AS nome_treino, t.foco AS musculo, tc.foco AS musculoID, u.userid
+                FROM treinos_concluidos tc
+                JOIN treinos t ON t.idtreino = tc.treino
+                JOIN users u ON t.aluno = u.userid
+                WHERE tc.dataConclusao = ?
+                ORDER BY tc.idtreinoconcluido DESC";
 
-                //     $stmt = mysqli_prepare($db, $query);
-                //     mysqli_stmt_bind_param($stmt, "s", $userID);
-                //     mysqli_stmt_execute($stmt);
+                $stmt = mysqli_prepare($db, $query);
+                mysqli_stmt_bind_param($stmt,'s',$data);
+                mysqli_stmt_execute($stmt);
+                $resultado = mysqli_stmt_get_result($stmt);
 
-                //     $resultados = mysqli_stmt_get_result($stmt);
+                if (mysqli_num_rows($resultado) > 0) {
+                    while ($row = mysqli_fetch_assoc($resultado)) {
+                        $focoString = $training->deStrcatFocus($row['musculo'], $row['musculoID']);
 
-                //     if (mysqli_num_rows($resultados) > 0) {
-                //         while ($row = mysqli_fetch_assoc($resultados)) {
-                //             echo '<a href="" class="btn btn-outline-success text-white d-flex my-2">
-                //                 <div class="col-3 align-items-center justify-content-center">
-                //                     <div class="row">
-                //                         <span>' . $row["nome_treino"] . '</span>
-                //                     </div>
-                //                     <div class="row">
-                //                         <span>' . $row["professor"] . '</span>
-                //                     </div>
-                //                 </div>
-                //                 <div class="col-1 align-items-center justify-content-center pt-1 fs-3">
-                //                     <i class="bi bi-caret-right text-center"></i>
-                //                 </div>
-                //                 <div class="col-8 align-items-center justify-content-center">
-                //                     <div class="row">
-                //                         <span>' . $row["foco"] . '</span>
-                //                     </div>
-                //                     <div class="row">
-                //                         <span>' . $row["tempo_decorrido"] . '</span>
-                //                     </div>
-                //                 </div>
-                //             </a>';
-                //         }
-                //     } else {
-                //         echo "<p>Não há treinos registrados hoje!</p>";
-                //     }
-                // }
+                        echo '<a href="" class="btn btn-outline-success text-white d-flex my-2 d-flex align-items-center justify-content-center">
+                                    <div class="col-3 align-items-center justify-content-center">
+                                        <div class="row">
+                                            <span>' . $row["nome_treino"] . '</span>
+                                        </div>
+                                        <div class="row">
+                                            <span>' . $focoString . '</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-1 align-items-center justify-content-center pt-1 fs-3">
+                                        <i class="bi bi-caret-right text-center"></i>
+                                    </div>
+                                    <div class="col-8 align-items-center justify-content-center">
+                                        <div class="row">
+                                            <span>Treino concluido em:</span>
+                                        </div>
+                                        <div class="row">
+                                            <span>' . $row["tempoDecorrido"] . '</span>
+                                        </div>
+                                    </div>
+                                </a>';
+                    }
+                } else {
+                    echo "<p>Não há treinos registrados hoje!</p>";
+                }
 
                 ?>
             </div>
@@ -467,45 +481,52 @@ if ($func->verificarLogado()) {
                                     class="bi bi-arrow-right me-2"></i>Top Diario</h3>
                             <table class="table-dark table-striped table text-center">
                                 <?php
-                                // Supondo que você já tenha estabelecido a conexão com o banco de dados ($db)
-                                
-                                $query = "SELECT ed.aluno, ed.tempo_decorrido, u.nome FROM exercicios_diarios AS ed
-                                        JOIN users AS u ON ed.aluno = u.userid
-                                        ORDER BY ed.tempo_decorrido DESC
-                                        LIMIT 3";
 
-                                $stmt = mysqli_prepare($db, $query);
-                                mysqli_stmt_execute($stmt);
-                                $resultados = mysqli_stmt_get_result($stmt);
+                                    $data = date('Y-m-d');
 
-                                if (!mysqli_num_rows($resultados)) {
-                                    echo "Não há treinos recentes!";
-                                } else {
-                                    $rows = mysqli_fetch_all($resultados, MYSQLI_ASSOC);
-                                    mysqli_free_result($resultados);
-                                    mysqli_stmt_close($stmt);
+                                    $query = 'SELECT 
+                                    tc.treino, 
+                                    SEC_TO_TIME(SUM(TIME_TO_SEC(tc.tempoDecorrido))) AS tempoTotal, 
+                                    MAX(tc.dataConclusao) AS ultimaConclusao, 
+                                    t.aluno, 
+                                    t.idtreino, 
+                                    u.nome AS user, 
+                                    u.userid
+                                  FROM treinos_concluidos tc
+                                  JOIN treinos t ON tc.treino = t.idtreino
+                                  JOIN users u ON t.aluno = u.userid
+                                  WHERE DATE(tc.dataConclusao) = ?
+                                  GROUP BY tc.treino
+                                  ORDER BY ultimaConclusao DESC
+                                  LIMIT 5';
 
-                                    echo "<table>
-                                        <tr>
-                                            <th>Classificação</th>
-                                            <th>Usuário</th>
-                                            <th>Tempo diário</th>
-                                        </tr>";
+                                    $stmt = $db->prepare($query);
+                                    $stmt->bind_param('s', $data);
+                                    $stmt->execute();
+                                    $resultado = $stmt->get_result();
 
-                                    foreach ($rows as $contador => $row) {
+                                    echo "
+                                            <tr>
+                                                <th>Classificação</th>
+                                                <th>Usuário</th>
+                                                <th>Tempo Total</th>
+                                            </tr>";
+
+                                    $contador = 1;
+
+                                    while ($row = $resultado->fetch_assoc()) {
                                         echo "<tr>
-                                        <td>" . ($contador + 1) . "</td>
-                                        <td>" . $row['nome'] . "</td>
-                                        <td>" . $row['tempo_decorrido'] . "</td>
-                                    </tr>";
+                                            <td>" . $contador . "</td>
+                                            <td>" . $row['user'] . "</td>
+                                            <td>" . $row['tempoTotal'] . "</td>
+                                        </tr>";
+                                        $contador++;
                                     }
 
-                                    echo "</table>";
-                                }
-
+                                    if($contador === 1){
+                                        echo '<tr><td colspan="3">Não há treinos concluidos hoje.</tr>';
+                                    }
                                 ?>
-
-
                             </table>
                         </div>
                     </div>
@@ -515,43 +536,57 @@ if ($func->verificarLogado()) {
                                     class="bi bi-arrow-right me-2"></i>Top Semanal</h3>
                             <table class="table-dark table-striped table text-center">
                                 <?php
-                                $query = "SELECT nome, tempo_semanal FROM users ORDER BY tempo_semanal DESC LIMIT 3";
+                                $data = date('Y-m-d');
 
-                                $stmt = mysqli_prepare($db, $query);
-                                mysqli_stmt_execute($stmt);
-
-                                $resultados = mysqli_stmt_get_result($stmt);
-
-                                if (!mysqli_num_rows($resultados)) {
-                                    echo "Não há treinos recentes!";
-                                } else {
-
-                                    echo "<tr>
+                                // Data de início da semana (segunda-feira)
+                                $data_inicio_semana = date('Y-m-d', strtotime('last Monday', strtotime($data)));
+                                
+                                // Data de final da semana (domingo)
+                                $data_fim_semana = date('Y-m-d', strtotime('next Sunday', strtotime($data)));
+                                
+                                $query = 'SELECT 
+                                            tc.treino, 
+                                            SEC_TO_TIME(SUM(TIME_TO_SEC(tc.tempoDecorrido))) AS tempoTotal, 
+                                            MAX(tc.dataConclusao) AS ultimaConclusao, 
+                                            t.aluno, 
+                                            t.idtreino, 
+                                            u.nome AS user, 
+                                            u.userid
+                                          FROM treinos_concluidos tc
+                                          JOIN treinos t ON tc.treino = t.idtreino
+                                          JOIN users u ON t.aluno = u.userid
+                                          WHERE tc.dataConclusao BETWEEN ? AND ?
+                                          GROUP BY tc.treino
+                                          ORDER BY ultimaConclusao DESC
+                                          LIMIT 5';
+                                
+                                $stmt = $db->prepare($query);
+                                $stmt->bind_param('ss', $data_inicio_semana, $data_fim_semana);
+                                $stmt->execute();
+                                $resultado = $stmt->get_result();
+                                
+                                echo "
+                                        <tr>
                                             <th>Classificação</th>
                                             <th>Usuário</th>
-                                            <th>Tempo</th>
+                                            <th>Tempo Total</th>
                                         </tr>";
-
-                                    $contador = 0;
-
-                                    while ($row = mysqli_fetch_assoc($resultados)) {
-                                        $contador++;
-                                        ?>
-                                        <tr>
-                                            <th>
-                                                <?php echo $contador ?>
-                                            </th>
-                                            <td>
-                                                <?php echo $row['nome'] ?>
-                                            </td>
-                                            <td>
-                                                <?php echo $row['tempo_semanal'] ?>
-                                            </td>
-                                        </tr>
-                                        <?php
-                                    }
+                                
+                                $contador = 1;
+                                
+                                while ($row = $resultado->fetch_assoc()) {
+                                    echo "<tr>
+                                        <td>" . $contador . "</td>
+                                        <td>" . $row['user'] . "</td>
+                                        <td>" . $row['tempoTotal'] . "</td>
+                                    </tr>";
+                                    $contador++;
                                 }
-
+                                
+                                if ($contador === 1) {
+                                    echo '<tr><td colspan="3">Não há treinos concluídos na semana.</tr>';
+                                }
+                                
                                 ?>
                             </table>
                         </div>
@@ -562,38 +597,57 @@ if ($func->verificarLogado()) {
                                     class="bi bi-arrow-right me-2"></i>Top Mensal</h3>
                             <table class="table-dark table-striped table text-center">
                                 <?php
-                                // Supondo que você já tenha estabelecido a conexão com o banco de dados ($db)
+                                $data = date('Y-m-d');
+
+                                // Data do primeiro dia do mês atual
+                                $data_primeiro_dia = date('Y-m-01', strtotime($data));
                                 
-                                $query = "SELECT nome, tempo_semanal FROM users ORDER BY tempo_semanal DESC LIMIT 3";
-
-                                $stmt = mysqli_prepare($db, $query);
-                                mysqli_stmt_execute($stmt);
-                                $resultados = mysqli_stmt_get_result($stmt);
-
-                                if (!mysqli_num_rows($resultados)) {
-                                    echo "Não há treinos recentes!";
-                                } else {
-                                    $rows = mysqli_fetch_all($resultados, MYSQLI_ASSOC);
-                                    mysqli_free_result($resultados);
-                                    mysqli_stmt_close($stmt);
-
-                                    echo "<tr>
+                                // Data do último dia do mês atual
+                                $data_ultimo_dia = date('Y-m-t', strtotime($data));
+                                
+                                $query = 'SELECT 
+                                            tc.treino, 
+                                            SEC_TO_TIME(SUM(TIME_TO_SEC(tc.tempoDecorrido))) AS tempoTotal, 
+                                            MAX(tc.dataConclusao) AS ultimaConclusao, 
+                                            t.aluno, 
+                                            t.idtreino, 
+                                            u.nome AS user, 
+                                            u.userid
+                                          FROM treinos_concluidos tc
+                                          JOIN treinos t ON tc.treino = t.idtreino
+                                          JOIN users u ON t.aluno = u.userid
+                                          WHERE tc.dataConclusao BETWEEN ? AND ?
+                                          GROUP BY tc.treino
+                                          ORDER BY ultimaConclusao DESC
+                                          LIMIT 5';
+                                
+                                $stmt = $db->prepare($query);
+                                $stmt->bind_param('ss', $data_primeiro_dia, $data_ultimo_dia);
+                                $stmt->execute();
+                                $resultado = $stmt->get_result();
+                                
+                                echo "
+                                        <tr>
                                             <th>Classificação</th>
                                             <th>Usuário</th>
-                                            <th>Tempo</th>
+                                            <th>Tempo Total</th>
                                         </tr>";
-
-                                    foreach ($rows as $contador => $row) {
-                                        echo "<tr>
-                                            <td>" . ($contador + 1) . "</td>
-                                            <td>" . $row['nome'] . "</td>
-                                            <td>" . $row['tempo_semanal'] . "</td>
-                                        </tr>";
-                                    }
-
-                                    echo "</table>";
+                                
+                                $contador = 1;
+                                
+                                while ($row = $resultado->fetch_assoc()) {
+                                    echo "<tr>
+                                        <td>" . $contador . "</td>
+                                        <td>" . $row['user'] . "</td>
+                                        <td>" . $row['tempoTotal'] . "</td>
+                                    </tr>";
+                                    $contador++;
                                 }
-
+                                
+                                if ($contador === 1) {
+                                    echo '<tr><td colspan="3">Não há treinos concluídos no mês.</tr>';
+                                }
+                                
                                 ?>
 
                             </table>
@@ -619,7 +673,7 @@ if ($func->verificarLogado()) {
                     <ul>
                         <li class="footer-li"><a class="footer-a" href="about.html">Sobre Nós</a></li>
                         <li class="footer-li"><a class="footer-a" href="team.html">Nossa Equipe</a></li>
-                        <li class="footer-li">Atalho 3</li>
+                        <li class="footer-li"><a class="footer-a" href="./imc/index.php?return=1">Calculadora IMC</a></li>
                         <li class="footer-li">Atalho 4</li>
                     </ul>
                 </div>
@@ -633,7 +687,7 @@ if ($func->verificarLogado()) {
             </div>
             <div class="row mt-4">
                 <div class="col-12">
-                    <p>&copy; <span id="data">{data}</span> OlympiaWorkout. Todos os direitos reservados.</p>
+                    <p>&copy; <span id="data">2023</span> OlympiaWorkout. Todos os direitos reservados.</p>
                 </div>
             </div>
         </div>

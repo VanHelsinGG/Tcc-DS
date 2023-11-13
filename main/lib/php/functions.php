@@ -530,6 +530,13 @@ class Treino
         return $result ? 1 : 0;
     }
 
+    public function incrementMakedTimes($trainingID)
+    {
+        $stmt = $this->db->prepare("UPDATE treinos SET vezes_feito = vezes_feito + 1 WHERE idtreino = ?");
+        $stmt->bind_param("i", $trainingID); 
+        return ($stmt->execute()) ? 1 : 0;
+    }    
+
     public function createTraining($trainingData)
     {
         $stmt = $this->db->prepare("INSERT INTO treinos (aluno, professor,nome, foco, duracao, exercicios, series, observacoes, status) VALUES (?,?,?, ?, ?, ?, ?, ?, '1')");

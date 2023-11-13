@@ -145,3 +145,7 @@
 [31/10/2023 11:00:11pm] - [login] Conta logada com o nome : Root
 [03/11/2023 06:12:55pm] - [login] Conta logada com o nome : Root
 [03/11/2023 06:31:53pm] - [login] Conta logada com o nome : Root
+[05/11/2023 09:19:00pm] - [login] Conta logada com o nome : Root
+[06/11/2023 12:29:04am] - [registro] Conta criada com o nome : Admin
+[06/11/2023 12:29:07am] - [login] Conta logada com o nome : Admin
+[06/11/2023 03:33:59pm] - [login] Conta logada com o nome : Admin

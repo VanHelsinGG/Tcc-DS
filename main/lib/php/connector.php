@@ -16,13 +16,13 @@ if (mysqli_connect_errno()) {
 }
 
 $query = "
-  DROP TABLE IF EXISTS `exercicios_diarios`;
 
   CREATE TABLE IF NOT EXISTS `treinos_concluidos`(
     `idtreinoconcluido` int(11) NOT NULL AUTO_INCREMENT,
     `treino` int(11) NOT NULL,
+    `foco` int(11) NOT NULL,
     `tempoDecorrido` time NOT NULL,
-    `dataConclusao` datetime NOT NULL,
+    `dataConclusao` date NOT NULL,
     PRIMARY KEY (`idtreinoconcluido`)
   ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -91,8 +91,7 @@ $query = "
     `tempo_mensal` time DEFAULT '00:00:00',
     PRIMARY KEY (`userid`)
   ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-  
-  DROP TABLE IF EXISTS `requisicoesTreino`;
+
 
   CREATE TABLE IF NOT EXISTS `requisicoes_treino` (
     `requisicaoid` int(11) NOT NULL AUTO_INCREMENT,

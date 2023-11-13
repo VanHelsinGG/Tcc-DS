@@ -70,21 +70,19 @@ $(document).ready(function () {
 
 $('.encerrar-treino').click(function () {
     const timePassed = getTrainingTime();
-    const date = new Date().toISOString().slice(0, 19).replace('T', ' ');
 
     $.post('/tcc/user/actions/encerrar_treino_action.php', {
         action: 'FINISH',
         treinoID: treinoID,
         tempoDecorrido: timePassed,
-        data: date
+        foco: foco
     }, function (data) {
         const resposta = JSON.parse(data);
 
         if (resposta.status === "success") {
-            alert('treino finalizado com sucesso!');
             localStorage.removeItem('exerciciosEstado');
             trainingCompleted = true;
-            location.reload();
+            window.location.href = 'main.php';
         } else {
             console.error(resposta.message);
         }

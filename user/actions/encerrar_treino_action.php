@@ -54,16 +54,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             } else {
                 echo json_encode(['status' => 'error', 'message' => 'Erro na preparação da consulta.']);
             }
-        }elseif ($action === "FINISH" && isset($_POST['treinoID']) && isset($_POST['data']) && isset($_POST['tempoDecorrido'])){
+        }elseif ($action === "FINISH" && isset($_POST['treinoID']) && isset($_POST['tempoDecorrido']) && isset($_POST['foco'])){
             $treinoID = $_POST['treinoID'];
             $tempoDecorrido = $_POST['tempoDecorrido'];
-            $data = $_POST['data'];
+            $foco = $_POST['foco'];
 
-            $query = "INSERT INTO treinos_concluidos (treino, tempoDecorrido, dataConclusao) VALUES (?,?,?)";
+            $data = date('y-m-d');
+
+            $query = "INSERT INTO treinos_concluidos (treino, tempoDecorrido, dataConclusao, foco) VALUES (?,?,?,?)";
             $stmt = mysqli_prepare($db, $query);
 
             if($stmt){
-                mysqli_stmt_bind_param($stmt, 'sss', $treinoID,$tempoDecorrido,$data);
+                mysqli_stmt_bind_param($stmt, 'ssss', $treinoID,$tempoDecorrido,$data, $foco);
                 if (mysqli_stmt_execute($stmt)) {
                     $query = "DELETE FROM treinos_andamento WHERE idtreino = ?";
                     $stmt = mysqli_prepare($db, $query);
@@ -71,6 +73,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     if ($stmt) {
                         mysqli_stmt_bind_param($stmt, "s", $treinoID);
                         if (mysqli_stmt_execute($stmt) && mysqli_stmt_affected_rows($stmt) > 0) {
+                            $training->incrementMakedTimes($treinoID);
                             echo json_encode(['status' => 'success', 'message' => 'Treino finalizado com sucesso!']);
                         } else {
                             echo json_encode(['status' => 'error', 'message' => 'Erro ao finalizar o treino!']);

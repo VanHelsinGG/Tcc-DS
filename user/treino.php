@@ -21,6 +21,9 @@ if (isset($_GET['treinoid'])) {
             $query = 'SELECT tempoDecorrido FROM treinos_andamento WHERE idtreino = ?';
             $stmt = mysqli_prepare($db, $query);
 
+            echo '<script>var treinoID = '.$treinoid.';
+            var foco = '.$_GET['treino'].';</script>';
+
             if ($stmt) {
                 mysqli_stmt_bind_param($stmt, "s", $treinoid);
                 mysqli_stmt_execute($stmt);
@@ -29,8 +32,6 @@ if (isset($_GET['treinoid'])) {
                 if ($result && $row = mysqli_fetch_assoc($result)) {
                     $tempoDecorrido = $row['tempoDecorrido'];
                     echo '<script>var continueTraining = true;
-                                var treinoID = '.$treinoid.';
-                                var foco = '.$_GET['treino'].';
                     </script>';
                 } else {
                     $data = date('y-m-d');
