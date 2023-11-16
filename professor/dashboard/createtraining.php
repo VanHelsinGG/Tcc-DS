@@ -166,7 +166,7 @@ echo "<script>var exercises = $exercicios_json;</script>";
                                                 <h2 id="titulo">Treino 1 - </h2>
                                             </div>
                                             <div class="col-10"><input type="text" class="form-control my-1 treino-i"
-                                                    placeholder="Nome Treino"></div>
+                                                    placeholder="Nome Treino" ></div>
                                         </div>
                                         <div class="col-4 px-4 my-2 exercicio-c" id="exercicio-1-1">
                                             <div class="row" style="position:relative;">
@@ -263,7 +263,7 @@ echo "<script>var exercises = $exercicios_json;</script>";
                                                 <h3 class="bg-escuro-terciario rounded p-2 px-3"><input type="text"
                                                         class="form-control my-1 exercicio-i" placeholder="Exercício 1">
                                                 </h3>
-                                                <div class="sugestoes-exercicios shadow-lg rounded dropdown dropdown-menu"></div>
+                                                <div class="sugestoes-exercicios shadow-lg rounded dropdown dropdown-menu ps-2"></div>
                                             </div>
                                             <div class="row">
                                                 <input type="text" class="form-control serie-i my-1 serie-1"
@@ -279,7 +279,7 @@ echo "<script>var exercises = $exercicios_json;</script>";
                                                     name="serie-i" placeholder="Serie 4" required max='100' min='1'
                                                     inputmode="numeric" pattern="[0-9]*">
                                                 <button type="button" class="btn btn-success mt-1"
-                                                    onclick="adicionarInput(this)">Nova Serie</button>
+                                                    onclick="adicionarInput(this)" >Nova Serie</button>
                                             </div>
                                         </div>
                                         <div class="col-4 px-4 my-2 exercicio-c" id="exercicio-1-2">

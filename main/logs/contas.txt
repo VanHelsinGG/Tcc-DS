@@ -160,3 +160,6 @@
 [13/11/2023 11:54:16am] - [login] Conta logada com o nome : Olympia Workout
 [13/11/2023 12:17:20pm] - [login] Conta logada com o nome : Olympia Workout
 [13/11/2023 12:18:07pm] - [login] Conta logada com o nome : Olympia Workout
+[16/11/2023 08:17:52am] - [login] Conta logada com o nome : Olympia Workout
+[16/11/2023 10:57:10am] - [login] Conta logada com o nome : Olympia Workout
+[16/11/2023 11:02:01am] - [login] Conta logada com o nome : Olympia Workout

@@ -53,17 +53,14 @@ $('.exercicio-i').on('input', function () {
             return nome.toLowerCase().includes(inputText);
         });
 
-        // Limitar a quantidade de sugestões a 3
         suggestions = suggestions.slice(0, 3);
     }
 
     var $sugestaoExercicio = $(this).closest('.row').find('.sugestoes-exercicios');
 
-    // Limpa as sugestões anteriores
     $sugestaoExercicio.empty();
 
     if (suggestions.length > 0) {
-        // Adiciona as novas sugestões apenas se houver alguma
         var $dropdownMenu = $('<ul class="list-unstyled"></ul>');
 
         suggestions.forEach(function (suggestion) {
@@ -72,15 +69,24 @@ $('.exercicio-i').on('input', function () {
 
         $sugestaoExercicio.append($dropdownMenu);
 
-        // Adiciona o comportamento de dropdown ao elemento pai do input
-        $sugestaoExercicio.parent().addClass('show').dropdown('toggle');
+        $sugestaoExercicio.parent().dropdown('show');
+
+        $(this).tooltip('dispose');
     } else {
-        // Esconde o dropdown se não houver sugestões
-        $sugestaoExercicio.removeClass('show');
+        $sugestaoExercicio.parent().dropdown('hide');
+
+        $(this).tooltip({
+            title: 'Este exercício não está registrado em nosso banco de dados. Ao adicioná-lo, não será possível visualizar sua execução.',
+            placement: 'top'
+        });
+
+        $(this).tooltip('show');
     }
 });
 
-
+$('.exercicio-i').on('shown.bs.dropdown', function () {
+    $(this).tooltip('hide');
+});
 
 $(document).on('click', '.sugestoes-exercicios li', function () {
     var selectedSuggestion = $(this).text();
@@ -89,7 +95,8 @@ $(document).on('click', '.sugestoes-exercicios li', function () {
 
     inputField.val(selectedSuggestion);
 
-    $(this).closest('.row').find('.sugestoes-exercicios').empty();
+    var $row = $(this).closest('.row');
+    $row.find('.sugestoes-exercicios').parent().dropdown('toggle');
 });
 
 $(document).on('click', '.sugestoes li', function () {
